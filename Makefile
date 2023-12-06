@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/06 12:47:48 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/06 15:04:28 by amugnier         ###   ########.fr        #
+#    Updated: 2023/12/06 17:29:33 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ RM = rm -f
 
 $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
 
 
 all: $(LIBFT) $(MLX) $(NAME)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/11 12:19:11 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:07:41 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	void	*mlx_ptr;
 	void	*win_ptr;
 
-	printf("Hello World!\n");
+	printf("Hello World CARO!\n");
 	mlx_ptr = mlx_init();
 	if (!mlx_ptr)
 		return (0);

@@ -1,6 +1,10 @@
 name: Compilation minirt
 
-on: [push]
+on:
+  push:
+    branches:
+      - caro
+      - Antoine
 
 jobs:
   parsing:

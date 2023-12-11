@@ -12,7 +12,7 @@ jobs:
           - uses : actions/checkout@v2
           - name : Compile parsing minirt
             run : |
-              make
+              make parsing
           - name : Run parsing without args
             run : |
               ./minirt

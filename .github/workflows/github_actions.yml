@@ -3,8 +3,8 @@ name: Compilation minirt
 on:
   push:
     branches:
-      - caro
       - Antoine
+      - caro
 
 jobs:
   parsing:
@@ -13,7 +13,23 @@ jobs:
           - uses : actions/checkout@v2
           - name : Compile parsing minirt
             run : |
-              echo "In progress to create this test"
+              make parsing
+          - name : Run parsing without args
+            run : |
+              ./minirt
+          - name : Run parsing with scene_1.rt
+            run : |
+              ./minirt scene/scene_1.rt
+          - name : Run parsing with no permission
+            run : |
+              chmod 000 scene/scene_1.rt
+              ./minirt scene/scene_1.rt
+          - name : Run parsing with wrong extension
+            run : |
+              ./minirt scene/scene_1.rt2
+          - name : Run parsing with wrong file
+            run : |
+              ./minirt scene/scene_2.rt
 
   mlx_check:
       runs-on: ubuntu-22.04

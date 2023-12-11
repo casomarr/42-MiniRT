@@ -5,6 +5,7 @@ on:
     branches:
       - Antoine
       - caro
+
 jobs:
   parsing:
       runs-on: ubuntu-22.04

@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/11 15:07:19 by amugnier         ###   ########.fr        #
+#    Updated: 2023/12/11 15:22:03 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,6 +130,10 @@ $(GTACTION): $(OBJS_ACTIONS)
 
 # Construction de l'action (si différente)
 action: $(LIBFT) $(MLX) $(GTACTION)
+
+#remove $(MLX) From $(NAME) if parsing are call by make parsing
+parsing: $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
 
 # **************************************************************************** #
 #                                   PHONIES                                    #

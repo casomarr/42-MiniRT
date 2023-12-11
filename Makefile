@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/08 14:51:51 by amugnier         ###   ########.fr        #
+#    Updated: 2023/12/11 15:07:19 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
 SRCS = $(PATH_SRCS)/main.c \
+	   $(PATH_SRCS)/open_file.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

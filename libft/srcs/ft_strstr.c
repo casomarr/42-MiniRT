@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 11:04:59 by amugnier          #+#    #+#             */
-/*   Updated: 2023/02/06 11:08:11 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:29:04 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_strstr(const char *str, char *comp)
 	i = 0;
 	j = 0;
 	if (str[i] == '\0' && comp[j] == '\0')
-		return (EXIT_SUCCESS);
+		return (EXIT_FAILURE);
 	while (str[i] != '\0')
 	{
 		while (str[i + j] == comp[j] && str[i + j] != '\0' && comp[j] != '\0')

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 13:44:26 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:03:38 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+/* struct s_ray
+{
+	int	origin;
+	int	direction;
+	int	norm;
+	int	color;
+} t_ray; */
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
@@ -53,11 +61,14 @@ bool	check_not_empty(int fd);
 bool	open_file(char *path);
 int		parsing(char *file_name);
 
-int		render_tiles(t_data *data);
-void	sphere_img(t_data *data);
+/*Main*/
+int	initialisation(t_data *data);
+
+/*Layers*/
+void	sphere(t_data *data, int color);
 void	img_pix_put(t_img *img, int x, int y, int color);
-int render_rect(t_data *data, int color);
-int	render(t_data *data);
-void	render_background(t_data *data, int color);
+int 	rectangle(t_data *data, int color);
+int		render(t_data *data);
+void	background(t_data *data, int color);
 
 #endif

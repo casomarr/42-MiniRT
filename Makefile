@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/11 17:44:45 by casomarr         ###   ########.fr        #
+#    Updated: 2023/12/13 15:02:29 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 ### SOURCES
 SRCS = $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
-	   $(PATH_SRCS)/test.c \
+	   $(PATH_SRCS)/layers.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

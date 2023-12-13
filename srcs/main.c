@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 15:04:47 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:12:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	render(&data);
+	ray_init(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

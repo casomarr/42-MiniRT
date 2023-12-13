@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/13 15:02:29 by casomarr         ###   ########.fr        #
+#    Updated: 2023/12/13 17:03:38 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 SRCS = $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/layers.c \
+	   $(PATH_SRCS)/ray_generation.c \
+	   $(PATH_SRCS)/maths.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

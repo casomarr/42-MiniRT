@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 15:03:38 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:14:31 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,38 @@
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF
 
+
+typedef struct s_vec{
+    float x, y, z;
+} t_vec;
+
 typedef struct s_img
 {
 	void	*mlx_img; //address that mlx_new_image returns
 	char	*addr;
 	int		bpp; /* bits per pixel */
-	int		line_len;
+	int		width; //avant line_len, change pour ray_generation
+	int		height;
 	int		endian;
 }	t_img;
 
-/* struct s_ray
+typedef struct s_ray
 {
-	int	origin;
-	int	direction;
+	t_vec	camera_center;
+	t_vec	pixel_00_location;
+	t_vec	direction;
 	int	norm;
 	int	color;
-} t_ray; */
+	float	pixel_delta_w;
+	float	pixel_delta_h;
+}	t_ray;
 
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
+	t_ray	ray;
 }	t_data;
 
 void	start_parsing(int fd);
@@ -70,5 +80,14 @@ void	img_pix_put(t_img *img, int x, int y, int color);
 int 	rectangle(t_data *data, int color);
 int		render(t_data *data);
 void	background(t_data *data, int color);
+
+/*Ray Generation*/
+void	ray_init(t_data *data);
+void	ray_generation(t_data *data);
+
+/*Maths*/
+t_vec	vec_substract(t_vec a, t_vec b);
+t_vec vec_add(t_vec a, t_vec b);
+
 
 #endif

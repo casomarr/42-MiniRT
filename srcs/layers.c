@@ -34,8 +34,10 @@ int rectangle(t_data *data, int color)
 int	render(t_data *data)
 {
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT); //remplit ma structure img
-	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len,
+	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.width,
 								&data->img.endian);
+	int	aspect_ratio = 16.0 / 9.0; //ajoute pour ray_generation
+	data->img.height = data->img.width / aspect_ratio; //ajoute pour ray_generation
     background(data, WHITE);
     rectangle(data, GREEN);
 	sphere(data, RED);
@@ -49,7 +51,7 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 	int		i;
 
 	i = img->bpp - 8;
-	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8)); //magie voudou demander a patou
+	pixel = img->addr + (y * img->width + x * (img->bpp / 8)); //magie voudou demander a patou
 	while (i >= 0)
 	{
 		/* big endian, MSB is the leftmost bit */

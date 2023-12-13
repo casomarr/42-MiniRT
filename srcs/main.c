@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/12 18:23:16 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:43:48 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	main(/* int argc, char **argv */)
 		printf("Error\nmlx_new_window() failed\n");
 		return (0);
 	}
-	//render_tiles(&data); //test caro
 	sphere_img(&data);
+	//render(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

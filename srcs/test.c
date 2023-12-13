@@ -9,65 +9,7 @@
 // 	int	color;
 // } t_ray;
 
-
-// /*dessine un grand pixel*/
-// int render_tiles(t_data *data)
-// {
-// 	int	i;
-// 	int j;
-// 	int x;
-// 	int y;
-// 	int radius;
-// 	double	pi;
-// 	double	area;
-// 	int	color;
-
-// 	radius = 200;
-// 	pi = 3.1415926535;
-// 	area = pi * pow(radius, 2);
-// 	x = 500;
-// 	y = 500;
-	
-// /* 	i = 100;
-// 	while (i < 300)
-// 	{
-// 		j = 100;
-// 		while (j < 300)
-// 			mlx_pixel_put(mlx_ptr, win_ptr, j++, i, 0x00FF0000);
-// 		++i;
-// 	} */
-// 	i = 0;
-// 	while (i < radius)
-// 	{
-// 		j = 0;
-// 		while (j < radius)
-// 		{
-// 			if (i * i + j * j <= radius * radius) //if (intersection == true)
-// 			{
-// 				// sinus = longeur ligne
-// 				// cosinus = hauteur ligne
-// 				// on doit mettre des pixels de sinus/cosinus a 0.
-
-
-
-// 				//on genere le rayon
-				
-// 				//on determine la couleur
-// 				//color = ray->color * object->color;
-// 				//on affiche le pixel (pas possible d'avoir les 4 de suite comme ca)
-// 				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y - i, 0x00FF0000);
-// 				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x - j, y + i, 0x00FF0000);
-// 				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x - j, y - i, 0x00FF0000);
-// 				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + j, y + i, 0x00FF0000);
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-void	render_background(t_img *img, int color)
+void	render_background(t_data *data, int color)
 {
     int	i;
     int	j;
@@ -77,39 +19,38 @@ void	render_background(t_img *img, int color)
     {
         j = 0;
         while (j < WIN_WIDTH)
-        {
-            img_pix_put(img, j++, i, color);
-        }
-        ++i;
+            img_pix_put(&data->img, j++, i, color);
+			//mlx_pixel_put(data->mlx_ptr, data->win_ptr, j++, i, color);
+        i++;
     }
 }
 
-int render_rect(t_img *img, int colour)
+int render_rect(t_data *data, int color)
 {
 	int	i;
 	int j;
 
 	i = 100;
-	while (i < 100 + 100)
+	while (i < 100 + WIN_HEIGHT)
 	{
 		j = 100;
-		while (j < 100 + 100)
-			img_pix_put(img, j++, i, colour);
-		++i;
+		while (j < 100 + WIN_WIDTH)
+			img_pix_put(&data->img, j++, i, color);
+			//mlx_pixel_put(data->mlx_ptr, data->win_ptr, j++, i, color); //s'affiche mais pq on ecrit direct sur la fenetre. Du coup si je mets ca enelever mlx_pput_img_ti_window
+		i++;
 	}
 	return (0);
 }
 
 int	render(t_data *data)
 {
-    if (data->win_ptr == NULL)
-        return (1);
-    render_background(&data->img, WHITE);
-    render_rect(&data->img, GREEN);
-    render_rect(&data->img, RED);
-
+	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len,
+								&data->img.endian);
+    render_background(data, WHITE);
+    render_rect(data, RED);
+	//sleep(10000);
     mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-
     return (0);
 }
 
@@ -119,8 +60,7 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 	int		i;
 
 	i = img->bpp - 8;
-	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	//printf("pixel = %s\n", pixel);
+	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8)); //magie voudou demander a patou
 	// if (pixel == NULL)
 	// 	return ;
 	while (i >= 0)
@@ -144,7 +84,8 @@ void	sphere_img(t_data *data)
 	int	radius; //sera dans struct obj
 
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT); //remplit ma structure img
-	//printf("data->img.bpp = %d\n", data->img.bpp);
+	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len,
+								&data->img.endian);
 	x = 100;
 	y = 100;
 	radius = 100;
@@ -163,14 +104,14 @@ void	sphere_img(t_data *data)
 			}
 			else
 			{
-				img_pix_put(&data->img, x + j, y - i, BLACK);
-				img_pix_put(&data->img, x - j, y + i, BLACK);
-				img_pix_put(&data->img, x - j, y - i, BLACK);
-				img_pix_put(&data->img, x + j, y + i, BLACK);
+				img_pix_put(&data->img, x + j, y - i, WHITE);
+				img_pix_put(&data->img, x - j, y + i, WHITE);
+				img_pix_put(&data->img, x - j, y - i, WHITE);
+				img_pix_put(&data->img, x + j, y + i, WHITE);
 			}
 			j++;
 		}
 		i++;
 	}
-	render(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 100, 100);
 }

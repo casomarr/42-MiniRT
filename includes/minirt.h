@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 18:14:31 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:15:27 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ void	ray_generation(t_data *data);
 t_vec	vec_substract(t_vec a, t_vec b);
 t_vec vec_add(t_vec a, t_vec b);
 
+/*Checks*/
+bool	intersection(t_data *data, int j, int i);
 
 #endif

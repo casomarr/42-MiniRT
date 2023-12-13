@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/13 18:19:07 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:12:47 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,12 @@ void	ray_generation(t_data *data)
 			//center_pixel = vec_add(center_pixel, (j * data->ray.pixel_delta_w));
 			center_pixel.x = center_pixel.x + (j * data->ray.pixel_delta_w);
 			data->ray.direction = vec_substract(center_pixel, data->ray.camera_center);
-			//termine if intersection and if yes determine color.
+			//determine if intersection and if yes determine color.
+			if (intersection(data, j, i) == true)
+			{
+				//determine color
+				//put color to window or to new layer?
+			}
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/14 15:07:30 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:46:48 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int determine_color(t_data *data, int x, int y)
 	y = tmp / WIN_WIDTH;
 
 	printf("on est sur le pixel %d:%d\n", x, y);
-	
-	color = data->ray.color * data->img.tab[x][y]; //tab[x][y] correspnd a quoi?
+	data->ray.color = WHITE;
+	color = data->ray.color * data->img.tab[x][y];
 
 	return (color);
 }

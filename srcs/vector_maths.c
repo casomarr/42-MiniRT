@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/14 14:36:52 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:55:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec	vecSubstract(t_vec a, t_vec b) {
 }
 
 // Function to add two vectors
-t_vec vecAdd(t_vec a, t_vec b) {
+t_vec   vecAdd(t_vec a, t_vec b) {
     t_vec result;
     result.x = a.x + b.x;
     result.y = a.y + b.y;
@@ -31,7 +31,7 @@ t_vec vecAdd(t_vec a, t_vec b) {
 }
 
 // Function to multiply two vectors
-t_vec vecProduct(t_vec a, t_vec b) {
+t_vec   vecProduct(t_vec a, t_vec b) {
     t_vec result;
     result.x = a.x + b.x;
     result.y = a.y + b.y;

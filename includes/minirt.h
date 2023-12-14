@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 15:45:26 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:03:22 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_img
 
 typedef struct s_ray
 {
-	t_vec	camera_center;
+	t_vec	camera_center; //le changer en "origin"? plus court et plus clair
 	t_vec	pixel_00_location;
 	t_vec	direction;
 	int	norm;
@@ -101,21 +101,25 @@ int		render(t_data *data);
 void	background(t_data *data, int color);
 
 /*Ray Generation*/
-// void	ray_init(t_data *data);
-// void	ray_generation(t_data *data);
+void	ray_init(t_data *data);
+void	ray_generation(t_data *data);
 
-// /*Maths*/
-// t_vec	vecSubstract(t_vec a, t_vec b);
-// t_vec vecAdd(t_vec a, t_vec b);
+/*Maths*/
+t_vec	vecSubstract(t_vec a, t_vec b);
+t_vec	vecAdd(t_vec a, t_vec b);
+t_vec	vecProduct(t_vec a, t_vec b);
 
-// /*Intersection Maths*/
-// void	spheres_intersection(bool *intersection, t_data *data);
-// bool	objects_iteration(t_data *data, int x, int y);
+/*Intersection Maths*/
+void	sphere_intersection(bool *intersection, t_data *data);
+bool	objects_iteration(t_data *data);
 
-// /*Checks*/
-// bool	intersection(t_data *data, int j, int i);
+/*Checks*/
+bool	intersection(t_data *data, int j, int i);
 
-// /*Color*/
-// int determine_color(t_data *data, int x, int y);
+/*Color*/
+int determine_color(t_data *data, int x, int y);
+
+/*Lstnew*/
+t_obj	*lstnew(int object);
 
 #endif

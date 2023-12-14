@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 15:09:59 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 17:22:55 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	initialisation(t_data *data)
 {
-	(*data).mlx_ptr = NULL;
 	(*data).win_ptr = NULL;
 	(*data).mlx_ptr = mlx_init();
 	if (!(*data).mlx_ptr)
@@ -31,6 +30,11 @@ int	initialisation(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+void	obj_init_pour_test(t_data *data)
+{
+	data->obj = *lstnew(SPHERE);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data data;
@@ -44,8 +48,9 @@ int	main(int argc, char **argv)
 		return (0);
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	obj_init_pour_test(&data);
 	render(&data);
-	//ray_init(&data);
+	ray_init(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

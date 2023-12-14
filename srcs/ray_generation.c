@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/14 15:32:38 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:17:54 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ void	ray_generation(t_data *data)
 	int	x;
 	t_vec	center_pixel;
 	int	pixel_color;
-	t_img	*new_img;
+	t_img	new_img;
 
 	y = 0;
-	new_img = NULL;
-	new_img->mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	new_img->addr  = mlx_get_data_addr(new_img->mlx_img, &new_img->bpp, &new_img->width,
-								&new_img->endian);
+	//new_img = malloc(sizeof(t_img) * 1);
+	//new_img = NULL;
+	//memset(new_img, 0, sizeof(t_img));
+	new_img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	new_img.addr  = mlx_get_data_addr(new_img.mlx_img, &new_img.bpp, &new_img.width,
+								&new_img.endian);
 	while (y < WIN_HEIGHT)
 	{
 		x = 0;
@@ -69,12 +71,13 @@ void	ray_generation(t_data *data)
 			data->ray.direction = vecSubstract(center_pixel, data->ray.camera_center);
 			//determine if intersection and if yes determine color.
 			//if (intersection(data, j, i) == true)
-			if (objects_iteration(data, x, y) == true)
+	
+			if (objects_iteration(data) == true)
 			{
 				printf("intersection = true\n");
+				exit(1); //intersection tjrs fausse
 				pixel_color = determine_color(data, x, y);
-				newimg_pix_put(new_img, x, y, pixel_color);
-				
+				newimg_pix_put(&new_img, x, y, pixel_color);
 			}
 			else //juste pour test
 				printf("intersection = false\n");
@@ -82,5 +85,5 @@ void	ray_generation(t_data *data)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, new_img->mlx_img, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, new_img.mlx_img, 0, 0);
 }

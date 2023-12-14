@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 19:15:27 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:45:26 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,18 @@
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF
 
+# define SPHERE		0
+# define CYLINDER	1
+# define PLANE		2
+
 
 typedef struct s_vec{
     float x, y, z;
 } t_vec;
+
+typedef struct t_color{
+    float r, g, b;
+} t_color;
 
 typedef struct s_img
 {
@@ -45,6 +53,7 @@ typedef struct s_img
 	int		width; //avant line_len, change pour ray_generation
 	int		height;
 	int		endian;
+	int		**tab;
 }	t_img;
 
 typedef struct s_ray
@@ -58,12 +67,21 @@ typedef struct s_ray
 	float	pixel_delta_h;
 }	t_ray;
 
+typedef struct s_obj
+{
+	int	type; //define :sphere, cylinder, plane
+	int	nb;
+	struct s_obj	*next;
+	//etc
+}	t_obj;
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
 	t_ray	ray;
+	t_obj	obj;
 }	t_data;
 
 void	start_parsing(int fd);
@@ -76,20 +94,28 @@ int	initialisation(t_data *data);
 
 /*Layers*/
 void	sphere(t_data *data, int color);
-void	img_pix_put(t_img *img, int x, int y, int color);
+void	img_pix_put(t_data *data, int x, int y, int color);
+void	newimg_pix_put(t_img *img, int x, int y, int color);
 int 	rectangle(t_data *data, int color);
 int		render(t_data *data);
 void	background(t_data *data, int color);
 
 /*Ray Generation*/
-void	ray_init(t_data *data);
-void	ray_generation(t_data *data);
+// void	ray_init(t_data *data);
+// void	ray_generation(t_data *data);
 
-/*Maths*/
-t_vec	vec_substract(t_vec a, t_vec b);
-t_vec vec_add(t_vec a, t_vec b);
+// /*Maths*/
+// t_vec	vecSubstract(t_vec a, t_vec b);
+// t_vec vecAdd(t_vec a, t_vec b);
 
-/*Checks*/
-bool	intersection(t_data *data, int j, int i);
+// /*Intersection Maths*/
+// void	spheres_intersection(bool *intersection, t_data *data);
+// bool	objects_iteration(t_data *data, int x, int y);
+
+// /*Checks*/
+// bool	intersection(t_data *data, int j, int i);
+
+// /*Color*/
+// int determine_color(t_data *data, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/13 18:50:48 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/14 17:01:48 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ bool	check_light(char **value, t_data *data);
 bool	check_plan(char **value, t_data *data);
 bool	check_sphere(char **value, t_data *data);
 bool	check_cylinder(char **value, t_data *data);
+void	ft_free_split(char **value);
 
 #endif

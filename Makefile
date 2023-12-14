@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/13 16:33:26 by amugnier         ###   ########.fr        #
+#    Updated: 2023/12/14 14:37:10 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@
 NAME = minirt
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
 # LX11 = /usr/lib/x86_64-linux-gnu/libX11.a

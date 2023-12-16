@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 17:01:48 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/16 19:41:56 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,71 @@
 # include <math.h>
 
 
+typedef struct s_vec
+{
+	int x;
+	int y;
+	int z;
+}	t_vec;
+
+typedef struct s_light
+{
+	t_vec position;
+	float lightness;
+} t_light;
+
+typedef struct s_ambiant
+{
+	float lightness;
+	//RGB ??? int -> t_vec ou t_rgb ?
+} t_ambiant;
+
+typedef struct s_sphere
+{
+	t_vec position;
+	float diameter;
+	//RGB ??? int -> t_vec ou t_rgb ?
+} t_sphere;
+
+typedef struct s_cylinder
+{
+	t_vec position;
+	t_vec direction;
+	float diameter;
+	float height;
+	//RGB ??? int -> t_vec ou t_rgb ?
+} t_cylinder;
+
+typedef struct s_plan
+{
+	t_vec position;
+	t_vec direction;
+	//RGB ??? int -> t_vec ou t_rgb ?
+} t_plan;
+
 typedef struct s_camera
 {
+	t_vec	position;
+	t_vec	direction;
 	int		fov;
-	float	coord_x;
-	float	coord_y;
-	float	coord_z;
-	float	vector_x;
-	float	vector_y;
-	float	vector_z;
 } t_camera;
+
+typedef struct s_scene
+{
+	t_camera	camera;
+	t_ambiant	ambiant;
+	t_light		light;
+	t_sphere	*sphere;
+	t_cylinder	*cylinder;
+	t_plan		*plan;
+} t_scene;
+
 
 typedef struct s_data
 {
-	t_camera	camera;
+	void	*mlx_ptr;
+	void	*mlx_win;
+	t_scene	scene;
 } t_data;
 
 typedef struct s_check_objs

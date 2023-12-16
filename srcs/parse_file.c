@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 17:05:21 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:44:00 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 		return (false);
 	}
 	if (ft_strlen(value[0]) == 1 || ft_strlen(value[0]) == 2)
-		check_chars(value, data); //NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE IF ERROR
+	{
+		if (check_chars(value, data) == false)
+			return (false); //NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE IF ERROR
+	}
 	else
 	{
 		ft_dprintf(2, "Error\nObject not exists\n");
@@ -78,7 +81,7 @@ int	parse_file(int fd, t_data *data)
 	return (false);
 }
 
-void	check_chars(char **value, t_data *data) //change to bool return type
+bool	check_chars(char **value, t_data *data) //change to bool return type
 {
 	static struct s_check_objs comp[6] = {{"A",check_ambient},
 		{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
@@ -89,11 +92,9 @@ void	check_chars(char **value, t_data *data) //change to bool return type
 	while (i < 6)
 	{
 		if (ft_strncmp(value[0], comp[i].ref, ft_strlen(comp[i].ref)) == 0)
-		{
-			comp[i].check(value, data); //add if false
-			return ; 
-		}
+			return(comp[i].check(value, data)); //add if false
 		i++;
 	}
 	ft_dprintf(2, "Error\nObject not exists\n"); //move this error
+	return (false);
 }

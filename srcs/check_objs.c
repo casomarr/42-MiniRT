@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/16 19:50:33 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:32:31 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ bool	check_sphere(char **value, t_data *data)
 	// int i;
 
 	// i = 0;
-	(void)data;
+	data->scene.nb_sphere++;
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters for sphere\n");
@@ -309,7 +309,7 @@ bool	check_plan(char **value, t_data *data)
 	// int i;
 
 	// i = 0;
-	(void)data;
+	data->scene.nb_plan++;
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters for plan\n");
@@ -330,7 +330,7 @@ bool	check_cylinder(char **value, t_data *data)
 	// int i;
 
 	// i = 0;
-	(void)data;
+	data->scene.nb_cylinder++;
 	if (count_params(value) != 6)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters for cylinder\n");

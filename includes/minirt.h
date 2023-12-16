@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/16 19:41:56 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/16 20:41:27 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-
+# define MAX_OBJ 256
 
 typedef struct s_vec
 {
@@ -81,6 +81,9 @@ typedef struct s_scene
 	t_sphere	*sphere;
 	t_cylinder	*cylinder;
 	t_plan		*plan;
+	int			nb_sphere;
+	int			nb_cylinder;
+	int			nb_plan;
 } t_scene;
 
 
@@ -103,7 +106,7 @@ bool	open_file(char *path, t_data *data);
 int		parsing(char *file_name, t_data *data);
 int		parse_file(int fd, t_data *data);
 bool	check_nb_char_in_line(char *line, t_data *data);
-void	check_chars(char **value, t_data *data);
+bool	check_chars(char **value, t_data *data);
 
 bool	check_camera(char **value, t_data *data);
 bool	check_ambient(char **value, t_data *data);

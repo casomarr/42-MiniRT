@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/18 12:26:52 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:03:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,14 @@ int	initialisation(t_data *data)
 		printf("Error\nmlx_new_window() failed\n");
 		return (EXIT_FAILURE);
 	}
+	data->img.mlx_img = NULL;
 	return (EXIT_SUCCESS);
-}
-
-void	obj_init_pour_test(t_data *data)
-{
-	data->obj = *lstnew(SPHERE);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data	data;
+	int		color;
 	
 	if (argc != 2)
 	{
@@ -48,14 +45,14 @@ int	main(int argc, char **argv)
 		return (0);
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	obj_init_pour_test(&data);
-	//render(&data);
 	ray_init(&data);
-	ray_generation(&data); //gives ray direction
-	if (intersection(&data) == true) //ray_camera_object
+	ray_generation(&data);
+	color = 0;
+	if (intersection(&data) == true)
 	{
-		determine_pixel_color(&data); //dedans : calculate_norm(&data); //ray_object_light
-		add_pixel_to_img(&data); //first time : create image
+		//determine_pixel(); //necessaire?
+		color = determine_pixel_color(&data);
+		add_pixel_to_img(&data, color); //first time : create image
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0); //if not intersection : pixel stays black (by default)
 	mlx_loop(data.mlx_ptr);

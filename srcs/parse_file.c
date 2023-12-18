@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/16 20:44:00 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:23:03 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	parse_file(int fd, t_data *data)
 {
 	char	*line;
 
+	init_data(data);
 	line = get_next_line(fd);
 	if (line != NULL)
 	{
@@ -87,8 +88,12 @@ bool	check_chars(char **value, t_data *data) //change to bool return type
 		{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
 		{"pl", check_plan}, {"cy", check_cylinder}};
 	int i;
-
 	i = 0;
+	if (data->scene.nb_objs > MAX_OBJS)
+	{
+		ft_dprintf(2, "Error\nToo many objects\n");
+		return (false);
+	}
 	while (i < 6)
 	{
 		if (ft_strncmp(value[0], comp[i].ref, ft_strlen(comp[i].ref)) == 0)
@@ -97,4 +102,13 @@ bool	check_chars(char **value, t_data *data) //change to bool return type
 	}
 	ft_dprintf(2, "Error\nObject not exists\n"); //move this error
 	return (false);
+}
+
+void	init_data(t_data *data)
+{
+	data->scene.nb_camera = 0;
+	data->scene.nb_ambiant = 0;
+	data->scene.nb_light = 0;
+	data->scene.nb_objs = 0;
+	data->scene.objs = NULL;
 }

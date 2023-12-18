@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/16 20:41:27 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/18 19:09:05 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,22 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-# define MAX_OBJ 256
+# define MAX_OBJS 256
 
 typedef struct s_vec
 {
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 }	t_vec;
+
+typedef unsigned char t_uint8;
+
+typedef union u_rgb
+{
+	int		full;
+	t_uint8	argb[4];
+}	t_rgb;
 
 typedef struct s_light
 {
@@ -43,29 +51,6 @@ typedef struct s_ambiant
 	//RGB ??? int -> t_vec ou t_rgb ?
 } t_ambiant;
 
-typedef struct s_sphere
-{
-	t_vec position;
-	float diameter;
-	//RGB ??? int -> t_vec ou t_rgb ?
-} t_sphere;
-
-typedef struct s_cylinder
-{
-	t_vec position;
-	t_vec direction;
-	float diameter;
-	float height;
-	//RGB ??? int -> t_vec ou t_rgb ?
-} t_cylinder;
-
-typedef struct s_plan
-{
-	t_vec position;
-	t_vec direction;
-	//RGB ??? int -> t_vec ou t_rgb ?
-} t_plan;
-
 typedef struct s_camera
 {
 	t_vec	position;
@@ -73,17 +58,29 @@ typedef struct s_camera
 	int		fov;
 } t_camera;
 
+
+typedef struct s_objs
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder
+	t_vec			position; //all 
+	t_vec			direction; //plan and cylinder 
+	t_rgb			color;
+	float			diameter; //sphere and cylinder
+	float			height; //cylinder only
+	struct s_objs	*next;
+} t_objs;
+
+
 typedef struct s_scene
 {
 	t_camera	camera;
 	t_ambiant	ambiant;
 	t_light		light;
-	t_sphere	*sphere;
-	t_cylinder	*cylinder;
-	t_plan		*plan;
-	int			nb_sphere;
-	int			nb_cylinder;
-	int			nb_plan;
+	t_objs		*objs;
+	int			nb_camera;
+	int			nb_ambiant;
+	int			nb_light;
+	int			nb_objs;
 } t_scene;
 
 
@@ -115,5 +112,7 @@ bool	check_plan(char **value, t_data *data);
 bool	check_sphere(char **value, t_data *data);
 bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
+void	init_data(t_data *data);
+
 
 #endif

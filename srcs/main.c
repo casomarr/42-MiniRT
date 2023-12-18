@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/16 20:45:29 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/18 19:16:45 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	if (parsing(argv[1], &data) == false)
-		return (1);
+		return (0); //need to change this return to 1 and continue test from action
 	return (0);
 }

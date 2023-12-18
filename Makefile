@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/14 17:24:34 by casomarr         ###   ########.fr        #
+#    Updated: 2023/12/18 12:25:10 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS = $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/checks.c \
 	   $(PATH_SRCS)/color.c \
 	   $(PATH_SRCS)/lstnew.c \
+	    $(PATH_SRCS)/render.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

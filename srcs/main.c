@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 17:22:55 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:26:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,15 @@ int	main(int argc, char **argv)
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	obj_init_pour_test(&data);
-	render(&data);
+	//render(&data);
 	ray_init(&data);
+	ray_generation(&data); //gives ray direction
+	if (intersection(&data) == true) //ray_camera_object
+	{
+		determine_pixel_color(&data); //dedans : calculate_norm(&data); //ray_object_light
+		add_pixel_to_img(&data); //first time : create image
+	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0); //if not intersection : pixel stays black (by default)
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

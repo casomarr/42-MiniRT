@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/14 18:03:22 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:28:59 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_img
 	int		width; //avant line_len, change pour ray_generation
 	int		height;
 	int		endian;
-	int		**tab;
+	//int		**tab;
 }	t_img;
 
 typedef struct s_ray
@@ -61,8 +61,8 @@ typedef struct s_ray
 	t_vec	camera_center; //le changer en "origin"? plus court et plus clair
 	t_vec	pixel_00_location;
 	t_vec	direction;
-	int	norm;
-	int	color;
+	int		norm;
+	int		color;
 	float	pixel_delta_w;
 	float	pixel_delta_h;
 }	t_ray;
@@ -82,6 +82,10 @@ typedef struct s_data
 	t_img	img;
 	t_ray	ray;
 	t_obj	obj;
+	int		current_pixel_color;
+	int		x;
+	int		y;
+	int		z_index;
 }	t_data;
 
 void	start_parsing(int fd);
@@ -93,12 +97,12 @@ int		parsing(char *file_name);
 int	initialisation(t_data *data);
 
 /*Layers*/
-void	sphere(t_data *data, int color);
+/* void	sphere(t_data *data, int color);
 void	img_pix_put(t_data *data, int x, int y, int color);
 void	newimg_pix_put(t_img *img, int x, int y, int color);
 int 	rectangle(t_data *data, int color);
 int		render(t_data *data);
-void	background(t_data *data, int color);
+void	background(t_data *data, int color); */
 
 /*Ray Generation*/
 void	ray_init(t_data *data);
@@ -111,7 +115,8 @@ t_vec	vecProduct(t_vec a, t_vec b);
 
 /*Intersection Maths*/
 void	sphere_intersection(bool *intersection, t_data *data);
-bool	objects_iteration(t_data *data);
+// bool	objects_iteration(t_data *data);
+bool	intersection(t_data *data);
 
 /*Checks*/
 bool	intersection(t_data *data, int j, int i);
@@ -121,5 +126,9 @@ int determine_color(t_data *data, int x, int y);
 
 /*Lstnew*/
 t_obj	*lstnew(int object);
+
+/*Render*/
+void	img_pix_put(t_data *data, int x, int y, int color);
+void	add_pixel_to_img(t_data *data, int color);
 
 #endif

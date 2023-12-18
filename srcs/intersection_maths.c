@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/14 18:20:33 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:07:02 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,20 +135,13 @@ void	sphere_intersection(bool *intersection, t_data *data)
     int x = (int)(ray_location.x * WIN_WIDTH);
     int y = (int)(ray_location.y * WIN_HEIGHT);
 
-    if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
-    {
-		//n'arrive jamais ICI
-        printf("Intersection at pixel %d:%d\n", x, y);
-
-        if (data->img.tab[y][x] != WHITE) // WHITE = BACKGROUND COLOR
-		{
-			printf("INTERSECTION = TRUE\n");
-            *intersection = true;
-		}
-    }
+	//calculer ici si le rayon hit the sphere
+	//if yes, data->z_index (=closest object) is updated. Initialize it to NULL? (soit a 0,0,0).
+	// Faut tout reinitialiser a chaque fois qu on rebouge la camera
+	//mettre ans une variable data->current_pixel_color la couleur de l'objet intersecte
 }
 
-bool	objects_iteration(t_data *data)
+bool	intersection(t_data *data)
 {
 /*fonction avec une while qui parcours a chaque fois qu'elle est appellee toute
  la liste d'objets presents dans la scene pour modifier ou pas la valeur de ret 

@@ -6,11 +6,14 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/14 18:17:54 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:30:08 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+// int	aspect_ratio = 16.0 / 9.0; //ajoute pour ray_generation
+// data->img.height = data->img.width / aspect_ratio; //ajoute pour ray_generation
 
 void	ray_init(t_data *data) //ou direct envoyer que le ray pour que lignes plus courtes pour norme
 {
@@ -41,24 +44,41 @@ void	ray_init(t_data *data) //ou direct envoyer que le ray pour que lignes plus 
 	t_vec	vector_pixel_delta = {0.5f * (data->ray.pixel_delta_w + data->ray.pixel_delta_h), \
 	0.5f * (data->ray.pixel_delta_w + data->ray.pixel_delta_h), 0.0f}; //c'est bien pour l'offset qu on le multiplie par 0.5?
 	data->ray.pixel_00_location = vecAdd(viewport_pixel_00, vector_pixel_delta);
-	ray_generation (data); //ou direct envoyer que le ray pour que lignes plus courtes pour norme
+	// ray_generation (data); //ou direct envoyer que le ray pour que lignes plus courtes pour norme
 }
 
 void	ray_generation(t_data *data)
+{
+	t_vec	center_pixel;
+
+	while (data->y < WIN_HEIGHT)
+	{
+		data->x = 0;
+		while (data->x < WIN_WIDTH)
+		{
+			//center_pixel = vecAdd(data->ray.pixel_00_location, (i * data->ray.pixel_delta_h));
+			center_pixel.y = data->ray.pixel_00_location.y + (data->y * data->ray.pixel_delta_h);
+			//center_pixel = vecAdd(center_pixel, (j * data->ray.pixel_delta_w));
+			center_pixel.x = center_pixel.x + (data->x * data->ray.pixel_delta_w);
+			data->ray.direction = vecSubstract(center_pixel, data->ray.camera_center);
+			data->x++;
+		}
+		data->y++;
+	}
+}
+
+/* void	ray_generation(t_data *data)
 {
 	int	y;
 	int	x;
 	t_vec	center_pixel;
 	int	pixel_color;
-	t_img	new_img;
+	t_img	img;
 
 	y = 0;
-	//new_img = malloc(sizeof(t_img) * 1);
-	//new_img = NULL;
-	//memset(new_img, 0, sizeof(t_img));
-	new_img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	new_img.addr  = mlx_get_data_addr(new_img.mlx_img, &new_img.bpp, &new_img.width,
-								&new_img.endian);
+	img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	img.addr  = mlx_get_data_addr(img.mlx_img, &img.bpp, &img.width,
+								&img.endian);
 	while (y < WIN_HEIGHT)
 	{
 		x = 0;
@@ -77,7 +97,7 @@ void	ray_generation(t_data *data)
 				printf("intersection = true\n");
 				exit(1); //intersection tjrs fausse
 				pixel_color = determine_color(data, x, y);
-				newimg_pix_put(&new_img, x, y, pixel_color);
+				newimg_pix_put(&img, x, y, pixel_color);
 			}
 			else //juste pour test
 				printf("intersection = false\n");
@@ -86,4 +106,4 @@ void	ray_generation(t_data *data)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, new_img.mlx_img, 0, 0);
-}
+} */

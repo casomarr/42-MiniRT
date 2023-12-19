@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/18 19:09:05 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:42:35 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,25 @@ peut faire une image petite pour augmenter les fps.*/
 # define SPHERE		0
 # define CYLINDER	1
 # define PLANE		2
+# define CAMERA		3
+# define AMBIENT	4
+# define LIGHT		5
 
+typedef struct s_vec
+{
+	float x;
+	float y;
+	float z;
+}	t_vec;
 
-typedef struct s_vec{
-    float x, y, z;
-} t_vec;
+typedef unsigned int t_uint32;
+typedef unsigned char t_uint8;
 
-typedef struct t_color{
-    float r, g, b;
-} t_color;
+typedef union	u_rgb
+{
+	t_uint32	full;
+	t_uint8		argb[4];
+}	t_rgb;
 
 typedef struct s_img
 {
@@ -56,57 +66,20 @@ typedef struct s_img
 	int		width; //avant line_len, change pour ray_generation
 	int		height;
 	int		endian;
-	//int		**tab;
 }	t_img;
 
 typedef struct s_ray
 {
-	t_vec	origin; //le changer en "origin"? plus court et plus clair
+	t_vec	origin;
 	t_vec	current_pixel;
 	t_vec	location;
-	t_vec	object_direction;
-	t_vec	light_direction;
+	t_vec	object_direction; //direction entrant
+	t_vec	light_direction; //direction sortante
 	int		norm;
 	int		color;
 	float	pixel_delta_w;
 	float	pixel_delta_h;
 }	t_ray;
-
-typedef struct s_obj
-{
-	int	type; //define :sphere, cylinder, plane
-	int	nb;
-	struct s_obj	*next;
-	//etc
-}	t_obj;
-
-typedef struct s_data
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	img;
-	t_ray	ray;
-	t_obj	obj;
-	int		current_pixel_color;
-	int		x;
-	int		y;
-	int		z_index;
-}	t_data;
-
-typedef struct s_vec
-{
-	float x;
-	float y;
-	float z;
-}	t_vec;
-
-typedef unsigned char t_uint8;
-
-typedef union u_rgb
-{
-	int		full;
-	t_uint8	argb[4];
-}	t_rgb;
 
 typedef struct s_light
 {
@@ -127,10 +100,9 @@ typedef struct s_camera
 	int		fov;
 } t_camera;
 
-
 typedef struct s_objs
 {
-	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = ca
 	t_vec			position; //all 
 	t_vec			direction; //plan and cylinder 
 	t_rgb			color;
@@ -142,9 +114,9 @@ typedef struct s_objs
 
 typedef struct s_scene
 {
-	t_camera	camera;
-	t_ambiant	ambiant;
-	t_light		light;
+	// t_camera	camera;
+	// t_ambiant	ambiant;
+	// t_light		light;
 	t_objs		*objs;
 	int			nb_camera;
 	int			nb_ambiant;
@@ -152,13 +124,18 @@ typedef struct s_scene
 	int			nb_objs;
 } t_scene;
 
-
 typedef struct s_data
 {
 	void	*mlx_ptr;
-	void	*mlx_win;
-	t_scene	scene;
-} t_data;
+	void	*win_ptr;
+	t_img	img;
+	t_ray	ray;
+	t_scene	scene; //avant : t_obj obj;
+	int		x;
+	int		y;
+	int		z_index;
+	int		front_object_color;
+}	t_data;
 
 typedef struct s_check_objs
 {
@@ -190,11 +167,16 @@ int		initialisation(t_data *data);
 void	ray_init(t_data *data);
 void	ray_generation(t_data *data);
 void	get_norm(t_data *data);
+void	normalize_direction_vector(t_data *data);
+void	generate_current_ray(t_data *data);
 
 /*Vector Maths*/
+t_vec	create_vec(int x, int y, int z);
 t_vec	vecSubstract(t_vec a, t_vec b);
 t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);
+t_vec	vecSquared(t_vec a);
+t_vec	vecSqrt(t_vec a);
 t_vec	vecDotProduct(t_vec a, t_vec b);
 
 /*Intersections*/
@@ -202,12 +184,10 @@ void	sphere_intersection(bool *intersection, t_data *data);
 bool	intersection(t_data *data);
 
 /*Color*/
+int	get_color(unsigned char color, float light_intensity);
 bool	direct_light(t_data *data);
 int		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
-
-/*Lstnew*/
-t_obj	*lstnew(int object);
 
 /*Render*/
 void	img_pix_put(t_data *data, int x, int y, int color);
@@ -217,5 +197,8 @@ void	add_pixel_to_img(t_data *data, int color);
 int		distance_light_object(t_data *data);
 int		brdf(t_data *data);
 int		shadows(t_data *data);
+
+/*Utils*/
+t_objs	*get_node(t_objs *objs, int type);
 
 #endif

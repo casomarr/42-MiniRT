@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/18 19:15:57 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:06:51 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,12 +272,17 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb)
 	return (true);
 }
 
+
+
 bool	check_camera(char **value, t_data *data)
 {
 	// int		i;
 
 	// i = 0;
+	t_objs	*camera; //TODO check to free if error
+	
 	data->scene.nb_camera++;
+	//TODO talk about incrementation of nb_objs
 	if (data->scene.nb_camera > 1)
 	{
 		ft_dprintf(2, "Error\nOnly one camera is allowed\n");
@@ -295,46 +300,52 @@ bool	check_camera(char **value, t_data *data)
 	if (check_isdigit_int(value[3]) == false)
 		return (false);
 	printf("Camera OK\n\n");
-	if (get_tvec_from_str(value[1], &data->scene.camera.position) == false)
+	camera = lst_new_objs();
+	if (!camera)
 		return (false);
-	if (get_tvec_from_str(value[2], &data->scene.camera.direction) == false)
+	camera->type = 3;
+	if (get_tvec_from_str(value[1], &camera->position) == false)
 		return (false);
+	if (get_tvec_from_str(value[2], &camera->direction) == false)
+		return (false);
+	camera->fov = ft_atoi(value[3]);
 	return (true);
 }
 
-bool	check_ambient(char **value, t_data *data)
+bool	check_ambiant(char **value, t_data *data)
 {
-	// int i;
+	t_objs	*ambiant; //TODO check to free if error
 
-	// i = 0;
 	data->scene.nb_ambiant++;
 	if (data->scene.nb_ambiant > 1)
 	{
-		ft_dprintf(2, "Error\nOnly one ambient is allowed\n");
+		ft_dprintf(2, "Error\nOnly one ambiant is allowed\n");
 		return (false);
 	}
 	if (count_params(value) != 3)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for ambient\n");
+		ft_dprintf(2, "Error\nWrong number of parameters for ambiant\n");
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
 		return (false);
 	if (three_params_int(value[2], data) == false)
 		return (false);
-	printf("Ambient OK\n\n");
-	
+	printf("ambiant OK\n\n");
+	ambiant = lst_new_objs();
+	if (!ambiant)
+		return (false);
+	ambiant->type = 4;
+	ambiant->lightness = ft_atof(value[1]);
+	if (get_trgb_from_str(value[2], &ambiant->color) == false)
+		return (false);
 	return (true);
 }
 
-
-
-
 bool	check_light(char **value, t_data *data)
 {
-	// int i;
-
-	// i = 0;
+	t_objs	*light; //TODO check to free if error
+	
 	data->scene.nb_light++;
 	if (data->scene.nb_light > 1)
 	{
@@ -351,8 +362,13 @@ bool	check_light(char **value, t_data *data)
 	if (check_isdigit_float(value[2]) == false)
 		return (false);
 	printf("Light OK\n\n");
-	if (get_tvec_from_str(value[1], &data->scene.light.position) == false)
+	light = lst_new_objs();
+	if (!light)
 		return (false);
+	light->type = 5;
+	if (get_tvec_from_str(value[1], &light->position) == false)
+		return (false);
+	light->lightness = ft_atof(value[2]);
 	return (true);
 }
 
@@ -376,6 +392,8 @@ t_objs	*lst_new_objs(void)
 	new->color.full = 0;
 	new->diameter = 0;
 	new->height = 0;
+	new->fov = 0;
+	new->lightness = 0;
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/18 15:23:03 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:53:28 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	parse_file(int fd, t_data *data)
 
 bool	check_chars(char **value, t_data *data) //change to bool return type
 {
-	static struct s_check_objs comp[6] = {{"A",check_ambient},
+	static struct s_check_objs comp[6] = {{"A",check_ambiant},
 		{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
 		{"pl", check_plan}, {"cy", check_cylinder}};
 	int i;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/14 14:37:10 by amugnier         ###   ########.fr        #
+#    Updated: 2023/12/18 14:55:44 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,9 +49,16 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
 SRCS = $(PATH_SRCS)/main.c \
-	   $(PATH_SRCS)/open_file.c \
-	   $(PATH_SRCS)/parse_file.c \
-	   $(PATH_SRCS)/check_objs.c
+	     $(PATH_SRCS)/parse_file.c \
+	     $(PATH_SRCS)/check_objs.c
+		   $(PATH_SRCS)/open_file.c \
+		   $(PATH_SRCS)/rays.c \
+		   $(PATH_SRCS)/vector_maths.c \
+		   $(PATH_SRCS)/intersections.c \
+		   $(PATH_SRCS)/color.c \
+		   $(PATH_SRCS)/lstnew.c \
+		   $(PATH_SRCS)/render.c \
+		   $(PATH_SRCS)/light_intensity.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

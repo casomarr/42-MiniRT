@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 14:06:51 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:21:43 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,8 +309,38 @@ bool	check_camera(char **value, t_data *data)
 	if (get_tvec_from_str(value[2], &camera->direction) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
+	if (check_data_camera(camera) == false)
+		return (false);
 	return (true);
 }
+
+bool	check_data_camera(t_objs *objs)
+{
+	//Waiting to check behavior if too far from 0 to x y z
+	if (objs->fov < 0 || objs->fov > 180)
+	{
+		ft_dprintf(2, "Error\nFov must be between 0 and 180\n");
+		return (false);
+	}
+	//Waiting to check x y z between -1 and 1 in one time
+	return (true);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 bool	check_ambiant(char **value, t_data *data)
 {
@@ -339,6 +369,20 @@ bool	check_ambiant(char **value, t_data *data)
 	ambiant->lightness = ft_atof(value[1]);
 	if (get_trgb_from_str(value[2], &ambiant->color) == false)
 		return (false);
+	if (check_lightness(ambiant) == false)
+		return (false);
+	if (check_rgb(&ambiant->color) == false)
+		return (false);
+	return (true);
+}
+
+bool check_lightness(t_objs *objs)
+{
+	if (objs->lightness < 0 || objs->lightness > 1)
+	{
+		ft_dprintf(2, "Error\nLightness must be between 0 and 1\n");
+		return (false);
+	}
 	return (true);
 }
 
@@ -369,11 +413,10 @@ bool	check_light(char **value, t_data *data)
 	if (get_tvec_from_str(value[1], &light->position) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
+	if (check_lightness(light) == false)
+		return (false);
 	return (true);
 }
-
-//Transform 255,255,255 to 0x00FFFFFF
-
 
 t_objs	*lst_new_objs(void)
 {

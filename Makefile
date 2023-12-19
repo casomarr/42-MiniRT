@@ -19,7 +19,7 @@
 NAME = minirt
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
 # LX11 = /usr/lib/x86_64-linux-gnu/libX11.a
@@ -49,14 +49,16 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
 SRCS = $(PATH_SRCS)/main.c \
-		$(PATH_SRCS)/open_file.c \
-		$(PATH_SRCS)/rays.c \
-		$(PATH_SRCS)/vector_maths.c \
-		$(PATH_SRCS)/intersections.c \
-		$(PATH_SRCS)/color.c \
-		$(PATH_SRCS)/lstnew.c \
-		$(PATH_SRCS)/render.c \
-		$(PATH_SRCS)/light_intensity.c \
+	     $(PATH_SRCS)/parse_file.c \
+	     $(PATH_SRCS)/check_objs.c
+		   $(PATH_SRCS)/open_file.c \
+		   $(PATH_SRCS)/rays.c \
+		   $(PATH_SRCS)/vector_maths.c \
+		   $(PATH_SRCS)/intersections.c \
+		   $(PATH_SRCS)/color.c \
+		   $(PATH_SRCS)/lstnew.c \
+		   $(PATH_SRCS)/render.c \
+		   $(PATH_SRCS)/light_intensity.c \
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

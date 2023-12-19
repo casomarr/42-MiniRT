@@ -41,8 +41,8 @@ int	main(int argc, char **argv)
 		printf("Error\nUsage ./miniRT <file.rt>\n");
 		return (0);
 	}
-	if (parsing(argv[1]) == false)
-		return (0);
+	if (parsing(argv[1], &data) == false)
+		return (0); //need to change this return to 1 and continue test from action
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	ray_init(&data);

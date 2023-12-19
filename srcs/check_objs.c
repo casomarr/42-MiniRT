@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 17:21:43 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:20:15 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,8 +370,6 @@ bool	check_ambiant(char **value, t_data *data)
 	if (get_trgb_from_str(value[2], &ambiant->color) == false)
 		return (false);
 	if (check_lightness(ambiant) == false)
-		return (false);
-	if (check_rgb(&ambiant->color) == false)
 		return (false);
 	return (true);
 }

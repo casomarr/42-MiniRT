@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 17:18:18 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:20:18 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
 bool	check_data_camera(t_objs *objs);
-bool	check_rgb(t_rgb *rgb);
 bool	check_lightness(t_objs *objs);
 
 

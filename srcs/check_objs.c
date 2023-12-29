@@ -113,7 +113,6 @@ bool	three_params_int(char *value, t_data *data)
 			ft_free_split(params);
 			return (false);
 		}
-		//TODO check if value is between 0 and 255
 		if (ft_atoi(params[i]) < 0 || ft_atoi(params[i]) > 255)
 		{
 			ft_dprintf(2, "Error\nWrong colors parameter\n");
@@ -122,7 +121,7 @@ bool	three_params_int(char *value, t_data *data)
 		}
 		i++;
 	}
-	ft_free_split(params);//TODO Remove this because i can't get the value in the function
+	ft_free_split(params);
 	return (true);
 }
 
@@ -281,7 +280,7 @@ bool	check_camera(char **value, t_data *data)
 	// i = 0;
 	t_objs	*camera; //TODO check to free if error
 	t_objs	*tmp;
-	
+
 	data->scene.nb_camera++;
 	//TODO talk about incrementation of nb_objs
 	if (data->scene.nb_camera > 1)
@@ -310,6 +309,8 @@ bool	check_camera(char **value, t_data *data)
 	if (get_tvec_from_str(value[2], &camera->direction) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
+	if (check_data_camera(camera) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -321,6 +322,46 @@ bool	check_camera(char **value, t_data *data)
 		data->scene.objs = camera;
 	return (true);
 }
+
+bool	check_data_camera(t_objs *objs)
+{
+
+	if ((objs->position.x < -10000 || objs->position.x > 10000)
+		|| (objs->position.y < -10000 || objs->position.y > 10000)
+		|| (objs->position.z < -10000 || objs->position.z > 10000))
+	{
+		ft_dprintf(2, "Error\nPosition must be between -10000 and 10000\n");
+		return (false);
+	}
+
+	if (objs->fov < 0 || objs->fov > 180)
+	{
+		ft_dprintf(2, "Error\nFov must be between 0 and 180\n");
+		return (false);
+	}
+	if ((objs->direction.x < -1 || objs->direction.x > 1)
+		|| (objs->direction.y < -1 || objs->direction.y > 1)
+		|| (objs->direction.z < -1 || objs->direction.z > 1))
+	{
+		ft_dprintf(2, "Error\nDirection must be between -1 and 1\n");
+		return (false);
+	}
+	return (true);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 bool	check_ambiant(char **value, t_data *data)
 {
@@ -350,6 +391,8 @@ bool	check_ambiant(char **value, t_data *data)
 	ambiant->lightness = ft_atof(value[1]);
 	if (get_trgb_from_str(value[2], &ambiant->color) == false)
 		return (false);
+	if (check_lightness(ambiant) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -359,6 +402,16 @@ bool	check_ambiant(char **value, t_data *data)
 	}
 	else
 		data->scene.objs = ambiant;
+	return (true);
+}
+
+bool check_lightness(t_objs *objs)
+{
+	if (objs->lightness < 0 || objs->lightness > 1)
+	{
+		ft_dprintf(2, "Error\nLightness must be between 0 and 1\n");
+		return (false);
+	}
 	return (true);
 }
 
@@ -390,6 +443,8 @@ bool	check_light(char **value, t_data *data)
 	if (get_tvec_from_str(value[1], &light->position) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
+	if (check_lightness(light) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -401,9 +456,6 @@ bool	check_light(char **value, t_data *data)
 		data->scene.objs = light;
 	return (true);
 }
-
-//Transform 255,255,255 to 0x00FFFFFF
-
 
 t_objs	*lst_new_objs(void)
 {
@@ -432,8 +484,8 @@ t_objs	*lst_new_objs(void)
 bool	check_sphere(char **value, t_data *data)
 {
 	t_objs *sphere;//TODO check to free if error
-	t_objs	*tmp;
-	
+	t_objs *tmp;
+
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
@@ -448,7 +500,7 @@ bool	check_sphere(char **value, t_data *data)
 		return (false);
 	printf("Sphere OK\n\n");
 
-	
+
 	sphere = lst_new_objs();
 	if (!sphere)
 		return (false);
@@ -478,7 +530,7 @@ bool	check_sphere(char **value, t_data *data)
 bool	check_plan(char **value, t_data *data)
 {
 	t_objs *plan; //TODO check to free if error
-	t_objs	*tmp;
+	t_objs *tmp;
 
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
@@ -524,8 +576,8 @@ bool	check_plan(char **value, t_data *data)
 bool	check_cylinder(char **value, t_data *data)
 {
 	t_objs *cylinder; //TODO check to free if error
-	t_objs	*tmp;
-	
+	t_objs *tmp;
+
 	data->scene.nb_objs++;
 	if (count_params(value) != 6)
 	{

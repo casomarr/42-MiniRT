@@ -279,7 +279,8 @@ bool	check_camera(char **value, t_data *data)
 
 	// i = 0;
 	t_objs	*camera; //TODO check to free if error
-	
+	t_objs	*tmp;
+
 	data->scene.nb_camera++;
 	//TODO talk about incrementation of nb_objs
 	if (data->scene.nb_camera > 1)
@@ -310,12 +311,15 @@ bool	check_camera(char **value, t_data *data)
 	camera->fov = ft_atoi(value[3]);
 	if (check_data_camera(camera) == false)
 		return (false);
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = camera;
 	}
-	data->scene.objs = camera;
+	else
+		data->scene.objs = camera;
 	return (true);
 }
 
@@ -362,6 +366,7 @@ bool	check_data_camera(t_objs *objs)
 bool	check_ambiant(char **value, t_data *data)
 {
 	t_objs	*ambiant; //TODO check to free if error
+	t_objs	*tmp;
 
 	data->scene.nb_ambiant++;
 	if (data->scene.nb_ambiant > 1)
@@ -388,12 +393,15 @@ bool	check_ambiant(char **value, t_data *data)
 		return (false);
 	if (check_lightness(ambiant) == false)
 		return (false);
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = ambiant;
 	}
-	data->scene.objs = ambiant;
+	else
+		data->scene.objs = ambiant;
 	return (true);
 }
 
@@ -410,7 +418,8 @@ bool check_lightness(t_objs *objs)
 bool	check_light(char **value, t_data *data)
 {
 	t_objs	*light; //TODO check to free if error
-	
+	t_objs	*tmp;
+
 	data->scene.nb_light++;
 	if (data->scene.nb_light > 1)
 	{
@@ -436,12 +445,15 @@ bool	check_light(char **value, t_data *data)
 	light->lightness = ft_atof(value[2]);
 	if (check_lightness(light) == false)
 		return (false);
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = light;
 	}
-	data->scene.objs = light;
+	else
+		data->scene.objs = light;
 	return (true);
 }
 
@@ -472,7 +484,8 @@ t_objs	*lst_new_objs(void)
 bool	check_sphere(char **value, t_data *data)
 {
 	t_objs *sphere;//TODO check to free if error
-	
+	t_objs *tmp;
+
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
@@ -487,7 +500,7 @@ bool	check_sphere(char **value, t_data *data)
 		return (false);
 	printf("Sphere OK\n\n");
 
-	
+
 	sphere = lst_new_objs();
 	if (!sphere)
 		return (false);
@@ -502,18 +515,22 @@ bool	check_sphere(char **value, t_data *data)
 	printf("argb[2] -> %x\n", sphere->color.argb[2]);
 	printf("argb[3] -> %x\n", sphere->color.argb[3]);
 	//check data
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = sphere;
 	}
-	data->scene.objs = sphere;
+	else
+		data->scene.objs = sphere;
 	return (true);
 }
 
 bool	check_plan(char **value, t_data *data)
 {
 	t_objs *plan; //TODO check to free if error
+	t_objs *tmp;
 
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
@@ -544,19 +561,23 @@ bool	check_plan(char **value, t_data *data)
 	printf("argb[2] -> %x\n", plan->color.argb[2]);
 	printf("argb[3] -> %x\n", plan->color.argb[3]);
 	//check data
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = plan;
 	}
-	data->scene.objs = plan;
+	else
+		data->scene.objs = plan;
 	return (true);
 }
 
 bool	check_cylinder(char **value, t_data *data)
 {
 	t_objs *cylinder; //TODO check to free if error
-	
+	t_objs *tmp;
+
 	data->scene.nb_objs++;
 	if (count_params(value) != 6)
 	{
@@ -592,11 +613,14 @@ bool	check_cylinder(char **value, t_data *data)
 	printf("argb[2] -> %x\n", cylinder->color.argb[2]);
 	printf("argb[3] -> %x\n", cylinder->color.argb[3]);
 	//check data
-	if (data->scene.objs != NULL)
+	tmp = data->scene.objs;
+	if (tmp != NULL)
 	{
-		while (data->scene.objs->next != NULL)
-			data->scene.objs = data->scene.objs->next;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = cylinder;
 	}
-	data->scene = cylinder;
+	else
+		data->scene.objs = cylinder;
 	return (true);
 }

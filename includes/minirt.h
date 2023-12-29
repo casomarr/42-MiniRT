@@ -145,6 +145,8 @@ bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
+bool	check_data_camera(t_objs *objs);
+bool	check_lightness(t_objs *objs);
 
 
 /*Main*/

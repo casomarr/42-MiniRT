@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/18 17:35:36 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:44:18 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ higher is the light intensity reflected on the object.
 This equation is called Inverse Square Law.*/
 int	distance_light_object(t_data *data)
 {
-	t_vec result;
-	
-	result = sqrt((point_y ^ 2) + (point_x ^ 2));
-	/*rajouter calcul pour que result = la valeur par
-	laquelle la couleur doit etre multipliee*/
-	return result;
+	t_vec	result;
+	t_vec	intersection;
+	t_objs	*light;
+	float	distance;
+
+	intersection = create_vec(data->x, data->y, data->z_index);
+	light = get_node(data->scene.objs, LIGHT);
+	result = vecSubstract(light->position, intersection);
+	result = vecSqrt(result);
+	distance = sqrtf(result.x + result.y + result.z);
+	//printf("distance = %d\n", distance);
+	return distance;
 }
 /*Bidirectional Reflectance Distribution Function :
 function that takes as parameters the direction of
@@ -31,7 +37,7 @@ angle that we get is narrow, the light intensity will
 be higher (more intense).*/
 int	brdf(t_data *data)
 {
-	
+	//utilise la norme je crois
 }
 
 /*Returns the intensity of the shadowing (by how much does

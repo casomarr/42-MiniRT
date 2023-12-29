@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 14:42:07 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/29 19:03:35 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@ line from the point of intersection. If not, it means the
 current pixel is in the shadow.*/
 bool	direct_light(t_data *data)
 {
-	///
+	///test
+	(void)data;
+	return (true);
 }
 
 int	get_color(unsigned char color, float light_intensity)
 {
-	float	color;
+	// float	color;
 
 	color = (float)color * light_intensity;
 	if (color >= 255.0) //au cas ou on essayerait de rendre le blanc encore plus blanc
 		return(255);
 	else
-		return((t_uint8)(color + 0,5));
+		return((t_uint8)(color + 0.5));
 }
 
 /*In case of intersection between the ray leaving the camera and

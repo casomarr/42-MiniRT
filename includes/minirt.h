@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/29 14:42:53 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:31 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_ray
 	t_vec	location;
 	t_vec	object_direction; //direction entrant
 	t_vec	light_direction; //direction sortante
-	int		norm;
+	float		norm;
 	int		color;
 	float	pixel_delta_w;
 	float	pixel_delta_h;
@@ -117,6 +117,28 @@ typedef struct s_data
 	int		front_object_color;
 }	t_data;
 
+/* typedef struct s_check_objs
+{
+	const char	*ref;
+	bool		(*check)(char **value, t_data *data);
+}				t_check_objs;
+
+int		parse_file(int fd, t_data *data);
+bool	check_not_empty(int fd);
+bool	open_file(char *path, t_data *data);
+int		parsing(char *file_name, t_data *data);
+bool	check_nb_char_in_line(char *line, t_data *data);
+bool	check_chars(char **value, t_data *data);
+bool	check_camera(char **value, t_data *data);
+bool	check_ambiant(char **value, t_data *data);
+bool	check_light(char **value, t_data *data);
+bool	check_plan(char **value, t_data *data);
+bool	check_sphere(char **value, t_data *data);
+bool	check_cylinder(char **value, t_data *data);
+void	ft_free_split(char **value);
+void	init_data(t_data *data);
+t_objs	*lst_new_objs(void); */
+
 typedef struct s_check_objs
 {
 	const char	*ref;
@@ -138,6 +160,8 @@ bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
+bool	check_data_camera(t_objs *objs);
+bool	check_lightness(t_objs *objs);
 
 
 /*Main*/

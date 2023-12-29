@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 15:45:10 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:04:34 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	generate_current_ray(t_data *data)
 	t_objs	*camera;
 
 	ray = data->ray;
+	//segfault ligne suivante : une seule node dans objs
 	camera = get_node(data->scene.objs, CAMERA);
 	if (camera == NULL)
 	{
@@ -91,9 +92,8 @@ void	generate_current_ray(t_data *data)
 /*Calculates each ray's direction.*/
 void	ray_generation(t_data *data)
 {
-	t_vec	center_pixel;
-
 	//ray_init(data);
+	
 	data->y = 0;
 	while (data->y < WIN_HEIGHT)
 	{
@@ -101,6 +101,10 @@ void	ray_generation(t_data *data)
 		while (data->x < WIN_WIDTH)
 		{
 			generate_current_ray(data);
+			printf("x = %f\n", data->ray.object_direction.x);
+			printf("y = %f\n", data->ray.object_direction.y);
+			printf("z = %f\n", data->ray.object_direction.z);
+			printf("\n\n");
 			data->x++;
 		}
 		data->y++;

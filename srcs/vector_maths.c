@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_maths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 18:42:24 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:18:02 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_vec	vecSquared(t_vec a)
 {
 	t_vec result;
 	
-	result.x = powf(a.x, 2);
+	result.x = powf(a.x, 2); //powf(a, 2) = a*a = a au carré
 	result.y = powf(a.y, 2);
 	result.z = powf(a.z, 2);
 	return (result);
@@ -92,10 +92,7 @@ t_vec	vecSqrt(t_vec a)
 }
 
 //pour vecteur normaliser vecteurs pour la norme
-t_vec	vecDotProduct(t_vec a, t_vec b)
+float	DotProduct(t_vec a, t_vec b)
 {
-	t_vec result;
-	
-	//??
-	return (result);
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

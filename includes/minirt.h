@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 18:42:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:42:53 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@ typedef struct s_img
 	int		height;
 	int		endian;
 }	t_img;
-
-typedef struct s_vec
-{
-	float x;
-	float y;
-	float z;
-}	t_vec;
 
 typedef struct s_ray
 {
@@ -164,10 +157,10 @@ t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
-t_vec	vecDotProduct(t_vec a, t_vec b);
+float	DotProduct(t_vec a, t_vec b);
 
 /*Intersections*/
-void	sphere_intersection(bool *intersection, t_data *data);
+void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
 bool	intersection(t_data *data);
 
 /*Color*/

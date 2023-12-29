@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 18:20:15 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/22 13:45:02 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ bool	three_params_int(char *value, t_data *data)
 			ft_free_split(params);
 			return (false);
 		}
-		//TODO check if value is between 0 and 255
 		if (ft_atoi(params[i]) < 0 || ft_atoi(params[i]) > 255)
 		{
 			ft_dprintf(2, "Error\nWrong colors parameter\n");
@@ -122,7 +121,7 @@ bool	three_params_int(char *value, t_data *data)
 		}
 		i++;
 	}
-	ft_free_split(params);//TODO Remove this because i can't get the value in the function
+	ft_free_split(params);
 	return (true);
 }
 
@@ -311,22 +310,40 @@ bool	check_camera(char **value, t_data *data)
 	camera->fov = ft_atoi(value[3]);
 	if (check_data_camera(camera) == false)
 		return (false);
+	if (data->scene.objs != NULL)
+	{
+		while (data->scene.objs->next != NULL)
+			data->scene.objs = data->scene.objs->next;
+	}
+	data->scene.objs = camera;
 	return (true);
 }
 
 bool	check_data_camera(t_objs *objs)
 {
-	//Waiting to check behavior if too far from 0 to x y z
+
+	if ((objs->position.x < -10000 || objs->position.x > 10000)
+		|| (objs->position.y < -10000 || objs->position.y > 10000)
+		|| (objs->position.z < -10000 || objs->position.z > 10000))
+	{
+		ft_dprintf(2, "Error\nPosition must be between -10000 and 10000\n");
+		return (false);
+	}
+
 	if (objs->fov < 0 || objs->fov > 180)
 	{
 		ft_dprintf(2, "Error\nFov must be between 0 and 180\n");
 		return (false);
 	}
-	//Waiting to check x y z between -1 and 1 in one time
+	if ((objs->direction.x < -1 || objs->direction.x > 1)
+		|| (objs->direction.y < -1 || objs->direction.y > 1)
+		|| (objs->direction.z < -1 || objs->direction.z > 1))
+	{
+		ft_dprintf(2, "Error\nDirection must be between -1 and 1\n");
+		return (false);
+	}
 	return (true);
 }
-
-
 
 
 
@@ -371,6 +388,12 @@ bool	check_ambiant(char **value, t_data *data)
 		return (false);
 	if (check_lightness(ambiant) == false)
 		return (false);
+	if (data->scene.objs != NULL)
+	{
+		while (data->scene.objs->next != NULL)
+			data->scene.objs = data->scene.objs->next;
+	}
+	data->scene.objs = ambiant;
 	return (true);
 }
 
@@ -413,6 +436,12 @@ bool	check_light(char **value, t_data *data)
 	light->lightness = ft_atof(value[2]);
 	if (check_lightness(light) == false)
 		return (false);
+	if (data->scene.objs != NULL)
+	{
+		while (data->scene.objs->next != NULL)
+			data->scene.objs = data->scene.objs->next;
+	}
+	data->scene.objs = light;
 	return (true);
 }
 
@@ -520,6 +549,7 @@ bool	check_plan(char **value, t_data *data)
 		while (data->scene.objs->next != NULL)
 			data->scene.objs = data->scene.objs->next;
 	}
+	data->scene.objs = plan;
 	return (true);
 }
 
@@ -567,5 +597,6 @@ bool	check_cylinder(char **value, t_data *data)
 		while (data->scene.objs->next != NULL)
 			data->scene.objs = data->scene.objs->next;
 	}
+	data->scene = cylinder;
 	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 18:42:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:29:31 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,6 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
-typedef struct s_vec
-{
-	float x;
-	float y;
-	float z;
-}	t_vec;
-
 typedef struct s_ray
 {
 	t_vec	origin;
@@ -82,7 +75,7 @@ typedef struct s_ray
 	t_vec	location;
 	t_vec	object_direction; //direction entrant
 	t_vec	light_direction; //direction sortante
-	int		norm;
+	float		norm;
 	int		color;
 	float	pixel_delta_w;
 	float	pixel_delta_h;
@@ -123,6 +116,28 @@ typedef struct s_data
 	int		z_index;
 	int		front_object_color;
 }	t_data;
+
+/* typedef struct s_check_objs
+{
+	const char	*ref;
+	bool		(*check)(char **value, t_data *data);
+}				t_check_objs;
+
+int		parse_file(int fd, t_data *data);
+bool	check_not_empty(int fd);
+bool	open_file(char *path, t_data *data);
+int		parsing(char *file_name, t_data *data);
+bool	check_nb_char_in_line(char *line, t_data *data);
+bool	check_chars(char **value, t_data *data);
+bool	check_camera(char **value, t_data *data);
+bool	check_ambiant(char **value, t_data *data);
+bool	check_light(char **value, t_data *data);
+bool	check_plan(char **value, t_data *data);
+bool	check_sphere(char **value, t_data *data);
+bool	check_cylinder(char **value, t_data *data);
+void	ft_free_split(char **value);
+void	init_data(t_data *data);
+t_objs	*lst_new_objs(void); */
 
 typedef struct s_check_objs
 {
@@ -166,10 +181,10 @@ t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
-t_vec	vecDotProduct(t_vec a, t_vec b);
+float	DotProduct(t_vec a, t_vec b);
 
 /*Intersections*/
-void	sphere_intersection(bool *intersection, t_data *data);
+void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
 bool	intersection(t_data *data);
 
 /*Color*/

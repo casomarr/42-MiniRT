@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 18:44:18 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:04:30 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,16 @@ be higher (more intense).*/
 int	brdf(t_data *data)
 {
 	//utilise la norme je crois
+
+	//test
+	(void)data;
+	return (1); //test pour ne pas le prendre en compte comme ça on multiplie * 1
 }
 
 /*Returns the intensity of the shadowing (by how much does
 the pixel color has to be toned down)*/
 int	shadows(t_data *data)
 {
-	
+	(void)data;
+	return (1);
 }

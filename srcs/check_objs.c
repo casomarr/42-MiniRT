@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/22 13:45:02 by amugnier         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:21:09 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,7 +419,7 @@ bool	check_light(char **value, t_data *data)
 {
 	t_objs	*light; //TODO check to free if error
 	t_objs	*tmp;
-
+	
 	data->scene.nb_light++;
 	if (data->scene.nb_light > 1)
 	{

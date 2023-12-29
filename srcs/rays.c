@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 15:45:10 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:30:19 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	get_norm(t_data *data)
 	t_ray	ray;
 
 	ray = data->ray;
-	ray.norm = sqrt(ray.object_direction.x * ray.object_direction.x + \
+	ray.norm = sqrtf(ray.object_direction.x * ray.object_direction.x + \
 				ray.object_direction.y * ray.object_direction.y + \
 				ray.object_direction.z * ray.object_direction.z);
 }
@@ -75,6 +75,7 @@ void	generate_current_ray(t_data *data)
 	t_objs	*camera;
 
 	ray = data->ray;
+	//segfault ligne suivante : une seule node dans objs
 	camera = get_node(data->scene.objs, CAMERA);
 	if (camera == NULL)
 	{
@@ -82,8 +83,11 @@ void	generate_current_ray(t_data *data)
 		return ;
 	}
 	ray.origin = camera->position;
+	// printf("ray.origin = %f, %f, %f\n", camera->position.x, camera->position.y, camera->position.z);
 	ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
+	// printf("ray.current_pixel = %f, %f, %f\n", ray.current_pixel.x, ray.current_pixel.y, ray.current_pixel.z);
 	ray.object_direction = vecSubstract(ray.current_pixel, ray.origin);
+	// printf("ray.object_direction = %f, %f, %f\n", ray.object_direction.x, ray.object_direction.y, ray.object_direction.z);
 	get_norm(data);
 	normalize_direction_vector(data);
 }
@@ -91,9 +95,8 @@ void	generate_current_ray(t_data *data)
 /*Calculates each ray's direction.*/
 void	ray_generation(t_data *data)
 {
-	t_vec	center_pixel;
-
 	//ray_init(data);
+	
 	data->y = 0;
 	while (data->y < WIN_HEIGHT)
 	{

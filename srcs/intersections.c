@@ -3,28 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 15:46:58 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:31:56 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	sphere_intersection(bool *intersection, t_data *data)
+void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 {
 	//calculer ici si le rayon hit the sphere
 	//if yes, data->z_index (=closest object) is updated. Initialize it to NULL? (soit a 0,0,0).
 	
 	//mettre ans une variable data->current_pixel_color la couleur de l'objet intersecte
-	t_objs *object;
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
 
-	object = data->scene.objs;
-	if (intersection == true && data->z_index < object->position.z)
+	a = DotProduct(data->ray.object_direction, data->ray.object_direction);
+	b = 2 * DotProduct(data->ray.object_direction, vecSubstract(data->ray.origin, sphere->position));
+	c = DotProduct(vecSubstract(data->ray.origin, sphere->position), vecSubstract(data->ray.origin, sphere->position)) - powf(sphere->diameter, 2);
+
+	discriminant = powf(b, 2) - (4 * a * c);
+	// if (discriminant < 0) //pas besoin de cette condition vu que initialisé à faux et que vrai prime
+	// 	intersection = false; //si pas déjà vrai!
+	if (discriminant == 0)
+		*intersection = true; //en un seul point (sur le bord)
+	if (discriminant > 0)
+		*intersection = true; //en deux points
+
+	if (*intersection == true && data->z_index < sphere->position.z)
 	{
-		data->z_index = object->position.z;
-		data->front_object_color = object->color.full;
+		data->z_index = sphere->position.z;
+		data->front_object_color = sphere->color.full;
 	}
 	
 /*	t_vec	ray_location;
@@ -99,7 +113,7 @@ bool	intersection(t_data *data)
 	while (object)
 	{
 		if (object->type == SPHERE)
-			sphere_intersection(&intersection, data);
+			sphere_intersection(&intersection, data, object);
 		/* else if (object->type == CYLINDER)
 			cylinder_intersection(&intersection, data);
 		else if (object->type == PLANE)

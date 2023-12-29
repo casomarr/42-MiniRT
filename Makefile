@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
+#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/19 18:55:56 by casomarr         ###   ########.fr        #
+#    Updated: 2023/12/29 19:57:13 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@
 NAME = minirt
 
 CC = clang
+#caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
 CFLAGS = -Wall -Wextra -Werror -g3
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
@@ -57,15 +58,8 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/parse_file.c \
 	   $(PATH_SRCS)/rays.c \
 	   $(PATH_SRCS)/render.c \
-	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/utils.c \
-
-##Pour Antoine
-#SRCS = $(PATH_SRCS)/main.c \
-#	   $(PATH_SRCS)/parse_file.c \
-#	   $(PATH_SRCS)/check_objs.c \
-#	   $(PATH_SRCS)/open_file.c
-
+	   $(PATH_SRCS)/vector_maths.c
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs
@@ -107,6 +101,7 @@ $(MLX):
 ### CLEANING
 clean:
 	$(MAKE) -C $(PATH_LIBFT) clean
+#caro : mettre ligne suivante en commentaire pour compiler depuis chez moi
 	$(MAKE) -C $(PATH_MLX) clean
 	$(RM) -r $(OBJ_DIR)
 

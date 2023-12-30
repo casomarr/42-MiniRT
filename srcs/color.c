@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 19:03:35 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 12:48:10 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	determine_pixel_color(t_data *data)
 	
 	light_intensity = 0; //ou 1 vu que multiplication en bas?
 	color.full = data->front_object_color;
+	// printf("object color : %d\n", color.full);
+	// exit(1);
 	if (direct_light(data) == true)
 	{
 		light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1

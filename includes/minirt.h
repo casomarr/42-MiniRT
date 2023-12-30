@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/29 19:29:31 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 12:39:44 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		determine_pixel_color(t_data *data);
 
 /*Render*/
 void	img_pix_put(t_data *data, int x, int y, int color);
-void	add_pixel_to_img(t_data *data, int color);
+// void	add_pixel_to_img(t_data *data, int color);
 
 /*Light Intensity*/
 int		distance_light_object(t_data *data);

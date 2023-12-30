@@ -6,7 +6,7 @@
 #    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/29 19:57:13 by octonaute        ###   ########.fr        #
+#    Updated: 2023/12/29 20:06:59 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = minirt
 
 CC = clang
 #caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -gdwarf-4
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
 # LX11 = /usr/lib/x86_64-linux-gnu/libX11.a
@@ -101,7 +101,6 @@ $(MLX):
 ### CLEANING
 clean:
 	$(MAKE) -C $(PATH_LIBFT) clean
-#caro : mettre ligne suivante en commentaire pour compiler depuis chez moi
 	$(MAKE) -C $(PATH_MLX) clean
 	$(RM) -r $(OBJ_DIR)
 

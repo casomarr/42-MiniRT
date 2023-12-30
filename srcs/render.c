@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:21:40 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 19:56:09 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 12:41:34 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 	i = data->img.bpp - 8;
 
 
-//////////////////////////////// caro : test en cours pour segfault
-	data->img.width = WIN_WIDTH; //test
+/* 	data->img.width = WIN_WIDTH; //test
 	if (data->img.addr == NULL)
 	{
 		printf("Error\nimg.addr is not initialized\n");
@@ -37,9 +36,8 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 	{
 		printf("Error\nimg.width is not initialized\n");
 		return;
-	}
-	// printf("color = %d\n", color);
-////////////////////////////////
+	} */
+
 	
 	pixel = data->img.addr + (y * data->img.width + x * (data->img.bpp / 8)); //magie voudou demander a patou
 	while (i >= 0)
@@ -54,7 +52,7 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 	}
 }
 
-void	add_pixel_to_img(t_data *data, int color)
+/* void	add_pixel_to_img(t_data *data, int color)
 {
 	if(data->img.mlx_img == NULL)
 	{
@@ -63,4 +61,4 @@ void	add_pixel_to_img(t_data *data, int color)
 							&data->img.endian);
 	}
 	img_pix_put(data, data->x, data->y, color);
-}
+} */

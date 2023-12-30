@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 19:30:19 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 13:42:00 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ but their direction changes (they reach a different pixel on the canevas
 and continue in that direction into the scene)*/
 void	generate_current_ray(t_data *data)
 {
-	t_ray	ray;
 	t_objs	*camera;
 
-	ray = data->ray;
 	//segfault ligne suivante : une seule node dans objs
 	camera = get_node(data->scene.objs, CAMERA);
 	if (camera == NULL)
@@ -82,11 +80,11 @@ void	generate_current_ray(t_data *data)
 		ft_dprintf(2, "Error\nCrash getting camera node\n");
 		return ;
 	}
-	ray.origin = camera->position;
+	data->ray.origin = camera->position;
 	// printf("ray.origin = %f, %f, %f\n", camera->position.x, camera->position.y, camera->position.z);
-	ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
+	data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
 	// printf("ray.current_pixel = %f, %f, %f\n", ray.current_pixel.x, ray.current_pixel.y, ray.current_pixel.z);
-	ray.object_direction = vecSubstract(ray.current_pixel, ray.origin);
+	data->ray.object_direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
 	// printf("ray.object_direction = %f, %f, %f\n", ray.object_direction.x, ray.object_direction.y, ray.object_direction.z);
 	get_norm(data);
 	normalize_direction_vector(data);
@@ -104,6 +102,11 @@ void	ray_generation(t_data *data)
 		while (data->x < WIN_WIDTH)
 		{
 			generate_current_ray(data);
+			if (intersection(data) == true)
+			{
+				//determine_pixel(); //necessaire?
+				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+			}
 			data->x++;
 		}
 		data->y++;

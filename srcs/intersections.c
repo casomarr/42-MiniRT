@@ -6,20 +6,23 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 13:43:30 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 13:58:12 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/*Checks if the ray intersects with the current sphere.
+If yes, checks if there is no other object intersecting
+with the ray before it hits the sphere by comparing its
+position.z to the z_index that keeps in memory the closest
+intersection point (closest to the camera/origin of the ray).
+If the spphere is closest, the variables z_index and
+front_object_color are updated.*/
 void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 {
-	// printf("intersection BEFORE = %d\n", *intersection);
+	//il ne fallait pas utiliser ray.norm ici??
 	
-	//calculer ici si le rayon hit the sphere
-	//if yes, data->z_index (=closest object) is updated. Initialize it to NULL? (soit a 0,0,0).
-	
-	//mettre ans une variable data->current_pixel_color la couleur de l'objet intersecte
 	float	a;
 	float	b;
 	float	c;
@@ -35,7 +38,6 @@ void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 	// printf("b = %f\n", b);
 	// printf("c = %f\n", c);
 	// printf("discriminant = %f\n", discriminant);
-	// exit(1); //sans ça on voit que les nums deviennent infinis
 	
 	// if (discriminant < 0) //pas besoin de cette condition vu que initialisé à faux et que vrai prime
 	// 	intersection = false; //si pas déjà vrai!
@@ -44,68 +46,14 @@ void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 	if (discriminant > 0)
 		*intersection = true; //en deux points
 
-	if (discriminant >= 0 && data->z_index < sphere->position.z)
+	if (discriminant >= 0 && data->z_index < sphere->position.z) /*devrait être l'inverse
+	(sphere->position.z < data->z_index) mais alors il faut initialiser z_index à autre chose
+	que 0 ou initialiser front_object_color ailleurs, sinon front_object_color ne sera 
+	jamais initialisé!*/
 	{
 		data->z_index = sphere->position.z;
 		data->front_object_color = sphere->color.full;
 	}
-	// printf("intersection AFTER = %d\n", *intersection);
-
-	
-/*	t_vec	ray_location;
-	t_vec	tmp_calc;
-	
-	//ray_location = vecSubstract(data->ray.direction, 2 * data->ray.norm);
-	ray_location.x = data->ray.direction.x - (2 * data->ray.norm);
-	ray_location.y = data->ray.direction.y - (2 * data->ray.norm);
-	ray_location.z = data->ray.direction.z - (2 * data->ray.norm);
-	
-	// tmp_calc = vecProduct(data->ray.direction, data->ray.norm);
-	tmp_calc.x = data->ray.direction.x * data->ray.norm;
-	tmp_calc.y = data->ray.direction.y * data->ray.norm;
-	tmp_calc.z = data->ray.direction.z * data->ray.norm; 
-	
-	ray_location = vecProduct(ray_location, tmp_calc); */
-
-
-
-/* 	t_vec ray_location;
-    t_vec tmp_calc;
-    
-    // Calculate ray location
-    ray_location.x = data->ray.camera_center.x + data->ray.direction.x * data->ray.norm;
-    ray_location.y = data->ray.camera_center.y + data->ray.direction.y * data->ray.norm;
-    ray_location.z = data->ray.camera_center.z + data->ray.direction.z * data->ray.norm;
-
-    // Calculate tmp_calc using the normalized ray direction
-    tmp_calc.x = data->ray.direction.x;
-    tmp_calc.y = data->ray.direction.y;
-    tmp_calc.z = data->ray.direction.z;
-    
-    ray_location = vecAdd(ray_location, tmp_calc); // You should use vecSum instead of vecProduct here
-
-    int x = (int)(ray_location.x * WIN_WIDTH);
-    int y = (int)(ray_location.y * WIN_HEIGHT);
-
-    if (x >= 0 && x < WIN_WIDTH && y >= 0 && y < WIN_HEIGHT)
-    {
-        printf("Intersection at pixel %d:%d, color %d\n", x, y, data->img.tab[y][x]);
-
-        if (data->img.tab[y][x] != WHITE) // WHITE = BACKGROUND COLOR
-            *intersection = true;
-    } */
-
-	
-
-/* 	t_vec ray_location;
-
-    // Calculate ray location
-    ray_location.x = data->ray.camera_center.x + data->ray.direction.x * data->ray.norm;
-    ray_location.y = data->ray.camera_center.y + data->ray.direction.y * data->ray.norm;
-    ray_location.z = data->ray.camera_center.z + data->ray.direction.z * data->ray.norm;
-
-    int x = (int)(ray_location.x * WIN_WIDTH);
-    int y = (int)(ray_location.y * WIN_HEIGHT); */
 }
 
 /*Checks if the current ray intersects with each of the objects

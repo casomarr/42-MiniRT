@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 13:42:00 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 16:42:43 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,11 @@ void	ray_generation(t_data *data)
 			if (intersection(data) == true)
 			{
 				//determine_pixel(); //necessaire?
-				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+				img_pix_put(data, data->intersection_point.x, data->intersection_point.y, determine_pixel_color(data));
 			}
 			data->x++;
 		}
 		data->y++;
 	}
 }
+

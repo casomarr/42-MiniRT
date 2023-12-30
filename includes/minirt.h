@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/30 12:39:44 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 16:41:50 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 200
-# define WIN_WIDTH 400
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -115,6 +115,7 @@ typedef struct s_data
 	int		y;
 	int		z_index;
 	int		front_object_color;
+	t_vec	intersection_point;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -182,6 +183,7 @@ t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
 float	DotProduct(t_vec a, t_vec b);
+t_vec	vecMultiplyFloat(t_vec a, float f);
 
 /*Intersections*/
 void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);

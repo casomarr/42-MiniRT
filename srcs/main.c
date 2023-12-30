@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/30 12:55:49 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 14:59:00 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,15 @@ int	main(int argc, char **argv)
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }
+
+
+/* 	int i = 0;
+	int x;
+	int y;
+	x = 500;
+	while (i < 200)
+	{
+		y = 500 + i;
+		img_pix_put(&data, x, y, BLUE);
+		i++;
+	} */

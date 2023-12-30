@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 19:04:30 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 14:06:30 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	distance_light_object(t_data *data)
 	result = vecSubstract(light->position, intersection);
 	result = vecSqrt(result);
 	distance = sqrtf(result.x + result.y + result.z);
-	//printf("distance = %d\n", distance);
+	// printf("distance = %f\n", distance);
 	return distance;
 }
 /*Bidirectional Reflectance Distribution Function :

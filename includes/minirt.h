@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/30 16:41:50 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 18:35:05 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+//# include <limits.h> //ne marche pas à la maison
+
 # define MAX_OBJS 256
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
@@ -113,7 +115,7 @@ typedef struct s_data
 	t_scene	scene;
 	int		x;
 	int		y;
-	int		z_index;
+	float		z_index;
 	int		front_object_color;
 	t_vec	intersection_point;
 }	t_data;

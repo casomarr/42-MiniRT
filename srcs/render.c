@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:21:40 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 12:41:34 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 17:20:51 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 		return;
 	} */
 
-	
 	pixel = data->img.addr + (y * data->img.width + x * (data->img.bpp / 8)); //magie voudou demander a patou
 	while (i >= 0)
 	{
@@ -50,6 +49,7 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 			*pixel++ = (color >> (data->img.bpp - 8 - i)) & 0xFF;
 		i -= 8;
 	}
+	// printf("color = %d\n", color);
 }
 
 /* void	add_pixel_to_img(t_data *data, int color)

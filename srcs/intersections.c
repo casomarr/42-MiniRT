@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 16:43:18 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 18:38:40 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ discriminant > 0 --> intersects the sphere twice (= it passes
 through the "middle" of the sphere)*/
 void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 {
-	//il ne fallait pas utiliser ray.norm ici??
-	
 	float	a;
 	float	b;
 	float	c;
@@ -42,9 +40,17 @@ void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 	
 	discriminant = powf(b, 2) - (4 * a * c);
 	if (discriminant == 0)
+	{
 		*intersection = true; //en un seul point (sur le bord)
+		// printf("Intersection point = (%f, %f, %f)\n", data->intersection_point.x, data->intersection_point.y, data->intersection_point.z);
+		// exit(1); //bizarre que discriminant jamais = 0
+	}
 	if (discriminant > 0)
+	{
 		*intersection = true; //en deux points
+		// printf("Intersection point = (%f, %f, %f)\n", data->intersection_point.x, data->intersection_point.y, data->intersection_point.z);
+		// exit(1); //Intersection point = (-nan, -nan, -nan) WTF
+	}
 
 	//on choisit le point d'intersection le plus proche de la camera
 	if ((-b + sqrtf(discriminant)) / (2 * a) < (-b - sqrtf(discriminant)) / (2 * a))
@@ -53,19 +59,25 @@ void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere)
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 	
 	data->intersection_point = vecAdd(data->ray.origin, vecMultiplyFloat(data->ray.object_direction, t));
-	
-	// if (discriminant >= 0 && data->z_index < sphere->position.z) /*devrait être l'inverse
-	// (sphere->position.z < data->z_index) mais alors il faut initialiser z_index à autre chose
-	// que 0 ou initialiser front_object_color ailleurs, sinon front_object_color ne sera 
-	// jamais initialisé!*/
-	if (discriminant >= 0 && t < data->z_index)
+
+	if (discriminant >= 0 && t > 0 && t < data->z_index) //t > 0 car sinon derriere camera
 	{
-		data->z_index = data->intersection_point.z;
+		data->z_index = t; // et non data->intersection_point.z car peut etre négatif vu que 3D
 		data->front_object_color = sphere->color.full;
+		// printf("Sphere position: (%f, %f, %f)\n", sphere->position.x, sphere->position.y, sphere->position.z);
+		if (sphere->position.x != 200) //les deux sphères entrent dans cette fonction mais la première n'entre jamais dans cette condition
+			printf("sphere 1\n");
 	}
 
-	//pour test je l'initialise ici :
-	data->front_object_color = sphere->color.full;
+	// printf("color = %d\n", data->front_object_color);
+
+/////////////////////////////TEST
+/* 	if (sphere->color.full == 16777215)
+		printf("sphere 1\n");
+	else if (sphere->color.full == 6579300)
+		printf("sphere 2\n"); */
+/////////////////////////////TEST
+
 }
 
 /*Checks if the current ray intersects with each of the objects
@@ -80,7 +92,8 @@ bool	intersection(t_data *data)
 
 	object = data->scene.objs;
 	intersection = false;
-	data->z_index = 0;
+	// data->z_index = FLT_MAX; //ne marche pas à la maison
+	data->z_index = 100000; //`à 42 mettre FLT_MAX
 	while (object)
 	{
 		if (object->type == SPHERE)
@@ -91,5 +104,17 @@ bool	intersection(t_data *data)
 			plane_intersection(&intersection, data); */
 		object = object->next;
 	}
+
+/////////////////////////////TEST
+/* 	if (data->front_object_color == 16777215)
+		printf("FRONT SPHERE = sphere 1\n");
+	else if (data->front_object_color == 6579300)
+		printf("FRONT SPHERE = sphere 2\n");
+	else
+		printf("background\n"); */
+/////////////////////////////TEST
+	
+	// printf("intersection = %d\n", intersection); //0 = false
+
 	return (intersection);
 }

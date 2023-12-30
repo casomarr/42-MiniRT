@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 12:48:10 by octonaute        ###   ########.fr       */
+/*   Updated: 2023/12/30 17:21:30 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	determine_pixel_color(t_data *data)
 	if (direct_light(data) == true)
 	{
 		light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
+		// light_intensity = 1; //test pour 2 sphères car light_intensity est négatif sinon
 		//on s'en fout de color.argb[0] (= alpha)
 		color.argb[1] = get_color(color.argb[1], light_intensity);
 		color.argb[2] = get_color(color.argb[2], light_intensity);
@@ -65,6 +66,8 @@ int	determine_pixel_color(t_data *data)
 		color.argb[2] = get_color(color.argb[2], shadows(data));
 		color.argb[3] = get_color(color.argb[3], shadows(data));
 	}
+	// printf("color = %d\n", color.full);
+	// printf("light intensity = %d\n", light_intensity);
 	return (color.full);
 }
 

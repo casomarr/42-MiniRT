@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 14:06:30 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/01 18:08:11 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ the pixel color has to be toned down)*/
 int	shadows(t_data *data)
 {
 	(void)data;
-	return (1);
+	return (0);
 }

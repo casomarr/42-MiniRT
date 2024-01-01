@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 17:47:46 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/01 17:28:39 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,18 @@ time the camera moves*/
 /*Calculates the norm of the angle of the ray from
 camera to object and object to light source and then
 calculates the norm of this angle.*/
-void	get_norm(t_data *data)
+void	get_norm(t_ray ray)
 {
-	t_ray	ray;
-
-	ray = data->ray;
-	ray.norm = sqrtf(ray.object_direction.x * ray.object_direction.x + \
-				ray.object_direction.y * ray.object_direction.y + \
-				ray.object_direction.z * ray.object_direction.z);
+	ray.norm = sqrtf(ray.direction.x * ray.direction.x + \
+				ray.direction.y * ray.direction.y + \
+				ray.direction.z * ray.direction.z);
 }
 
-void	normalize_direction_vector(t_data *data)
+void	normalize_direction_vector(t_ray ray)
 {
-	t_ray	ray;
-
-	ray = data->ray;
-	ray.object_direction.x /= ray.norm;
-	ray.object_direction.y /= ray.norm;
-	ray.object_direction.z /= ray.norm;
+	ray.direction.x /= ray.norm;
+	ray.direction.y /= ray.norm;
+	ray.direction.z /= ray.norm;
 }
 
 /*Generates each ray. They all have the same origin (the camera center)
@@ -84,10 +78,10 @@ void	generate_current_ray(t_data *data)
 	// printf("ray.origin = %f, %f, %f\n", camera->position.x, camera->position.y, camera->position.z);
 	data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
 	// printf("ray.current_pixel = %f, %f, %f\n", ray.current_pixel.x, ray.current_pixel.y, ray.current_pixel.z);
-	data->ray.object_direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
-	// printf("ray.object_direction = %f, %f, %f\n", ray.object_direction.x, ray.object_direction.y, ray.object_direction.z);
-	get_norm(data);
-	normalize_direction_vector(data);
+	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
+	// printf("ray.direction = %f, %f, %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
+	get_norm(data->ray);
+	normalize_direction_vector(data->ray);
 }
 
 /*Calculates each ray's direction.*/
@@ -106,10 +100,14 @@ void	ray_generation(t_data *data)
 			{
 				//determine_pixel(); //necessaire?
 				img_pix_put(data, data->intersection_point.x, data->intersection_point.y, determine_pixel_color(data));
+				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 			}
+			// else
+			// 	img_pix_put(data, data->x, data->y, 25600);
 			data->x++;
 		}
 		data->y++;
 	}
+	printf("FINI WHILE\n");
 }
 

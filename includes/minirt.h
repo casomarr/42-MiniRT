@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/30 18:35:05 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/01 18:06:07 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,17 @@
 # include <math.h>
 //# include <limits.h> //ne marche pas à la maison
 
+
+#include <sys/types.h>
+#include <sys/wait.h>
+
+
 # define MAX_OBJS 256
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 800
-# define WIN_WIDTH 800
+# define WIN_HEIGHT 1000
+# define WIN_WIDTH 1000
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -75,8 +80,7 @@ typedef struct s_ray
 	t_vec	origin;
 	t_vec	current_pixel;
 	t_vec	location;
-	t_vec	object_direction; //direction entrant
-	t_vec	light_direction; //direction sortante
+	t_vec	direction;
 	float		norm;
 	int		color;
 	float	pixel_delta_w;
@@ -118,6 +122,7 @@ typedef struct s_data
 	float		z_index;
 	int		front_object_color;
 	t_vec	intersection_point;
+	bool	direct_light;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -173,8 +178,8 @@ int		initialisation(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
 void	ray_generation(t_data *data);
-void	get_norm(t_data *data);
-void	normalize_direction_vector(t_data *data);
+void	get_norm(t_ray ray);
+void	normalize_direction_vector(t_ray ray);
 void	generate_current_ray(t_data *data);
 
 /*Vector Maths*/
@@ -188,7 +193,8 @@ float	DotProduct(t_vec a, t_vec b);
 t_vec	vecMultiplyFloat(t_vec a, float f);
 
 /*Intersections*/
-void	sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
+void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
+void	sphere_light_intersection(t_data *data, t_objs *object);
 bool	intersection(t_data *data);
 
 /*Color*/

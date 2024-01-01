@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 17:21:30 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/01 18:08:16 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ line from the point of intersection. If not, it means the
 current pixel is in the shadow.*/
 bool	direct_light(t_data *data)
 {
+	
 	///test
 	(void)data;
-	return (true);
+	return (true); //bleu
+	// return (false); //blanc
 }
 
 int	get_color(unsigned char color, float light_intensity)
@@ -46,12 +48,13 @@ int	determine_pixel_color(t_data *data)
 {
 	int	light_intensity;
 	t_rgb	color;
+
+	// color.full = data->front_object_color; //pour test
 	
 	light_intensity = 0; //ou 1 vu que multiplication en bas?
-	color.full = data->front_object_color;
-	// printf("object color : %d\n", color.full);
-	// exit(1);
-	if (direct_light(data) == true)
+
+	// if (direct_light(data) == true)
+	if (data->direct_light == true)
 	{
 		light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
 		// light_intensity = 1; //test pour 2 sphères car light_intensity est négatif sinon
@@ -60,14 +63,16 @@ int	determine_pixel_color(t_data *data)
 		color.argb[2] = get_color(color.argb[2], light_intensity);
 		color.argb[3] = get_color(color.argb[3], light_intensity);
 	}
-	else
+	else //N'ENTRE QUE DANS CETTE CONDITION!!!!
 	{
 		color.argb[1] = get_color(color.argb[1], shadows(data));
 		color.argb[2] = get_color(color.argb[2], shadows(data));
 		color.argb[3] = get_color(color.argb[3], shadows(data));
 	}
+
 	// printf("color = %d\n", color.full);
 	// printf("light intensity = %d\n", light_intensity);
+
 	return (color.full);
 }
 

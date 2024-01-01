@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/01 18:06:07 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 00:14:18 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ typedef struct s_ray
 	t_vec	current_pixel;
 	t_vec	location;
 	t_vec	direction;
-	float		norm;
+	float	norm;
 	int		color;
+	float	discriminant;
+	float	t;
+	t_vec	point; //pour norme au lieu de 3 float a, b, c
 	float	pixel_delta_w;
 	float	pixel_delta_h;
 }	t_ray;
@@ -178,9 +181,11 @@ int		initialisation(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
 void	ray_generation(t_data *data);
-void	get_norm(t_ray ray);
-void	normalize_direction_vector(t_ray ray);
-void	generate_current_ray(t_data *data);
+void	get_norm(t_ray *ray);
+void	normalize_direction_vector(t_ray *ray);
+// void	generate_current_ray(t_data *data);
+void	generate_camera_ray(t_data *data);
+void	generate_light_ray(t_data *data);
 
 /*Vector Maths*/
 t_vec	create_vec(int x, int y, int z);
@@ -191,6 +196,7 @@ t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
 float	DotProduct(t_vec a, t_vec b);
 t_vec	vecMultiplyFloat(t_vec a, float f);
+float	vecMagnitude(t_vec a);
 
 /*Intersections*/
 void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
@@ -198,8 +204,7 @@ void	sphere_light_intersection(t_data *data, t_objs *object);
 bool	intersection(t_data *data);
 
 /*Color*/
-int	get_color(unsigned char color, float light_intensity);
-bool	direct_light(t_data *data);
+int		get_color(unsigned char color, float light_intensity);
 int		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
 
@@ -208,6 +213,7 @@ void	img_pix_put(t_data *data, int x, int y, int color);
 // void	add_pixel_to_img(t_data *data, int color);
 
 /*Light Intensity*/
+bool	direct_light(t_data *data);
 int		distance_light_object(t_data *data);
 int		brdf(t_data *data);
 int		shadows(t_data *data);

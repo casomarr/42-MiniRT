@@ -6,11 +6,23 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/01 18:08:11 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 00:02:22 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+/*Checks if the light source is reachable by a straight
+line from the point of intersection. If not, it means the
+current pixel is in the shadow.*/
+// bool	direct_light(t_data *data)
+// {
+	
+// 	///test
+// 	(void)data;
+// 	return (true); //bleu
+// 	// return (false); //blanc
+// }
 
 /*The closer the object is to the light source, the
 higher is the light intensity reflected on the object.
@@ -27,6 +39,8 @@ int	distance_light_object(t_data *data)
 	result = vecSubstract(light->position, intersection);
 	result = vecSqrt(result);
 	distance = sqrtf(result.x + result.y + result.z);
+
+	//soit juste : distance_to_light = vecMagnitude(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
 	// printf("distance = %f\n", distance);
 	return distance;
 }
@@ -41,7 +55,7 @@ int	brdf(t_data *data)
 
 	//test
 	(void)data;
-	return (1); //test pour ne pas le prendre en compte comme ça on multiplie * 1
+	return (0); //test pour ne pas le prendre en compte comme ça on multiplie * 1
 }
 
 /*Returns the intensity of the shadowing (by how much does

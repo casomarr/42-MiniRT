@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/01 23:16:53 by octonaute        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minirt.h"
 
 /*Initializes the parameters needed for ray generation each
@@ -46,24 +34,44 @@ time the camera moves*/
 /*Calculates the norm of the angle of the ray from
 camera to object and object to light source and then
 calculates the norm of this angle.*/
-void	get_norm(t_ray ray)
+void	get_norm(t_ray *ray)
 {
-	ray.norm = sqrtf(ray.direction.x * ray.direction.x + \
-				ray.direction.y * ray.direction.y + \
-				ray.direction.z * ray.direction.z);
+	ray->norm = sqrtf(ray->direction.x * ray->direction.x + \
+				ray->direction.y * ray->direction.y + \
+				ray->direction.z * ray->direction.z);
 }
 
-void	normalize_direction_vector(t_ray ray)
+void	normalize_direction_vector(t_ray *ray)
 {
-	ray.direction.x /= ray.norm;
-	ray.direction.y /= ray.norm;
-	ray.direction.z /= ray.norm;
+    if (ray->norm > 0)
+    {
+        ray->direction.x /= ray->norm;
+        ray->direction.y /= ray->norm;
+        ray->direction.z /= ray->norm;
+    }
+    else
+    {
+		ray->direction.x = 0.0f;
+		ray->direction.y = 0.0f;
+		ray->direction.z = 0.0f;
+    }
+}
+
+void	generate_light_ray(t_data *data)
+{
+	t_objs *light;
+
+	light = get_node(data->scene.objs, LIGHT);
+	data->ray.origin = light->position;
+	data->ray.direction = vecSubstract(light->position, data->intersection_point);
+	get_norm(&data->ray);
+	normalize_direction_vector(&data->ray);
 }
 
 /*Generates each ray. They all have the same origin (the camera center)
 but their direction changes (they reach a different pixel on the canevas
 and continue in that direction into the scene)*/
-void	generate_current_ray(t_data *data)
+void	generate_camera_ray(t_data *data)
 {
 	t_objs	*camera;
 
@@ -80,8 +88,8 @@ void	generate_current_ray(t_data *data)
 	// printf("ray.current_pixel = %f, %f, %f\n", ray.current_pixel.x, ray.current_pixel.y, ray.current_pixel.z);
 	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
 	// printf("ray.direction = %f, %f, %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
-	get_norm(data->ray);
-	normalize_direction_vector(data->ray);
+	get_norm(&data->ray);
+	normalize_direction_vector(&data->ray);
 }
 
 /*Calculates each ray's direction.*/
@@ -95,15 +103,20 @@ void	ray_generation(t_data *data)
 		data->x = 0;
 		while (data->x < WIN_WIDTH)
 		{
-			generate_current_ray(data);
+			generate_camera_ray(data);
 			if (intersection(data) == true)
 			{
 				//determine_pixel(); //necessaire?
-				img_pix_put(data, data->intersection_point.x, data->intersection_point.y, determine_pixel_color(data));
+				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+                // printf("INTERSECTION FOUND\n");
+                // exit(1);
 			}
-			// else
-			// 	img_pix_put(data, data->x, data->y, 25600);
+			else
+            {
+				img_pix_put(data, data->x, data->y, 25600);
+                // printf("INTERSECTION NOT FOUND\n");
+            }
 			data->x++;
 		}
 		data->y++;

@@ -6,23 +6,11 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/01 18:08:16 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 00:17:41 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/*Checks if the light source is reachable by a straight
-line from the point of intersection. If not, it means the
-current pixel is in the shadow.*/
-bool	direct_light(t_data *data)
-{
-	
-	///test
-	(void)data;
-	return (true); //bleu
-	// return (false); //blanc
-}
 
 int	get_color(unsigned char color, float light_intensity)
 {
@@ -56,6 +44,8 @@ int	determine_pixel_color(t_data *data)
 	// if (direct_light(data) == true)
 	if (data->direct_light == true)
 	{
+		printf("DIRECT LIGHT\n"); //jamais dans cette condition
+		exit(1);
 		light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
 		// light_intensity = 1; //test pour 2 sphères car light_intensity est négatif sinon
 		//on s'en fout de color.argb[0] (= alpha)
@@ -65,6 +55,8 @@ int	determine_pixel_color(t_data *data)
 	}
 	else //N'ENTRE QUE DANS CETTE CONDITION!!!!
 	{
+		// printf("INDIRECT LIGHT\n");
+
 		color.argb[1] = get_color(color.argb[1], shadows(data));
 		color.argb[2] = get_color(color.argb[2], shadows(data));
 		color.argb[3] = get_color(color.argb[3], shadows(data));

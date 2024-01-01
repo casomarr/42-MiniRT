@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 14:18:02 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 00:08:18 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,8 @@ t_vec	vecSqrt(t_vec a)
 float	DotProduct(t_vec a, t_vec b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+float	vecMagnitude(t_vec a)
+{
+	return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
 }

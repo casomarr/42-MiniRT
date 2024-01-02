@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/22 13:45:02 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:46:49 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,10 @@ bool	check_isdigit_int(char *value)
 			return (false);
 		i++;
 	}
+	if (value[i] == '\n')
+		value[i] = '\0';
 	return (true);
 }
-
-// bool	check_isdigit_float(char *value)
-// {
-// 	int	i;
-// 	int	dot;
-
-// 	i = 0;
-// 	dot = 0;
-// 	if (ft_is_sign(value[i]))
-// 		i++;
-// 	while (value[i] != '\0' && value[i] != '\n')
-// 	{
-// 		if (value[i] == '.')
-// 		{
-// 			dot++;
-// 			i++;
-// 		}
-// 		if (dot > 1)
-// 			return (false);
-// 		if (ft_isdigit(value[i]) == false)
-// 			return (false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
 
 bool	check_isdigit_float(char *value)
 {
@@ -113,12 +90,18 @@ bool	three_params_int(char *value, t_data *data)
 			ft_free_split(params);
 			return (false);
 		}
-		if (ft_atoi(params[i]) < 0 || ft_atoi(params[i]) > 255)
+		if (ft_strlen(params[i]) >= 4)
 		{
-			ft_dprintf(2, "Error\nWrong colors parameter\n");
+			ft_dprintf(2, "Error\nWrong lenght colors parameters\n");
 			ft_free_split(params);
 			return (false);
 		}
+		// if (ft_atoi(params[i]) < 0 || ft_atoi(params[i]) > 255)
+		// {
+		// 	ft_dprintf(2, "Error\nWrong colors parameter\n");
+		// 	ft_free_split(params);
+		// 	return (false);
+		// }
 		i++;
 	}
 	ft_free_split(params);
@@ -132,7 +115,7 @@ bool	three_params_float(char *value, t_data *data)
 
 	(void)data;
 	i = 0;
-	params = ft_split(value, ','); //need free this at the end
+	params = ft_split(value, ',');
 	if (count_params(params) != 3)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters\n");
@@ -149,7 +132,7 @@ bool	three_params_float(char *value, t_data *data)
 		}
 		i++;
 	}
-	ft_free_split(params); //TODO Remove this because i can't get the value in the function
+	ft_free_split(params);
 	return (true);
 }
 /*
@@ -271,8 +254,6 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb)
 	return (true);
 }
 
-
-
 bool	check_camera(char **value, t_data *data)
 {
 	// int		i;
@@ -299,7 +280,6 @@ bool	check_camera(char **value, t_data *data)
 		return (false);
 	if (check_isdigit_int(value[3]) == false)
 		return (false);
-	printf("Camera OK\n\n");
 	camera = lst_new_objs();
 	if (!camera)
 		return (false);
@@ -309,7 +289,7 @@ bool	check_camera(char **value, t_data *data)
 	if (get_tvec_from_str(value[2], &camera->direction) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
-	if (check_data_camera(camera) == false)
+	if (check_data_objs(camera) == false)
 		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
@@ -322,46 +302,6 @@ bool	check_camera(char **value, t_data *data)
 		data->scene.objs = camera;
 	return (true);
 }
-
-bool	check_data_camera(t_objs *objs)
-{
-
-	if ((objs->position.x < -10000 || objs->position.x > 10000)
-		|| (objs->position.y < -10000 || objs->position.y > 10000)
-		|| (objs->position.z < -10000 || objs->position.z > 10000))
-	{
-		ft_dprintf(2, "Error\nPosition must be between -10000 and 10000\n");
-		return (false);
-	}
-
-	if (objs->fov < 0 || objs->fov > 180)
-	{
-		ft_dprintf(2, "Error\nFov must be between 0 and 180\n");
-		return (false);
-	}
-	if ((objs->direction.x < -1 || objs->direction.x > 1)
-		|| (objs->direction.y < -1 || objs->direction.y > 1)
-		|| (objs->direction.z < -1 || objs->direction.z > 1))
-	{
-		ft_dprintf(2, "Error\nDirection must be between -1 and 1\n");
-		return (false);
-	}
-	return (true);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 bool	check_ambiant(char **value, t_data *data)
 {
@@ -383,7 +323,6 @@ bool	check_ambiant(char **value, t_data *data)
 		return (false);
 	if (three_params_int(value[2], data) == false)
 		return (false);
-	printf("ambiant OK\n\n");
 	ambiant = lst_new_objs();
 	if (!ambiant)
 		return (false);
@@ -391,7 +330,7 @@ bool	check_ambiant(char **value, t_data *data)
 	ambiant->lightness = ft_atof(value[1]);
 	if (get_trgb_from_str(value[2], &ambiant->color) == false)
 		return (false);
-	if (check_lightness(ambiant) == false)
+	if (check_data_objs(ambiant) == false)
 		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
@@ -402,16 +341,6 @@ bool	check_ambiant(char **value, t_data *data)
 	}
 	else
 		data->scene.objs = ambiant;
-	return (true);
-}
-
-bool check_lightness(t_objs *objs)
-{
-	if (objs->lightness < 0 || objs->lightness > 1)
-	{
-		ft_dprintf(2, "Error\nLightness must be between 0 and 1\n");
-		return (false);
-	}
 	return (true);
 }
 
@@ -435,7 +364,6 @@ bool	check_light(char **value, t_data *data)
 		return (false);
 	if (check_isdigit_float(value[2]) == false)
 		return (false);
-	printf("Light OK\n\n");
 	light = lst_new_objs();
 	if (!light)
 		return (false);
@@ -443,7 +371,7 @@ bool	check_light(char **value, t_data *data)
 	if (get_tvec_from_str(value[1], &light->position) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
-	if (check_lightness(light) == false)
+	if (check_data_objs(light) == false)
 		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
@@ -498,9 +426,6 @@ bool	check_sphere(char **value, t_data *data)
 		return (false);
 	if (three_params_int(value[3], data) == false) //color
 		return (false);
-	printf("Sphere OK\n\n");
-
-
 	sphere = lst_new_objs();
 	if (!sphere)
 		return (false);
@@ -510,11 +435,8 @@ bool	check_sphere(char **value, t_data *data)
 	sphere->diameter = ft_atof(value[2]);
 	if (get_trgb_from_str(value[3], &sphere->color) == false)
 		return (false);
-	printf("Full -> %d\n", sphere->color.full);
-	printf("argb[1] -> %x\n", sphere->color.argb[1]);
-	printf("argb[2] -> %x\n", sphere->color.argb[2]);
-	printf("argb[3] -> %x\n", sphere->color.argb[3]);
-	//check data
+	if (check_data_objs(sphere) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -544,7 +466,6 @@ bool	check_plan(char **value, t_data *data)
 		return (false);
 	if (three_params_int(value[3], data) == false)
 		return (false);
-	printf("Plan OK\n\n");
 
 	plan = lst_new_objs();
 	if (!plan)
@@ -556,11 +477,8 @@ bool	check_plan(char **value, t_data *data)
 		return (false);
 	if (get_trgb_from_str(value[3], &plan->color) == false)
 		return (false);
-	printf("Full -> %d\n", plan->color.full);
-	printf("argb[1] -> %x\n", plan->color.argb[1]);
-	printf("argb[2] -> %x\n", plan->color.argb[2]);
-	printf("argb[3] -> %x\n", plan->color.argb[3]);
-	//check data
+	if (check_data_objs(plan) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -594,8 +512,6 @@ bool	check_cylinder(char **value, t_data *data)
 		return (false);
 	if (three_params_int(value[5], data) == false)
 		return (false);
-	printf("Cylinder OK\n\n");
-
 	cylinder = lst_new_objs();
 	if (!cylinder)
 		return (false);
@@ -608,11 +524,8 @@ bool	check_cylinder(char **value, t_data *data)
 	cylinder->height = ft_atof(value[4]);
 	if (get_trgb_from_str(value[5], &cylinder->color) == false)
 		return (false);
-	printf("Full -> %d\n", cylinder->color.full);
-	printf("argb[1] -> %x\n", cylinder->color.argb[1]);
-	printf("argb[2] -> %x\n", cylinder->color.argb[2]);
-	printf("argb[3] -> %x\n", cylinder->color.argb[3]);
-	//check data
+	if (check_data_objs(cylinder) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{

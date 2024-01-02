@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/19 15:46:58 by casomarr         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:26:19 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,7 @@
 
 void	sphere_intersection(bool *intersection, t_data *data)
 {
-	//calculer ici si le rayon hit the sphere
-	//if yes, data->z_index (=closest object) is updated. Initialize it to NULL? (soit a 0,0,0).
-	
-	//mettre ans une variable data->current_pixel_color la couleur de l'objet intersecte
-	t_objs *object;
-
-	object = data->scene.objs;
-	if (intersection == true && data->z_index < object->position.z)
-	{
-		data->z_index = object->position.z;
-		data->front_object_color = object->color.full;
-	}
-	
-/*	t_vec	ray_location;
+/* 	t_vec	ray_location;
 	t_vec	tmp_calc;
 	
 	//ray_location = vecSubstract(data->ray.direction, 2 * data->ray.norm);
@@ -40,7 +27,7 @@ void	sphere_intersection(bool *intersection, t_data *data)
 	tmp_calc.y = data->ray.direction.y * data->ray.norm;
 	tmp_calc.z = data->ray.direction.z * data->ray.norm; 
 	
-	ray_location = vecProduct(ray_location, tmp_calc); */
+	ray_location = vecProduct(ray_location, tmp_calc);
 
 
 
@@ -72,7 +59,7 @@ void	sphere_intersection(bool *intersection, t_data *data)
 
 	
 
-/* 	t_vec ray_location;
+	t_vec ray_location;
 
     // Calculate ray location
     ray_location.x = data->ray.camera_center.x + data->ray.direction.x * data->ray.norm;
@@ -80,7 +67,12 @@ void	sphere_intersection(bool *intersection, t_data *data)
     ray_location.z = data->ray.camera_center.z + data->ray.direction.z * data->ray.norm;
 
     int x = (int)(ray_location.x * WIN_WIDTH);
-    int y = (int)(ray_location.y * WIN_HEIGHT); */
+    int y = (int)(ray_location.y * WIN_HEIGHT);
+
+	//calculer ici si le rayon hit the sphere
+	//if yes, data->z_index (=closest object) is updated. Initialize it to NULL? (soit a 0,0,0).
+	// Faut tout reinitialiser a chaque fois qu on rebouge la camera
+	//mettre ans une variable data->current_pixel_color la couleur de l'objet intersecte
 }
 
 /*Checks if the current ray intersects with each of the objects
@@ -91,21 +83,20 @@ the "hidden" objects.*/
 bool	intersection(t_data *data)
 {
 	bool	intersection;
-	t_objs	*object;
+	t_obj	*objects;
 
-	object = data->scene.objs;
+	objects = &data->obj;
 	intersection = false;
-	data->z_index = 0;
-	while (object)
+	while (objects)
 	{
-		if (object->type == SPHERE)
+		if (objects->type == SPHERE)
 			sphere_intersection(&intersection, data);
-		/* else if (object->type == CYLINDER)
+		/* else if (objects->type == CYLINDER)
 			cylinder_intersection(&intersection, data);
-		else if (object->type == PLANE)
+		else if (objects->type == PLANE)
 			plane_intersection(&intersection, data); */
-		object = object->next;
+		objects = objects->next;
 	}
-	//printf("intersection = %d\n", intersection); //false = 0
+	printf("intersection = %d\n", intersection); //false = 0
 	return (intersection);
 }

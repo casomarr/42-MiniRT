@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/02 00:02:22 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 18:22:35 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ higher is the light intensity reflected on the object.
 This equation is called Inverse Square Law.*/
 int	distance_light_object(t_data *data)
 {
-	t_vec	result;
+/* 	t_vec	result;
 	t_vec	intersection;
 	t_objs	*light;
 	float	distance;
@@ -42,7 +42,11 @@ int	distance_light_object(t_data *data)
 
 	//soit juste : distance_to_light = vecMagnitude(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
 	// printf("distance = %f\n", distance);
-	return distance;
+	
+	return distance; */
+
+	// printf("distance = %f\n", data->light_distance);
+	return (data->light_distance);
 }
 /*Bidirectional Reflectance Distribution Function :
 function that takes as parameters the direction of
@@ -55,7 +59,7 @@ int	brdf(t_data *data)
 
 	//test
 	(void)data;
-	return (0); //test pour ne pas le prendre en compte comme ça on multiplie * 1
+	return (1); //test pour ne pas le prendre en compte comme ça on multiplie * 1
 }
 
 /*Returns the intensity of the shadowing (by how much does
@@ -63,5 +67,5 @@ the pixel color has to be toned down)*/
 int	shadows(t_data *data)
 {
 	(void)data;
-	return (0);
+	return (-1);
 }

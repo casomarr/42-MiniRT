@@ -95,7 +95,10 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 			// printf("1er object list APRES WHILE: type = %d\n", data->scene.objs->type);
 			// exit(1);
 			if (initial_distance <= data->light_distance || data->light_distance == FLT_MAX)
+			{
 				data->direct_light = true;
+				data->light_distance = initial_distance; //pour color
+			}
 		// }
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 15:04:22 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/02 18:08:03 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void	img_pix_put(t_data *data, int x, int y, int color);
 
 /*Light Intensity*/
 bool	direct_light(t_data *data);
-int		distance_light_object(t_data *data);
+int	distance_light_object(t_data *data);
 int		brdf(t_data *data);
 int		shadows(t_data *data);
 

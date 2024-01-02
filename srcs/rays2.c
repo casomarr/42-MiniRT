@@ -92,31 +92,58 @@ void	generate_camera_ray(t_data *data)
 	normalize_direction_vector(&data->ray);
 }
 
+/* t_vec	determine_pixel(int x, int y, int trigger)
+{
+	t_vec	pixel;
+	static int	i;
+
+	if (trigger == 1) //first time
+		i = x + WIN_WIDTH * y;
+	else
+		i++;
+	pixel.x = i % WIN_WIDTH;
+	pixel.y = i / WIN_WIDTH;
+
+	// sleep(20);
+	// while (i < WIN_WIDTH * WIN_HEIGHT)
+	// {
+  	// 	i++;
+	// 	pixel.x = i % WIN_WIDTH;
+	// 	pixel.y = i / WIN_WIDTH;
+	// }
+	pixel.z = 0;
+	return (pixel);
+} */
+
 /*Calculates each ray's direction.*/
 void	ray_generation(t_data *data)
 {
 	//ray_init(data);
+	//t_vec	pixel;
+	// int trigger;
 	
 	data->y = 0;
+	// trigger = 1;
 	while (data->y < WIN_HEIGHT)
 	{
 		data->x = 0;
 		while (data->x < WIN_WIDTH)
 		{
+			// pixel = determine_pixel(data->x, data->y, trigger);
+			// trigger = 0;
 			generate_camera_ray(data);
 			if (intersection(data) == true)
 			{
-				//determine_pixel(); //necessaire?
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 				//mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-                // printf("INTERSECTION FOUND\n");
-                // exit(1);
+				// printf("INTERSECTION FOUND\n");
+				// exit(1);
 			}
 			else
-            {
+			{
 				img_pix_put(data, data->x, data->y, 25600);
-                // printf("INTERSECTION NOT FOUND\n");
-            }
+				// printf("INTERSECTION NOT FOUND\n");
+			}
 			data->x++;
 		}
 		data->y++;

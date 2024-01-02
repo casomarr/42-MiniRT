@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 00:14:18 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 15:04:22 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-//# include <limits.h> //ne marche pas à la maison
+# include <float.h>
 
 
 #include <sys/types.h>
@@ -122,9 +122,12 @@ typedef struct s_data
 	t_scene	scene;
 	int		x;
 	int		y;
-	float		z_index;
+	float	z_index;
+	float	light_distance;
 	int		front_object_color;
 	t_vec	intersection_point;
+	t_vec	closest_intersection_point;
+	int		closest_object_type;
 	bool	direct_light;
 }	t_data;
 

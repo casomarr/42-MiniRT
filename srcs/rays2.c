@@ -63,7 +63,7 @@ void	generate_light_ray(t_data *data)
 
 	light = get_node(data->scene.objs, LIGHT);
 	data->ray.origin = light->position;
-	data->ray.direction = vecSubstract(light->position, data->intersection_point);
+	data->ray.direction = vecSubstract(light->position, data->closest_intersection_point);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
 }
@@ -108,7 +108,7 @@ void	ray_generation(t_data *data)
 			{
 				//determine_pixel(); //necessaire?
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
-				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+				//mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
                 // printf("INTERSECTION FOUND\n");
                 // exit(1);
 			}

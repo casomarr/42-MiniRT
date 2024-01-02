@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/02 00:17:41 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/02 15:58:48 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ int	determine_pixel_color(t_data *data)
 	int	light_intensity;
 	t_rgb	color;
 
-	// color.full = data->front_object_color; //pour test
+	color.full = data->front_object_color;
 	
 	light_intensity = 0; //ou 1 vu que multiplication en bas?
 
 	// if (direct_light(data) == true)
 	if (data->direct_light == true)
 	{
-		printf("DIRECT LIGHT\n"); //jamais dans cette condition
-		exit(1);
+		// printf("DIRECT LIGHT\n"); //jamais dans cette condition
+		// exit(1);
 		light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
 		// light_intensity = 1; //test pour 2 sphères car light_intensity est négatif sinon
 		//on s'en fout de color.argb[0] (= alpha)

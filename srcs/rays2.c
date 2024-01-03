@@ -66,6 +66,7 @@ void	generate_light_ray(t_data *data)
 	data->ray.direction = vecSubstract(light->position, data->closest_intersection_point);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
+	data->direct_light = false;
 }
 
 /*Generates each ray. They all have the same origin (the camera center)

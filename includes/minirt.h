@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/03 17:27:55 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/03 19:38:27 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ bool	intersection(t_data *data);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);
-int		determine_pixel_color(t_data *data);
+float		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
 
 /*Render*/

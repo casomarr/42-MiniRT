@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/03 17:41:53 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/03 18:02:49 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,22 @@ int	distance_light_object(t_data *data)
 //donne cercle rouge
 	// (void)data;
 	// return(1);
+
+
+/* 	float	constant_attenuation = 1.0;
+	float	linear_attenuation = 0.01;
+	float	quadratic_attenuation = 0.001;
+	float	attenuation;
+	float	brightness;
+	float	max_attenuation = 0.5; //après tests mettre à 0.1 et 0.9?
+	float	min_attenuation = 0.9;
+
+	attenuation = 1 / (constant_attenuation + (linear_attenuation * data->light_distance) + (quadratic_attenuation * powf(data->light_distance, 2)));
+	// printf("attenuation = %f\n", attenuation);
+	brightness = (max_attenuation - min_attenuation) / ((attenuation - min_attenuation));
+	// printf("brightness = %f\n", brightness);
+
+	return (brightness); */
 }
 /*Bidirectional Reflectance Distribution Function :
 function that takes as parameters the direction of

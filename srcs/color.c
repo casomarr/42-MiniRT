@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/03 17:42:11 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/03 19:38:16 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ betwen the light source and the object, and the BRDF.
 In both cases we get a light_intensity value that is then multiplied
 by the color of the intersected object, which gives us the color
 of the current pixel.*/
-int	determine_pixel_color(t_data *data)
+float	determine_pixel_color(t_data *data)
 {
 	float	light_intensity;
 	t_rgb	color;
@@ -51,8 +51,8 @@ int	determine_pixel_color(t_data *data)
 	// if (direct_light(data) == true)
 	if (data->direct_light == false) //FALSE ET TRUE SONT INVERSÉS!!!
 	{
-/* 		printf("DIRECT LIGHT\n");
-		printf("object color = %d\n", data->front_object_color); */
+		// printf("DIRECT LIGHT\n");
+		// printf("object color = %d\n", data->front_object_color);
 		// exit(1);
 		
 		// light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
@@ -64,8 +64,8 @@ int	determine_pixel_color(t_data *data)
 	}
 	else
 	{
-/* 		printf("INDIRECT LIGHT\n");
-		printf("object color = %d\n", data->front_object_color); */
+		// printf("INDIRECT LIGHT\n");
+		// printf("object color = %d\n", data->front_object_color);
 		// exit(1);
 		// pause();
 

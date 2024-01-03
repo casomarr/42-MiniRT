@@ -58,7 +58,7 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 		// 	exit(1);
 
 			light = get_node(data->scene.objs, LIGHT);
-			data->closest_intersection_point = vecAdd(light_ray->origin, vecMultiplyFloat(light_ray->direction, light_ray->t));
+			// data->closest_intersection_point = vecAdd(light_ray->origin, vecMultiplyFloat(light_ray->direction, light_ray->t));
 			initial_distance = vecMagnitude(vecSubstract(data->closest_intersection_point, light->position));
 			
 			object = data->scene.objs;
@@ -76,7 +76,8 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 					{
 						new_intersection = vecAdd(new_light_ray->origin, vecMultiplyFloat(new_light_ray->direction, new_light_ray->t));
 						new_distance = vecMagnitude(vecSubstract(new_intersection, light->position));
-						//printf("initial_distance = %f, new_distance = %f\n", initial_distance, new_distance);
+						if (initial_distance != new_distance)
+							printf("initial_distance = %f, new_distance = %f\n", initial_distance, new_distance);
 						if (new_distance < data->light_distance)
 							data->light_distance = new_distance;
 					}
@@ -94,7 +95,7 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 			}
 			// printf("1er object list APRES WHILE: type = %d\n", data->scene.objs->type);
 			// exit(1);
-			if (initial_distance <= data->light_distance || data->light_distance == FLT_MAX)
+			if (initial_distance == data->light_distance || data->light_distance == FLT_MAX)
 			{
 				data->direct_light = true;
 				data->light_distance = initial_distance; //pour color
@@ -115,7 +116,6 @@ bool	intersection(t_data *data)
 
 	object = data->scene.objs;
 	intersection = false;
-	data->direct_light = false;
 	data->z_index = FLT_MAX;
 	while (object)
 	{

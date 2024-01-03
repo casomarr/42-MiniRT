@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 13:53:28 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:48:56 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 	}
 	if (value[0] == NULL)
 	{
-		ft_free_split(value);
+		ft_free_split(value); //TODO NEEDED ?
 		return (false);
 	}
 	if (ft_strlen(value[0]) == 1 || ft_strlen(value[0]) == 2)
 	{
 		if (check_chars(value, data) == false)
-			return (false); //NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE IF ERROR
+			return (false); //TODO NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE OBJS IF ONE HAS BEEN CREATED AND RETURN FALSE
 	}
 	else
 	{
@@ -51,7 +51,7 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 		ft_free_split(value);
 		return (false);
 	}
-	ft_free_split(value); //TODO Remove this because i can't get the value in the function
+	ft_free_split(value);
 	return (true);
 }
 
@@ -84,10 +84,11 @@ int	parse_file(int fd, t_data *data)
 
 bool	check_chars(char **value, t_data *data) //change to bool return type
 {
-	static struct s_check_objs comp[6] = {{"A",check_ambiant},
-		{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
-		{"pl", check_plan}, {"cy", check_cylinder}};
-	int i;
+	int							i;
+	static struct s_check_objs	comp[6] = {{"A", check_ambiant},
+	{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
+	{"pl", check_plan}, {"cy", check_cylinder}};
+
 	i = 0;
 	if (data->scene.nb_objs > MAX_OBJS)
 	{
@@ -97,7 +98,7 @@ bool	check_chars(char **value, t_data *data) //change to bool return type
 	while (i < 6)
 	{
 		if (ft_strncmp(value[0], comp[i].ref, ft_strlen(comp[i].ref)) == 0)
-			return(comp[i].check(value, data)); //add if false
+			return (comp[i].check(value, data)); //add if false
 		i++;
 	}
 	ft_dprintf(2, "Error\nObject not exists\n"); //move this error

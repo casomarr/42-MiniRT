@@ -6,15 +6,15 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 17:46:49 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/03 15:14:13 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int		count_params(char **value)
+int	count_params(char **value)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (value[i])
@@ -65,13 +65,11 @@ bool	check_isdigit_float(char *value)
 	return (true);
 }
 
-
-bool	three_params_int(char *value, t_data *data)
+bool	three_params_int(char *value)
 {
-	int i;
-	char **params;
+	int		i;
+	char	**params;
 
-	(void)data;
 	i = 0;
 	params = ft_split(value, ',');
 	if (!params)
@@ -82,7 +80,7 @@ bool	three_params_int(char *value, t_data *data)
 		ft_free_split(params);
 		return (false);
 	}
-	while(params[i])
+	while (params[i])
 	{
 		if (check_isdigit_int(params[i]) == false)
 		{
@@ -96,24 +94,17 @@ bool	three_params_int(char *value, t_data *data)
 			ft_free_split(params);
 			return (false);
 		}
-		// if (ft_atoi(params[i]) < 0 || ft_atoi(params[i]) > 255)
-		// {
-		// 	ft_dprintf(2, "Error\nWrong colors parameter\n");
-		// 	ft_free_split(params);
-		// 	return (false);
-		// }
 		i++;
 	}
 	ft_free_split(params);
 	return (true);
 }
 
-bool	three_params_float(char *value, t_data *data)
+bool	three_params_float(char *value)
 {
-	int i;
-	char **params;
+	int		i;
+	char	**params;
 
-	(void)data;
 	i = 0;
 	params = ft_split(value, ',');
 	if (count_params(params) != 3)
@@ -122,7 +113,7 @@ bool	three_params_float(char *value, t_data *data)
 		ft_free_split(params);
 		return (false);
 	}
-	while(params[i])
+	while (params[i])
 	{
 		if (check_isdigit_float(params[i]) == false)
 		{
@@ -190,40 +181,70 @@ pl          0.0,0.0,-10.0     0.0,1.0,0.0                         0,0,225
 // 	return ret;
 // }
 
+// float	ft_atof(char *str)
+// {
+// 	int	i;
+// 	int	sign;
+// 	float	res;
+// 	float dec;
+
+// 	i = 0;
+// 	sign = 1;
+// 	res = 0;
+// 	dec = 1;
+// 	if (str[i] == '-')
+// 	{
+// 		sign = -1;
+// 		i++;
+// 	}
+// 	while (str[i] != '.' && str[i] != '\0')
+// 	{
+// 		res = res * 10 + str[i] - '0';
+// 		i++;
+// 	}
+// 	if (str[i] == '.')
+// 	{
+// 		i++;
+// 		while (str[i] != '\0')
+// 		{
+// 			dec /= 10;
+// 			res = res + (str[i] - '0') * dec;
+// 			i++;
+// 		}
+// 	}
+// 	return (res * sign);
+// }
+
 float	ft_atof(char *str)
 {
-	int	i;
-	int	sign;
-	float	res;
-	float dec;
+	int		reti;
+	float	dec;
+	float	sign;
 
-	i = 0;
 	sign = 1;
-	res = 0;
-	dec = 1;
-	if (str[i] == '-')
+	dec = 0;
+	reti = 0;
+	if (*str == '-')
 	{
-		sign = -1;
-		i++;
+		sign = -1.;
+		str++;
 	}
-	while (str[i] != '.' && str[i] != '\0')
+	while (*str)
 	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	if (str[i] == '.')
-	{
-		i++;
-		while (str[i] != '\0')
+		if (*str != '.')
 		{
-			dec /= 10;
-			res = res + (str[i] - '0') * dec;
-			i++;
+			dec *= 10;
+			reti *= 10;
+			reti += (int)(*str - '0');
 		}
+		else
+			dec = 1;
+		str++;
 	}
-	return (res * sign);
+	if (dec > 0)
+		return (((float)reti * sign) / dec);
+	return ((float)reti * sign);
 }
-
 
 bool	get_tvec_from_str(char *str, t_vec *v)
 {
@@ -256,14 +277,10 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb)
 
 bool	check_camera(char **value, t_data *data)
 {
-	// int		i;
-
-	// i = 0;
-	t_objs	*camera; //TODO check to free if error
 	t_objs	*tmp;
-
-	data->scene.nb_camera++;
+	t_objs	*camera;//TODO check to free if error
 	//TODO talk about incrementation of nb_objs
+	data->scene.nb_camera++;
 	if (data->scene.nb_camera > 1)
 	{
 		ft_dprintf(2, "Error\nOnly one camera is allowed\n");
@@ -274,9 +291,9 @@ bool	check_camera(char **value, t_data *data)
 		ft_dprintf(2, "Error\nWrong number of parameters for camera\n");
 		return (false);
 	}
-	if (three_params_float(value[1], data) == false)
+	if (three_params_float(value[1]) == false)
 		return (false);
-	if (three_params_float(value[2], data) == false)
+	if (three_params_float(value[2]) == false)
 		return (false);
 	if (check_isdigit_int(value[3]) == false)
 		return (false);
@@ -305,9 +322,9 @@ bool	check_camera(char **value, t_data *data)
 
 bool	check_ambiant(char **value, t_data *data)
 {
-	t_objs	*ambiant; //TODO check to free if error
 	t_objs	*tmp;
-
+	t_objs	*ambiant;
+	//TODO check to free if error
 	data->scene.nb_ambiant++;
 	if (data->scene.nb_ambiant > 1)
 	{
@@ -321,7 +338,7 @@ bool	check_ambiant(char **value, t_data *data)
 	}
 	if (check_isdigit_float(value[1]) == false)
 		return (false);
-	if (three_params_int(value[2], data) == false)
+	if (three_params_int(value[2]) == false)
 		return (false);
 	ambiant = lst_new_objs();
 	if (!ambiant)
@@ -346,9 +363,9 @@ bool	check_ambiant(char **value, t_data *data)
 
 bool	check_light(char **value, t_data *data)
 {
-	t_objs	*light; //TODO check to free if error
 	t_objs	*tmp;
-
+	t_objs	*light;
+	//TODO check to free if error
 	data->scene.nb_light++;
 	if (data->scene.nb_light > 1)
 	{
@@ -360,7 +377,7 @@ bool	check_light(char **value, t_data *data)
 		ft_dprintf(2, "Error\nWrong number of parameters for light\n");
 		return (false);
 	}
-	if (three_params_float(value[1], data) == false)
+	if (three_params_float(value[1]) == false)
 		return (false);
 	if (check_isdigit_float(value[2]) == false)
 		return (false);
@@ -387,7 +404,7 @@ bool	check_light(char **value, t_data *data)
 
 t_objs	*lst_new_objs(void)
 {
-	t_objs *new;
+	t_objs	*new;
 
 	new = malloc(sizeof(t_objs));
 	if (!new)
@@ -408,23 +425,22 @@ t_objs	*lst_new_objs(void)
 	return (new);
 }
 
-
 bool	check_sphere(char **value, t_data *data)
 {
-	t_objs *sphere;//TODO check to free if error
-	t_objs *tmp;
-
+	t_objs	*tmp	;
+	t_objs	*sphere;
+	//TODO	check to free if error
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters for sphere\n");
 		return (false);
 	}
-	if (three_params_float(value[1], data) == false) //position
+	if (three_params_float(value[1]) == false) //position
 		return (false);
 	if (check_isdigit_float(value[2]) == false) //diameter
 		return (false);
-	if (three_params_int(value[3], data) == false) //color
+	if (three_params_int(value[3]) == false) //color
 		return (false);
 	sphere = lst_new_objs();
 	if (!sphere)
@@ -451,22 +467,21 @@ bool	check_sphere(char **value, t_data *data)
 
 bool	check_plan(char **value, t_data *data)
 {
-	t_objs *plan; //TODO check to free if error
-	t_objs *tmp;
-
+	t_objs	*tmp;
+	t_objs	*plan;
+	//TODO check to free if error
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, "Error\nWrong number of parameters for plan\n");
 		return (false);
 	}
-	if (three_params_float(value[1], data) == false)
+	if (three_params_float(value[1]) == false)
 		return (false);
-	if (three_params_float(value[2], data) == false)
+	if (three_params_float(value[2]) == false)
 		return (false);
-	if (three_params_int(value[3], data) == false)
+	if (three_params_int(value[3]) == false)
 		return (false);
-
 	plan = lst_new_objs();
 	if (!plan)
 		return (false);
@@ -493,8 +508,8 @@ bool	check_plan(char **value, t_data *data)
 
 bool	check_cylinder(char **value, t_data *data)
 {
-	t_objs *cylinder; //TODO check to free if error
-	t_objs *tmp;
+	t_objs	*cylinder; //TODO check to free if error
+	t_objs	*tmp;
 
 	data->scene.nb_objs++;
 	if (count_params(value) != 6)
@@ -502,15 +517,15 @@ bool	check_cylinder(char **value, t_data *data)
 		ft_dprintf(2, "Error\nWrong number of parameters for cylinder\n");
 		return (false);
 	}
-	if (three_params_float(value[1], data) == false)
+	if (three_params_float(value[1]) == false)
 		return (false);
-	if (three_params_float(value[2], data) == false)
+	if (three_params_float(value[2]) == false)
 		return (false);
 	if (check_isdigit_float(value[3]) == false)
 		return (false);
 	if (check_isdigit_float(value[4]) == false)
 		return (false);
-	if (three_params_int(value[5], data) == false)
+	if (three_params_int(value[5]) == false)
 		return (false);
 	cylinder = lst_new_objs();
 	if (!cylinder)

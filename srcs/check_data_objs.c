@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 17:44:32 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/03 15:15:29 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,3 @@ bool	check_data_objs(t_objs *objs)
 	}
 	return (true);
 }
-

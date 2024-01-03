@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/02 18:22:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:41:53 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ int	distance_light_object(t_data *data)
 	
 	return distance; */
 
+//donne cercle rouge avec interieur noir
 	// printf("distance = %f\n", data->light_distance);
 	return (data->light_distance);
+
+//donne cercle rouge
+	// (void)data;
+	// return(1);
 }
 /*Bidirectional Reflectance Distribution Function :
 function that takes as parameters the direction of
@@ -64,8 +69,29 @@ int	brdf(t_data *data)
 
 /*Returns the intensity of the shadowing (by how much does
 the pixel color has to be toned down)*/
-int	shadows(t_data *data)
+float	shadows(t_data *data)
 {
-	(void)data;
-	return (-1);
+	/*
+	attenuation = 1 / constant + linear * distance + quadratic * distance2
+	brightness = max_attenuation − min_attenuation / attenuation − min_attenuation
+	final_color = brightness * object_color
+	*/
+	
+	float	constant_attenuation = 1.0;
+	float	linear_attenuation = 0.01;
+	float	quadratic_attenuation = 0.001;
+	float	attenuation;
+	float	brightness;
+	float	max_attenuation = 0.3; //après tests mettre à 0.1 et 0.9?
+	float	min_attenuation = 0.7;
+
+	attenuation = 1 / (constant_attenuation + (linear_attenuation * data->light_distance) + (quadratic_attenuation * powf(data->light_distance, 2)));
+	// printf("attenuation = %f\n", attenuation);
+	brightness = (max_attenuation - min_attenuation) / ((attenuation - min_attenuation));
+	// printf("brightness = %f\n", brightness);
+
+	return (brightness);
+
+	// (void)data;
+	// return(0.5);
 }

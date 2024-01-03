@@ -134,20 +134,27 @@ void	ray_generation(t_data *data)
 			generate_camera_ray(data);
 			if (intersection(data) == true)
 			{
+				generate_light_ray(data);
+				check_intersection_light(data, /* object,  */&data->ray);
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
-				//mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 				// printf("INTERSECTION FOUND\n");
 				// exit(1);
+				/* if (data->direct_light == false)
+				{
+					mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+					pause();
+				} */
 			}
 			else
 			{
-				img_pix_put(data, data->x, data->y, 25600);
+				img_pix_put(data, data->x, data->y, 15132390);
 				// printf("INTERSECTION NOT FOUND\n");
 			}
+			// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 			data->x++;
 		}
 		data->y++;
 	}
-	printf("FINI WHILE\n");
 }
 

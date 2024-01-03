@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/01 17:00:04 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/03 17:19:28 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	ray_generation(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
-	printf("FINI\n");
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

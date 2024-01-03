@@ -131,9 +131,5 @@ bool	intersection(t_data *data)
 			plane_intersection(&intersection, data); */
 		object = object->next;
 	}
-	generate_light_ray(data);
-	// check_intersection_init(object, &data->ray); //light ray
-	check_intersection_light(data, /* object,  */&data->ray);
-	// printf("intersection = %d\n", intersection); //0 = false
 	return (intersection);
 }

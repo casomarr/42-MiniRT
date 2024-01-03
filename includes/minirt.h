@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 18:08:03 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:27:55 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,11 @@ t_vec	vecMultiplyFloat(t_vec a, float f);
 float	vecMagnitude(t_vec a);
 
 /*Intersections*/
-void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
-void	sphere_light_intersection(t_data *data, t_objs *object);
+// void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
+// void	sphere_light_intersection(t_data *data, t_objs *object);
+void check_intersection_init(t_objs *object, t_ray *ray);
+void check_intersection_camera(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
 
 /*Color*/
@@ -219,7 +222,7 @@ void	img_pix_put(t_data *data, int x, int y, int color);
 bool	direct_light(t_data *data);
 int	distance_light_object(t_data *data);
 int		brdf(t_data *data);
-int		shadows(t_data *data);
+float		shadows(t_data *data);
 
 /*Utils*/
 t_objs	*get_node(t_objs *objs, int type);

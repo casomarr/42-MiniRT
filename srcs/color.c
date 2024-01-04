@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/03 19:38:16 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/04 19:26:03 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,27 @@ int	get_color(unsigned char color, float light_intensity)
 {
 	// float	color;
 
-	// if (light_intensity == 1)
-	// 	light_intensity = 0.5;
-
 	// printf("color = %d\n", (int)color);
 	// printf("light_intensity = %f\n", light_intensity);
 
-	color = (float)color * light_intensity;
+/* 	color = (float)color * light_intensity;
 
 	// printf("result = %f\n", (float)color);
 	
 	if (color >= 255.0) //au cas ou on essayerait de rendre le blanc encore plus blanc
 		return(255);
 	else
-		return((t_uint8)(color + 0.5));
+		return((t_uint8)(color + 0.5)); */
+
+	float new_color = (float)color * light_intensity;
+    new_color = roundf(new_color); // Rounds the float to the nearest integer
+
+    if (new_color > 255.0)
+        return 255;
+    else if (new_color < 0.0)
+        return 0;
+    else
+        return (int)new_color;
 }
 
 /*In case of intersection between the ray leaving the camera and
@@ -43,6 +50,10 @@ by the color of the intersected object, which gives us the color
 of the current pixel.*/
 float	determine_pixel_color(t_data *data)
 {
+
+	// printf ("distance : %f\n", data->light_distance);
+
+	
 	float	light_intensity;
 	t_rgb	color;
 
@@ -55,8 +66,10 @@ float	determine_pixel_color(t_data *data)
 		// printf("object color = %d\n", data->front_object_color);
 		// exit(1);
 		
-		// light_intensity = distance_light_object(data) * brdf(data); //numero entre 0 et 1
-		light_intensity = 1;
+		light_intensity = /* distance_light_object(data) * */ brdf(data);
+		// printf("light intensity = %f\n", light_intensity);
+		
+		// light_intensity = 1;
 		//on s'en fout de color.argb[0] (= alpha)
 		color.argb[1] = get_color(color.argb[1], light_intensity);
 		color.argb[2] = get_color(color.argb[2], light_intensity);
@@ -70,10 +83,12 @@ float	determine_pixel_color(t_data *data)
 		// pause();
 
 		// printf("color before shadowing = %d\n", color.full);
+		
+		light_intensity = /* shadows(data) *  */brdf(data);
 
-		color.argb[1] = get_color(color.argb[1], shadows(data));
-		color.argb[2] = get_color(color.argb[2], shadows(data));
-		color.argb[3] = get_color(color.argb[3], shadows(data));
+		color.argb[1] = get_color(color.argb[1], light_intensity); //au lieu de shadows(data);
+		color.argb[2] = get_color(color.argb[2], light_intensity);
+		color.argb[3] = get_color(color.argb[3], light_intensity);
 
 		// printf("color after shadowing = %d\n", color.full);
 		

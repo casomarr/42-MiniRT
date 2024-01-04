@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/03 19:38:27 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/04 18:43:53 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_data
 	t_vec	intersection_point;
 	t_vec	closest_intersection_point;
 	int		closest_object_type;
+	t_objs	current_object;
 	bool	direct_light;
 }	t_data;
 
@@ -220,8 +221,8 @@ void	img_pix_put(t_data *data, int x, int y, int color);
 
 /*Light Intensity*/
 bool	direct_light(t_data *data);
-int	distance_light_object(t_data *data);
-int		brdf(t_data *data);
+float	distance_light_object(t_data *data);
+float		brdf(t_data *data);
 float		shadows(t_data *data);
 
 /*Utils*/

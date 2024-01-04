@@ -29,6 +29,7 @@ void check_intersection_camera(bool *intersection, t_data *data, t_objs *object,
 				data->z_index = ray->t; // et non data->intersection_point.z car peut etre négatif vu que 3D
 				data->closest_intersection_point = data->intersection_point;
 				data->closest_object_type = object->type;
+				data->current_object = *object;
 				data->front_object_color = object->color.full;
 			}
 		}
@@ -63,7 +64,6 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 			
 			object = data->scene.objs;
 			data->light_distance = FLT_MAX;
-			// printf("1er object list AVANT WHILE: type = %d\n", data->scene.objs->type);
 			while(object)
 			{
 				// if (object != current_sphere)
@@ -76,8 +76,8 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 					{
 						new_intersection = vecAdd(new_light_ray->origin, vecMultiplyFloat(new_light_ray->direction, new_light_ray->t));
 						new_distance = vecMagnitude(vecSubstract(new_intersection, light->position));
-						if (initial_distance != new_distance)
-							printf("initial_distance = %f, new_distance = %f\n", initial_distance, new_distance);
+						// if (initial_distance != new_distance)
+						// 	printf("initial_distance = %f, new_distance = %f\n", initial_distance, new_distance);
 						if (new_distance < data->light_distance)
 							data->light_distance = new_distance;
 					}
@@ -93,8 +93,6 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 				}
 				object = object->next;
 			}
-			// printf("1er object list APRES WHILE: type = %d\n", data->scene.objs->type);
-			// exit(1);
 			if (initial_distance == data->light_distance || data->light_distance == FLT_MAX)
 			{
 				data->direct_light = true;

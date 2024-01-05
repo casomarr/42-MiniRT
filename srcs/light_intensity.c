@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/04 19:17:50 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/05 16:31:00 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ line from the point of intersection. If not, it means the
 current pixel is in the shadow.*/
 // bool	direct_light(t_data *data)
 // {
-	
+
 // 	///test
 // 	(void)data;
 // 	return (true); //bleu
@@ -42,7 +42,7 @@ float	distance_light_object(t_data *data)
 
 	//soit juste : distance_to_light = vecMagnitude(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
 	// printf("distance = %f\n", distance);
-	
+
 	return distance; */
 
 //donne cercle rouge avec interieur noir
@@ -83,12 +83,12 @@ float	brdf(t_data *data)
 	t_vec	surface_normal;
 
 	surface_normal = vecSubstract(data->current_object.position, data->closest_intersection_point);
-	
+
 	float magnitude = vecMagnitude(surface_normal);
 	surface_normal.x /= magnitude;
 	surface_normal.y /= magnitude;
 	surface_normal.z /= magnitude;
-	
+
 	float brdf = DotProduct(data->ray.direction, surface_normal);
 
 	//pas sûre que mes protections soient utiles
@@ -125,7 +125,7 @@ float	shadows(t_data *data)
 	brightness = max_attenuation − min_attenuation / attenuation − min_attenuation
 	final_color = brightness * object_color
 	*/
-	
+
 	float	constant_attenuation = 0.1;
 	float	linear_attenuation = 0.007;
 	float	quadratic_attenuation = 0.01;

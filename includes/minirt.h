@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 16:29:00 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/04 18:43:53 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,24 @@ peut faire une image petite pour augmenter les fps.*/
 # define CYLINDER	1
 # define PLANE		2
 # define CAMERA		3
-# define LIGHT		4
-# define AMBIANT	5
+# define AMBIENT	4
+# define LIGHT		5
 
-# define ESC_KEY 65307
+typedef struct s_vec
+{
+	float x;
+	float y;
+	float z;
+}	t_vec;
+
+typedef unsigned int t_uint32;
+typedef unsigned char t_uint8;
+
+typedef union	u_rgb
+{
+	t_uint32	full;
+	t_uint8		argb[4];
+}	t_rgb;
 
 typedef struct s_img
 {
@@ -59,12 +73,11 @@ typedef struct s_img
 	int		width; //avant line_len, change pour ray_generation
 	int		height;
 	int		endian;
-	//int		**tab;
 }	t_img;
 
 typedef struct s_ray
 {
-	t_vec	origin; //le changer en "origin"? plus court et plus clair
+	t_vec	origin;
 	t_vec	current_pixel;
 	t_vec	location;
 	t_vec	direction;
@@ -77,20 +90,11 @@ typedef struct s_ray
 	float	pixel_delta_h;
 }	t_ray;
 
-
-typedef unsigned char t_uint8;
-
-typedef union u_rgb
-{
-	int		full;
-	t_uint8	argb[4];
-}	t_rgb;
-
 typedef struct s_objs
 {
 	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			position; //all
-	t_vec			direction; //plan and cylinder
+	t_vec			position; //all 
+	t_vec			direction; //plan and cylinder 
 	t_rgb			color;
 	float			diameter; //sphere and cylinder
 	float			height; //cylinder only
@@ -109,7 +113,6 @@ typedef struct s_scene
 	int			nb_objs;
 } t_scene;
 
-
 typedef struct s_data
 {
 	void	*mlx_ptr;
@@ -117,7 +120,6 @@ typedef struct s_data
 	t_img	img;
 	t_ray	ray;
 	t_scene	scene;
-	int		current_pixel_color;
 	int		x;
 	int		y;
 	float	z_index;
@@ -173,15 +175,8 @@ bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
-bool	check_coords(t_objs *objs);
-bool	check_diameter(t_objs *objs);
-bool	check_height(t_objs *objs);
-bool	check_fov(t_objs *objs);
-bool	check_vector(t_objs *objs);
+bool	check_data_camera(t_objs *objs);
 bool	check_lightness(t_objs *objs);
-bool	check_color(t_objs *objs);
-bool	check_data_objs(t_objs *objs);
-
 
 
 /*Main*/
@@ -197,6 +192,7 @@ void	generate_camera_ray(t_data *data);
 void	generate_light_ray(t_data *data);
 
 /*Vector Maths*/
+t_vec	create_vec(int x, int y, int z);
 t_vec	vecSubstract(t_vec a, t_vec b);
 t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);

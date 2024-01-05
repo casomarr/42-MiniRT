@@ -1,14 +1,14 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    rays.txt                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#              #
-#    Updated: 2024/01/05 16:30:28 by amugnier         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rays.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 15:53:12 by casomarr          #+#    #+#             */
+/*   Updated: 2024/01/01 23:16:53 by octonaute        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minirt.h"
 
@@ -22,15 +22,15 @@ time the camera moves*/
 
 	// int	aspect_ratio = 16.0 / 9.0; //ajoute pour ray_generation
 	// data->img.height = data->img.width / aspect_ratio; //ajoute pour ray_generation
-
+	
 	//Camera
 	float	viewport_height = 2.0;
 	float	viewport_width = viewport_height * (data->img.width /data->img.height);
-
+	
 	//on calcule l'espace entre chaque pixel (a quel point les rayons seront proches)
 	ray.pixel_delta_w = 1 / WIN_WIDTH; //soit 1 soit viewport
 	ray.pixel_delta_h = 1 / WIN_HEIGHT; //soit 1 soit viewport
-
+	
 	//zone (=viewport) correspondant au pixel en haut a gauche
     viewport_current_pixel.x -= viewport_width;
     viewport_current_pixel.y -= viewport_height;
@@ -88,7 +88,7 @@ void	generate_current_ray(t_data *data)
 void	ray_generation(t_data *data)
 {
 	//ray_init(data);
-
+	
 	data->y = 0;
 	while (data->y < WIN_HEIGHT)
 	{

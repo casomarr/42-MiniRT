@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/05 16:33:29 by amugnier         ###   ########.fr        #
+#    Updated: 2024/01/01 23:23:56 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,17 +56,10 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/parse_file.c \
-	   $(PATH_SRCS)/rays.c \
+	   $(PATH_SRCS)/rays2.c \
 	   $(PATH_SRCS)/render.c \
-	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/utils.c \
-
-##Pour Antoine
-#SRCS = $(PATH_SRCS)/main.c \
-#	   $(PATH_SRCS)/parse_file.c \
-#	   $(PATH_SRCS)/check_objs.c \
-#	   $(PATH_SRCS)/open_file.c
-
+	   $(PATH_SRCS)/vector_maths.c
 
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs

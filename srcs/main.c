@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/03 17:19:28 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/05 18:14:52 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 {
 	int	x;
 	int	y;
-	
+
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -32,6 +32,37 @@
 		y++;
 	}
 } */
+void	ft_stop(t_data *data)
+{
+	t_objs	*tmp;
+	while (data->scene.objs != NULL)
+	{
+		tmp = data->scene.objs->next;
+		free(data->scene.objs);
+		data->scene.objs = tmp;
+	}
+	data->scene.objs = NULL;
+	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
+	exit(EXIT_SUCCESS);
+
+}
+
+int	esc_close(int keycode, t_data *data)
+{
+	if (keycode == ESC_KEY)
+		ft_stop(data);
+	return (0);
+}
+
+int	cross_close(t_data *data)
+{
+	ft_stop(data);
+	return (0);
+}
 
 int	initialisation(t_data *data)
 {
@@ -58,7 +89,7 @@ int	initialisation(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data data;
-	
+
 	if (argc != 2)
 	{
 		printf("Error\nUsage ./miniRT <file.rt>\n");
@@ -70,6 +101,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	ray_generation(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
+	mlx_hook(data.win_ptr, 17, 1L<< 17, cross_close, &data);
+	mlx_key_hook(data.win_ptr, esc_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/02 17:45:47 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:08:50 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ peut faire une image petite pour augmenter les fps.*/
 # define CAMERA		3
 # define LIGHT		4
 # define AMBIANT	5
+
+# define ESC_KEY 65307
 
 typedef struct s_img
 {

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/05 13:56:56 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/05 20:40:41 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ float	brdf(t_data *data)
 	t_objs	*ambient;
 	ambient = get_node(data->scene.objs, AMBIENT);
 	brdf = brdf + ambient->lightness; //dans determine_pixel color devient noir qd meme c'est chelou
-	// printf("brdf = %f\n", brdf);
+	// printf("ambient->lightness = %f\n", ambient->lightness);
 
 	return brdf;
 

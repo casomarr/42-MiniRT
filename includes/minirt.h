@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 17:46:32 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/05 20:55:24 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ typedef struct s_data
 	int		closest_object_type;
 	t_objs	current_object;
 	bool	direct_light;
+	float	distance_of_projection;
+	t_vec	current_pixel;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -197,6 +199,7 @@ void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
 void	generate_camera_ray(t_data *data);
 void	generate_light_ray(t_data *data);
+void	distance_of_projection(t_data *data);
 
 /*Vector Maths*/
 t_vec	create_vec(float x, float y, float z);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_data_objs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 17:50:45 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/05 20:39:33 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ bool	check_coords(t_objs *objs)//je separe Camera, Light, Ambiant, Plan, Sphere,
 
 bool	check_diameter(t_objs *objs)
 {
-	if (objs->diameter <= 0 || objs->diameter > 50)
+	if (objs->diameter <= 0 || objs->diameter > 200)
 	{
-		ft_dprintf(2, "Error\nDiameter must be between 0 and 50\n");
+		ft_dprintf(2, "Error\nDiameter must be between 0 and 200\n");
 		return (false);
 	}
 	return (true);
@@ -68,7 +68,7 @@ bool	check_vector(t_objs *objs)
 
 bool check_lightness(t_objs *objs)
 {
-	if (objs->lightness < 0 || objs->lightness > 1)
+	if (/* objs->lightness < 0 ||  */objs->lightness > 1) //DECOMMENTER
 	{
 		ft_dprintf(2, "Error\nLightness must be between 0 and 1\n");
 		return (false);

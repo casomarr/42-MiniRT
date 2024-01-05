@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/04 19:26:03 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/05 20:19:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ float	determine_pixel_color(t_data *data)
 
 	color.full = data->front_object_color;
 
+	//printf("color AVANT= %d\n", color.full);
+
 	// if (direct_light(data) == true)
 	if (data->direct_light == false) //FALSE ET TRUE SONT INVERSÉS!!!
 	{
@@ -71,9 +73,9 @@ float	determine_pixel_color(t_data *data)
 		
 		// light_intensity = 1;
 		//on s'en fout de color.argb[0] (= alpha)
+		color.argb[0] = get_color(color.argb[0], light_intensity);
 		color.argb[1] = get_color(color.argb[1], light_intensity);
 		color.argb[2] = get_color(color.argb[2], light_intensity);
-		color.argb[3] = get_color(color.argb[3], light_intensity);
 	}
 	else
 	{
@@ -86,16 +88,16 @@ float	determine_pixel_color(t_data *data)
 		
 		light_intensity = /* shadows(data) *  */brdf(data);
 
-		color.argb[1] = get_color(color.argb[1], light_intensity); //au lieu de shadows(data);
+		color.argb[0] = get_color(color.argb[0], light_intensity); //au lieu de shadows(data);
+		color.argb[1] = get_color(color.argb[1], light_intensity);
 		color.argb[2] = get_color(color.argb[2], light_intensity);
-		color.argb[3] = get_color(color.argb[3], light_intensity);
 
 		// printf("color after shadowing = %d\n", color.full);
 		
 		// color.full = 13107400;
 	}
 
-	// printf("color = %d\n", color.full);
+	//printf("color APRES= %d\n", color.full);
 	// printf("light intensity = %d\n", light_intensity);
 
 	return (color.full);

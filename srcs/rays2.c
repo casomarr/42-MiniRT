@@ -91,6 +91,7 @@ void	generate_camera_ray(t_data *data)
 	// printf("ray.direction = %f, %f, %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
+	distance_of_projection(data);
 }
 
 /* t_vec	determine_pixel(int x, int y, int trigger)
@@ -116,6 +117,53 @@ void	generate_camera_ray(t_data *data)
 	return (pixel);
 } */
 
+
+void	distance_of_projection(t_data *data)
+{
+	t_ray	ray;
+	t_vec	viewport_current_pixel;
+	float	distance_of_projection;
+
+	ray = data->ray;
+
+	// int	aspect_ratio = 16.0 / 9.0; //ajoute pour ray_generation
+	// data->img.height = data->img.width / aspect_ratio; //ajoute pour ray_generation
+	
+	//Camera
+	float	viewport_height = 2.0;
+	float	viewport_width = viewport_height * (data->img.width /data->img.height);
+	
+	//on calcule l'espace entre chaque pixel (a quel point les rayons seront proches)
+	ray.pixel_delta_w = 1 / WIN_WIDTH; //soit 1 soit viewport
+	ray.pixel_delta_h = 1 / WIN_HEIGHT; //soit 1 soit viewport
+	
+	//zone (=viewport) correspondant au pixel en haut a gauche
+	viewport_current_pixel = create_vec(data->x - viewport_width, data->y - viewport_height, 0);
+
+	//viewport pour chaque pixel
+	t_vec	vector_pixel_delta = {0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), \
+	0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), 0.0f}; //c'est bien pour l'offset qu on le multiplie par 0.5?
+
+	//localisation du premier viewport en haut a gauche
+	//ray.current_pixel_location = vecAdd(viewport_current_pixel, vector_pixel_delta);
+
+	//FOV
+	// http://www.massal.net/article/raytrace/page4.html
+	// https://gabrielgambetta.com/computer-graphics-from-scratch/02-basic-raytracing.html
+	//distance_of_projection = 0.5f * WIN_WIDTH / tanf((3.14 / 180) * 0.5f * get_node(data->scene.objs, CAMERA)->fov);
+	//printf("distance = %f\n", distance_of_projection);
+
+	//localisation du pixel --> PRENDRE EN COMPTE LA DISTANCE CALCULE DANS FOV
+	//data->current_pixel = vecAdd(viewport_current_pixel, vector_pixel_delta);
+	/*
+	Vx=Cx⋅Vw/Cw
+	Vy=Cy⋅Vh/Ch
+	*/
+	//data->current_pixel.x = data->x * 
+
+
+}
+
 /*Calculates each ray's direction.*/
 void	ray_generation(t_data *data)
 {
@@ -137,7 +185,19 @@ void	ray_generation(t_data *data)
 			{
 				generate_light_ray(data);
 				check_intersection_light(data, /* object,  */&data->ray);
-				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+				img_pix_put(data, data->current_pixel.x, data->current_pixel.y, determine_pixel_color(data));
+				// int x = data->x - WIN_WIDTH/2;
+				// int y = WIN_HEIGHT/2 - data->y;
+				// t_objs	*camera = get_node(data->scene.objs, CAMERA);
+				// int z = -(WIN_HEIGHT/2)/tan(camera->fov * 0.5);
+				// float dx = (2 * ((float)data->x + 0,5) / (float)WIN_WIDTH - 1) * camera->fov * WIN_WIDTH;
+				// float dy = (1 - 2 * ((float)data->y + 0,5) / (float)WIN_HEIGHT) * WIN_HEIGHT ;
+				// int dx = data->x / WIN_WIDTH;
+				// int dy = data->y / WIN_HEIGHT;
+				// img_pix_put(data, dx, dy, determine_pixel_color(data));
+
+
+
 				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 				// printf("INTERSECTION FOUND\n");
 				// exit(1);
@@ -147,11 +207,11 @@ void	ray_generation(t_data *data)
 					pause();
 				} */
 			}
-			else
+/* 			else
 			{
 				img_pix_put(data, data->x, data->y, 15132390);
 				// printf("INTERSECTION NOT FOUND\n");
-			}
+			} */
 			// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 			data->x++;
 		}

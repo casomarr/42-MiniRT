@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-/* void check_intersection_init(t_objs *object, t_ray *ray)
+void check_intersection_init(t_objs *object, t_ray *ray)
 {
 	ray->point.x = DotProduct(ray->direction, ray->direction);
 	ray->point.y = 2 * DotProduct(ray->direction, vecSubstract(ray->origin, object->position));
@@ -13,10 +13,9 @@
 		else
 			ray->t = (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x);
 	}
-} */
+}
 
-void check_intersection_init(t_objs *object, t_ray *ray)
-{
+/* void check_intersection_init(t_objs *object, t_ray *ray)
 	t_vec	origin_fov;
 
 	origin_fov = create_vec(object->position.x, object->position.y, 0.0);
@@ -32,7 +31,7 @@ void check_intersection_init(t_objs *object, t_ray *ray)
 		else
 			ray->t = (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x);
 	}
-}
+} */
 
 void check_intersection_camera(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
 {
@@ -78,6 +77,11 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 		// 	exit(1);
 
 			light = get_node(data->scene.objs, LIGHT);
+			if (light == NULL)
+			{
+				//gerer ce cas et proteger tous les autres get_node
+				return ;
+			}
 			// data->closest_intersection_point = vecAdd(light_ray->origin, vecMultiplyFloat(light_ray->direction, light_ray->t));
 			initial_distance = vecMagnitude(vecSubstract(data->closest_intersection_point, light->position));
 			

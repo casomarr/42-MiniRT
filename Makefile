@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
+#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/01 23:23:56 by octonaute        ###   ########.fr        #
+#    Updated: 2024/01/05 18:11:29 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
 SRCS = $(PATH_SRCS)/check_objs.c \
+	   $(PATH_SRCS)/check_data_objs.c \
 	   $(PATH_SRCS)/color.c \
 	   $(PATH_SRCS)/intersections2.c \
 	   $(PATH_SRCS)/light_intensity.c \
@@ -61,10 +62,17 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/utils.c \
 	   $(PATH_SRCS)/vector_maths.c
 
+SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
+	   $(PATH_SRCS)/check_data_objs.c \
+	   $(PATH_SRCS)/open_file.c \
+	   $(PATH_SRCS)/parse_file.c \
+	   $(PATH_SRCS)/parsing.c
+
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs
 
 OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -142,8 +150,8 @@ $(GTACTION): $(OBJS_ACTIONS)
 action: $(LIBFT) $(MLX) $(GTACTION)
 
 #remove $(MLX) From $(NAME) if parsing are call by make parsing
-parsing: $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+parsing: $(LIBFT) $(OBJS_PARSING)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS_PARSING) $(LIBFT)
 
 # **************************************************************************** #
 #                                   PHONIES                                    #

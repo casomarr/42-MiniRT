@@ -49,6 +49,8 @@ peut faire une image petite pour augmenter les fps.*/
 # define AMBIENT	4
 # define LIGHT		5
 
+# define ESC_KEY 65307
+
 typedef struct s_vec
 {
 	float x;
@@ -93,8 +95,8 @@ typedef struct s_ray
 typedef struct s_objs
 {
 	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			position; //all 
-	t_vec			direction; //plan and cylinder 
+	t_vec			position; //all
+	t_vec			direction; //plan and cylinder
 	t_rgb			color;
 	float			diameter; //sphere and cylinder
 	float			height; //cylinder only
@@ -175,9 +177,14 @@ bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
-bool	check_data_camera(t_objs *objs);
 bool	check_lightness(t_objs *objs);
-
+bool	check_color(t_objs *objs);
+bool	check_vector(t_objs *objs);
+bool	check_fov(t_objs *objs);
+bool	check_height(t_objs *objs);
+bool	check_data_objs(t_objs *objs);
+bool	check_diameter(t_objs *objs);
+bool	check_coords(t_objs *objs);
 
 /*Main*/
 int		initialisation(t_data *data);

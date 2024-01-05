@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/04 19:17:50 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/05 13:56:56 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ float	distance_light_object(t_data *data)
 	brightness = (max_attenuation - min_attenuation) / ((attenuation - min_attenuation));
 	// printf("brightness = %f\n", brightness);
 
-	return (brightness); */
+++	return (brightness); */
 }
 /*Bidirectional Reflectance Distribution Function :
 function that takes as parameters the direction of

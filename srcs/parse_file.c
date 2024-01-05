@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 13:53:28 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/05 20:51:29 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 	if (ft_strlen(value[0]) == 1 || ft_strlen(value[0]) == 2)
 	{
 		if (check_chars(value, data) == false)
+		{
+			ft_free_split(value);
 			return (false); //NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE IF ERROR
+		}
 	}
 	else
 	{

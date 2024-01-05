@@ -1,7 +1,7 @@
 #     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER                       COLOR
 
 
-C 500,500,500                 0,0,0                90
+C 500,500,300                 0,0,0                90
 
 A                                                            0.1                                   255,255,255
 

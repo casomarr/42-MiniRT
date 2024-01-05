@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 18:06:38 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:46:32 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	generate_camera_ray(t_data *data);
 void	generate_light_ray(t_data *data);
 
 /*Vector Maths*/
-t_vec	create_vec(int x, int y, int z);
+t_vec	create_vec(float x, float y, float z);
 t_vec	vecSubstract(t_vec a, t_vec b);
 t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);

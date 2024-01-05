@@ -1,10 +1,29 @@
 #include "minirt.h"
 
-void check_intersection_init(t_objs *object, t_ray *ray)
+/* void check_intersection_init(t_objs *object, t_ray *ray)
 {
 	ray->point.x = DotProduct(ray->direction, ray->direction);
 	ray->point.y = 2 * DotProduct(ray->direction, vecSubstract(ray->origin, object->position));
 	ray->point.z = DotProduct(vecSubstract(ray->origin, object->position), vecSubstract(ray->origin, object->position)) - powf(object->diameter, 2);
+	ray->discriminant = powf(ray->point.y, 2) - (4 * ray->point.x * ray->point.z);
+	if (ray->discriminant >= 0)
+	{
+		if ((-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x) < (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x))
+			ray->t = (-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x);
+		else
+			ray->t = (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x);
+	}
+} */
+
+void check_intersection_init(t_objs *object, t_ray *ray)
+{
+	t_vec	origin_fov;
+
+	origin_fov = create_vec(object->position.x, object->position.y, 0.0);
+
+	ray->point.x = DotProduct(ray->direction, ray->direction);
+	ray->point.y = 2 * DotProduct(ray->direction, vecSubstract(vecSubstract(ray->origin, origin_fov), object->position));
+	ray->point.z = DotProduct(vecSubstract(vecSubstract(ray->origin, origin_fov), object->position), vecSubstract(vecSubstract(ray->origin, origin_fov), object->position)) - powf(object->diameter, 2);
 	ray->discriminant = powf(ray->point.y, 2) - (4 * ray->point.x * ray->point.z);
 	if (ray->discriminant >= 0)
 	{

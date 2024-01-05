@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/02 17:19:25 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:44:47 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ convertir toutes ces fonctions en fonctions variadiques
 pour pouvoir par exemple multiplier plus de seulement 2
 vecteurs a la fois. */
 
-t_vec	create_vec(int x, int y, int z)
+t_vec	create_vec(float x, float y, float z)
 {
 	t_vec vector;
 	

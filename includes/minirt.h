@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 17:46:32 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:36:21 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ peut faire une image petite pour augmenter les fps.*/
 # define CAMERA		3
 # define AMBIENT	4
 # define LIGHT		5
+
+# define STOP 0
+# define PARSING_ERROR 1
 
 # define ESC_KEY 65307
 

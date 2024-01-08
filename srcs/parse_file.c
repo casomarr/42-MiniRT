@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 20:51:29 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:03:26 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 		if (check_chars(value, data) == false)
 		{
 			ft_free_split(value);
-			return (false); //NEED TO TRANSFORM THIS FUNCTION TO BOOL TO FREE IF ERROR
+			return (false);
 		}
 	}
 	else
 	{
-		ft_dprintf(2, "Error\nObject not exists\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"'%s' not a valid object\n\x1B[0m", data->scene.file_name,\
+			data->scene.line, value[0]);
 		ft_free_split(value);
 		return (false);
 	}
-	ft_free_split(value); //TODO Remove this because i can't get the value in the function
+	ft_free_split(value);
 	return (true);
 }
 
@@ -78,6 +80,7 @@ int	parse_file(int fd, t_data *data)
 			}
 			free(line);
 			line = get_next_line(fd);
+			data->scene.line++;
 		}
 		free(line);
 		return (true);
@@ -85,7 +88,7 @@ int	parse_file(int fd, t_data *data)
 	return (false);
 }
 
-bool	check_chars(char **value, t_data *data) //change to bool return type
+bool	check_chars(char **value, t_data *data)
 {
 	static struct s_check_objs comp[6] = {{"A",check_ambiant},
 		{"C", check_camera}, {"L", check_light}, {"sp", check_sphere},
@@ -99,11 +102,15 @@ bool	check_chars(char **value, t_data *data) //change to bool return type
 	}
 	while (i < 6)
 	{
-		if (ft_strncmp(value[0], comp[i].ref, ft_strlen(comp[i].ref)) == 0)
-			return(comp[i].check(value, data)); //add if false
+		if (ft_strncmp(value[0], comp[i].ref, ft_strlen(value[0])) == 0)
+			return(comp[i].check(value, data));
 		i++;
 	}
-	ft_dprintf(2, "Error\nObject not exists\n"); //move this error
+	if (value[0][ft_strlen(value[0]) - 1] == '\n')
+		value[0][ft_strlen(value[0]) - 1] = '\0';
+	ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+		"'%s' not a valid object\n\x1B[0m", data->scene.file_name, \
+		data->scene.line, value[0]);
 	return (false);
 }
 
@@ -114,4 +121,5 @@ void	init_data(t_data *data)
 	data->scene.nb_light = 0;
 	data->scene.nb_objs = 0;
 	data->scene.objs = NULL;
+	data->scene.line = 1;
 }

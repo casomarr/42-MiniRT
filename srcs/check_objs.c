@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 21:34:45 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:49:50 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_params(char **value)
 	return (i);
 }
 
-bool	check_isdigit_int(char *value)
+bool	check_isdigit_int(char *value, t_scene *scene)
 {
 	int	i;
 
@@ -32,7 +32,12 @@ bool	check_isdigit_int(char *value)
 	while (value[i] != '\0' && value[i] != '\n')
 	{
 		if (ft_isdigit(value[i]) == false)
+		{
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+				"This number is not an INT\n\x1B[0m",\
+				scene->file_name, scene->line);
 			return (false);
+		}
 		i++;
 	}
 	if (value[i] == '\n')
@@ -67,7 +72,7 @@ bool	check_isdigit_float(char *value)
 	return (true);
 }
 
-bool	three_params_int(char *value)
+bool	three_params_int(char *value, t_scene *scene)
 {
 	int		i;
 	char	**params;
@@ -78,21 +83,27 @@ bool	three_params_int(char *value)
 		return (false);
 	if (count_params(params) != 3)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters\n\x1B[0m",\
+			scene->file_name, scene->line);
 		ft_free_split(params);
 		return (false);
 	}
 	while (params[i])
 	{
-		if (check_isdigit_int(params[i]) == false)
+		if (check_isdigit_int(params[i], scene) == false)
 		{
-			ft_dprintf(2, "Error\nWrong parameters\n");
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+				"This number is not an INT\n\x1B[0m",\
+				scene->file_name, scene->line);
 			ft_free_split(params);
 			return (false);
 		}
 		if (ft_strlen(params[i]) >= 4)
 		{
-			ft_dprintf(2, "Error\nWrong lenght colors parameters\n");
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+				"Wrong lenght colors parameters\n\x1B[0m",\
+				scene->file_name, scene->line);
 			ft_free_split(params);
 			return (false);
 		}
@@ -102,16 +113,18 @@ bool	three_params_int(char *value)
 	return (true);
 }
 
-bool	three_params_float(char *value)
+bool	three_params_float(char *value, t_scene *scene)
 {
 	int		i;
 	char	**params;
 
 	i = 0;
 	params = ft_split(value, ',');
-	if (count_params(params) != 3)
+	if (count_params(params) != 3) //TODO maybe change to count commas
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters\n\x1B[0m",\
+			scene->file_name, scene->line);
 		ft_free_split(params);
 		return (false);
 	}
@@ -119,7 +132,9 @@ bool	three_params_float(char *value)
 	{
 		if (check_isdigit_float(params[i]) == false)
 		{
-			ft_dprintf(2, "Error\nWrong parameters\n");
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+				"This number is not a FLOAT\n\x1B[0m",\
+				scene->file_name, scene->line);
 			ft_free_split(params);
 			return (false);
 		}
@@ -262,7 +277,7 @@ bool	get_tvec_from_str(char *str, t_vec *v)
 	return (true);
 }
 
-bool	get_trgb_from_str(char *str, t_rgb *rgb)
+bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
 {
 	char	**split;
 
@@ -270,6 +285,16 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb)
 	if (!split)
 		return (false);
 	rgb->full = 0;
+	if ((ft_atoi(split[0]) > 255 || ft_atoi(split[0]) < 0)\
+		|| (ft_atoi(split[1]) > 255 || ft_atoi(split[1]) < 0)\
+		|| (ft_atoi(split[2]) > 255 || ft_atoi(split[2]) < 0))
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Color must be between 0 and 255\n\x1B[0m", scene->file_name,\
+			scene->line);
+		ft_free_split(split);
+		return (false);
+	}
 	rgb->argb[0] = (t_uint8)ft_atoi(split[0]);
 	rgb->argb[1] = (t_uint8)ft_atoi(split[1]);
 	rgb->argb[2] = (t_uint8)ft_atoi(split[2]);
@@ -285,19 +310,23 @@ bool	check_camera(char **value, t_data *data)
 	data->scene.nb_camera++;
 	if (data->scene.nb_camera > 1)
 	{
-		ft_dprintf(2, "Error\nOnly one camera is allowed\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Only one camera is allowed\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 4)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for camera\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Camera\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1]) == false)
+	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
-	if (three_params_float(value[2]) == false)
+	if (three_params_float(value[2], &data->scene) == false)
 		return (false);
-	if (check_isdigit_int(value[3]) == false)
+	if (check_isdigit_int(value[3], &data->scene) == false) //TODO CALL ERROR MESSAGE
 		return (false);
 	camera = lst_new_objs();
 	if (!camera)
@@ -308,7 +337,7 @@ bool	check_camera(char **value, t_data *data)
 	if (get_tvec_from_str(value[2], &camera->direction) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
-	if (check_data_objs(camera) == false)
+	if (check_data_objs(camera, &data->scene) == false)
 	{
 		free(camera);
 		return (false);
@@ -333,26 +362,30 @@ bool	check_ambiant(char **value, t_data *data)
 	data->scene.nb_ambiant++;
 	if (data->scene.nb_ambiant > 1)
 	{
-		ft_dprintf(2, "Error\nOnly one ambiant is allowed\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Only one ambiant is allowed\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 3)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for ambiant\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Ambiant\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
 		return (false);
-	if (three_params_int(value[2]) == false)
+	if (three_params_int(value[2], &data->scene) == false)
 		return (false);
 	ambiant = lst_new_objs();
 	if (!ambiant)
 		return (false);
 	ambiant->type = 4;
 	ambiant->lightness = ft_atof(value[1]);
-	if (get_trgb_from_str(value[2], &ambiant->color) == false)
+	if (get_trgb_from_str(value[2], &ambiant->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(ambiant) == false)
+	if (check_data_objs(ambiant, &data->scene) == false)
 	{
 		free(ambiant);
 		return (false);
@@ -377,15 +410,19 @@ bool	check_light(char **value, t_data *data)
 	data->scene.nb_light++;
 	if (data->scene.nb_light > 1)
 	{
-		ft_dprintf(2, "Error\nOnly one light is allowed\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Only one light is allowed\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 3)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for light\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Light\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1]) == false)
+	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
 	if (check_isdigit_float(value[2]) == false)
 		return (false);
@@ -396,7 +433,7 @@ bool	check_light(char **value, t_data *data)
 	if (get_tvec_from_str(value[1], &light->position) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
-	if (check_data_objs(light) == false)
+	if (check_data_objs(light, &data->scene) == false)
 	{
 		free(light);
 		return (false);
@@ -444,14 +481,16 @@ bool	check_sphere(char **value, t_data *data)
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for sphere\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Sphere\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1]) == false) //position
+	if (three_params_float(value[1], &data->scene) == false) //position
 		return (false);
 	if (check_isdigit_float(value[2]) == false) //diameter
 		return (false);
-	if (three_params_int(value[3]) == false) //color
+	if (three_params_int(value[3], &data->scene) == false) //color
 		return (false);
 	sphere = lst_new_objs();
 	if (!sphere)
@@ -460,9 +499,9 @@ bool	check_sphere(char **value, t_data *data)
 	if (get_tvec_from_str(value[1], &sphere->position) == false)
 		return (false);
 	sphere->diameter = ft_atof(value[2]);
-	if (get_trgb_from_str(value[3], &sphere->color) == false)
+	if (get_trgb_from_str(value[3], &sphere->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(sphere) == false)
+	if (check_data_objs(sphere, &data->scene) == false)
 	{
 		free(sphere);
 		return (false);
@@ -488,14 +527,16 @@ bool	check_plan(char **value, t_data *data)
 	data->scene.nb_objs++;
 	if (count_params(value) != 4)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for plan\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Plan\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1]) == false)
+	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
-	if (three_params_float(value[2]) == false)
+	if (three_params_float(value[2], &data->scene) == false)
 		return (false);
-	if (three_params_int(value[3]) == false)
+	if (three_params_int(value[3], &data->scene) == false)
 		return (false);
 	plan = lst_new_objs();
 	if (!plan)
@@ -505,9 +546,9 @@ bool	check_plan(char **value, t_data *data)
 		return (false);
 	if (get_tvec_from_str(value[2], &plan->direction) == false)
 		return (false);
-	if (get_trgb_from_str(value[3], &plan->color) == false)
+	if (get_trgb_from_str(value[3], &plan->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(plan) == false)
+	if (check_data_objs(plan, &data->scene) == false)
 	{
 		free(plan);
 		return (false);
@@ -532,18 +573,20 @@ bool	check_cylinder(char **value, t_data *data)
 	data->scene.nb_objs++;
 	if (count_params(value) != 6)
 	{
-		ft_dprintf(2, "Error\nWrong number of parameters for cylinder\n");
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of parameters for Cylinder\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1]) == false)
+	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
-	if (three_params_float(value[2]) == false)
+	if (three_params_float(value[2], &data->scene) == false)
 		return (false);
 	if (check_isdigit_float(value[3]) == false)
 		return (false);
 	if (check_isdigit_float(value[4]) == false)
 		return (false);
-	if (three_params_int(value[5]) == false)
+	if (three_params_int(value[5], &data->scene) == false)
 		return (false);
 	cylinder = lst_new_objs();
 	if (!cylinder)
@@ -555,9 +598,9 @@ bool	check_cylinder(char **value, t_data *data)
 		return (false);
 	cylinder->diameter = ft_atof(value[3]);
 	cylinder->height = ft_atof(value[4]);
-	if (get_trgb_from_str(value[5], &cylinder->color) == false)
+	if (get_trgb_from_str(value[5], &cylinder->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(cylinder) == false)
+	if (check_data_objs(cylinder, &data->scene) == false)
 	{
 		free(cylinder);
 		return (false);

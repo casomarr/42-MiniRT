@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 20:39:33 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:20:31 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	check_vector(t_objs *objs)
 
 bool check_lightness(t_objs *objs)
 {
-	if (/* objs->lightness < 0 ||  */objs->lightness > 1) //DECOMMENTER
+	if (objs->lightness < 0.0 || objs->lightness > 1.0)
 	{
 		ft_dprintf(2, "Error\nLightness must be between 0 and 1\n");
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 21:02:39 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:20:40 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,43 @@
 //effacer
 #include <sys/wait.h>
 
-void	ft_stop(t_data *data)
+/* void	init_img_black(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < WIN_HEIGHT)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			img_pix_put(data, x, y, 65536); //black + 1 car sinon beugue
+			x++;
+		}
+		y++;
+	}
+} */
+void	ft_stop(t_data *data) // TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FREE
 {
 	t_objs	*tmp;
 	while (data->scene.objs != NULL)
 	{
+		// if (data->scene.objs->next != NULL)
 		tmp = data->scene.objs->next;
+		// if (data->scene.objs)
 		free(data->scene.objs);
 		data->scene.objs = tmp;
 	}
 	data->scene.objs = NULL;
-	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
+	// if (data->mlx_ptr && data->win_ptr)
+	// {
+	// 	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	// 	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+	// 	mlx_destroy_display(data->mlx_ptr);
+	// 	free(data->mlx_ptr);
+	// }
 	exit(EXIT_SUCCESS);
 
 }
@@ -80,7 +102,11 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	if (parsing(argv[1], &data) == false)
+	{
+		printf("Error\nParsing failed\n");
+		ft_stop(&data);
 		return (0); //need to change this return to 1 and continue test from action
+	}
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	ray_generation(&data);

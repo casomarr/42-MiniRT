@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 17:59:58 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/05 21:34:45 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ bool	check_isdigit_float(char *value)
 		if (dot > 1)
 			return (false);
 		i++;
+		if (value[i] == '\n')
+			value[i] = '\0';
 	}
 	return (true);
 }
@@ -307,7 +309,10 @@ bool	check_camera(char **value, t_data *data)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
 	if (check_data_objs(camera) == false)
+	{
+		free(camera);
 		return (false);
+	}
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -348,7 +353,10 @@ bool	check_ambiant(char **value, t_data *data)
 	if (get_trgb_from_str(value[2], &ambiant->color) == false)
 		return (false);
 	if (check_data_objs(ambiant) == false)
+	{
+		free(ambiant);
 		return (false);
+	}
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -389,7 +397,10 @@ bool	check_light(char **value, t_data *data)
 		return (false);
 	light->lightness = ft_atof(value[2]);
 	if (check_data_objs(light) == false)
+	{
+		free(light);
 		return (false);
+	}
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -452,7 +463,11 @@ bool	check_sphere(char **value, t_data *data)
 	if (get_trgb_from_str(value[3], &sphere->color) == false)
 		return (false);
 	if (check_data_objs(sphere) == false)
+	{
+		free(sphere);
 		return (false);
+	}
+
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -493,7 +508,10 @@ bool	check_plan(char **value, t_data *data)
 	if (get_trgb_from_str(value[3], &plan->color) == false)
 		return (false);
 	if (check_data_objs(plan) == false)
+	{
+		free(plan);
 		return (false);
+	}
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -540,7 +558,10 @@ bool	check_cylinder(char **value, t_data *data)
 	if (get_trgb_from_str(value[5], &cylinder->color) == false)
 		return (false);
 	if (check_data_objs(cylinder) == false)
+	{
+		free(cylinder);
 		return (false);
+	}
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/05 20:55:24 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:45:34 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-
 # define MAX_OBJS 256
+#define PI 3.14159265358979323846
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
@@ -198,6 +198,7 @@ void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
 void	generate_camera_ray(t_data *data);
+// void	generate_camera_ray(t_data *data, float x, float y);
 void	generate_light_ray(t_data *data);
 void	distance_of_projection(t_data *data);
 

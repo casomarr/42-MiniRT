@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/05 20:19:28 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:08:38 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ float	determine_pixel_color(t_data *data)
 		// exit(1);
 		
 		light_intensity = /* distance_light_object(data) * */ brdf(data);
-		// printf("light intensity = %f\n", light_intensity);
+		//printf("light intensity = %f\n", light_intensity);
 		
 		// light_intensity = 1;
 		//on s'en fout de color.argb[0] (= alpha)

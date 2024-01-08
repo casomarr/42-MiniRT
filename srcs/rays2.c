@@ -63,6 +63,7 @@ void	generate_light_ray(t_data *data)
 
 	light = get_node(data->scene.objs, LIGHT);
 	data->ray.origin = light->position;
+	//data->ray.origin = data->closest_intersection_point; //peut etre que ca a permi que true et false s inversent fans determine_color?
 	data->ray.direction = vecSubstract(light->position, data->closest_intersection_point);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
@@ -76,7 +77,6 @@ void	generate_camera_ray(t_data *data)
 {
 	t_objs	*camera;
 
-	//segfault ligne suivante : une seule node dans objs
 	camera = get_node(data->scene.objs, CAMERA);
 	if (camera == NULL)
 	{
@@ -84,14 +84,18 @@ void	generate_camera_ray(t_data *data)
 		return ;
 	}
 	data->ray.origin = camera->position;
-	// printf("ray.origin = %f, %f, %f\n", camera->position.x, camera->position.y, camera->position.z);
-	data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
-	// printf("ray.current_pixel = %f, %f, %f\n", ray.current_pixel.x, ray.current_pixel.y, ray.current_pixel.z);
-	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
-	// printf("ray.direction = %f, %f, %f\n", ray.direction.x, ray.direction.y, ray.direction.z);
+	//data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
+	
+	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
+	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
+	float y = (1 - 2 * ((data->y + 0.5) / WIN_HEIGHT)) * fov_adjustment;
+	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, y, -1)); // -1 = focal length
+	
+	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin); //n'a pas les bonnes valeurs pour le premier pixel
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
-	distance_of_projection(data);
+	//distance_of_projection(data);
 }
 
 /* t_vec	determine_pixel(int x, int y, int trigger)
@@ -117,12 +121,12 @@ void	generate_camera_ray(t_data *data)
 	return (pixel);
 } */
 
-
+/* 
 void	distance_of_projection(t_data *data)
 {
 	t_ray	ray;
 	t_vec	viewport_current_pixel;
-	float	distance_of_projection;
+	// float	distance_of_projection;
 
 	ray = data->ray;
 
@@ -141,8 +145,8 @@ void	distance_of_projection(t_data *data)
 	viewport_current_pixel = create_vec(data->x - viewport_width, data->y - viewport_height, 0);
 
 	//viewport pour chaque pixel
-	t_vec	vector_pixel_delta = {0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), \
-	0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), 0.0f}; //c'est bien pour l'offset qu on le multiplie par 0.5?
+	// t_vec	vector_pixel_delta = {0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), \
+	// 0.5f * (ray.pixel_delta_w + ray.pixel_delta_h), 0.0f}; //c'est bien pour l'offset qu on le multiplie par 0.5?
 
 	//localisation du premier viewport en haut a gauche
 	//ray.current_pixel_location = vecAdd(viewport_current_pixel, vector_pixel_delta);
@@ -155,14 +159,14 @@ void	distance_of_projection(t_data *data)
 
 	//localisation du pixel --> PRENDRE EN COMPTE LA DISTANCE CALCULE DANS FOV
 	//data->current_pixel = vecAdd(viewport_current_pixel, vector_pixel_delta);
-	/*
-	Vx=Cx⋅Vw/Cw
-	Vy=Cy⋅Vh/Ch
-	*/
+	
+	// Vx=Cx⋅Vw/Cw
+	// Vy=Cy⋅Vh/Ch
+	
 	//data->current_pixel.x = data->x * 
 
 
-}
+} */
 
 /*Calculates each ray's direction.*/
 void	ray_generation(t_data *data)
@@ -180,27 +184,18 @@ void	ray_generation(t_data *data)
 		{
 			// pixel = determine_pixel(data->x, data->y, trigger);
 			// trigger = 0;
+
 			generate_camera_ray(data);
 			if (intersection(data) == true)
 			{
+				// printf("data->closest_intersection_point = %f,%f,%f\n", data->closest_intersection_point.x, data->closest_intersection_point.y, data->closest_intersection_point.z);
+				// sleep(5);
+				
 				generate_light_ray(data);
 				check_intersection_light(data, /* object,  */&data->ray);
-				img_pix_put(data, data->current_pixel.x, data->current_pixel.y, determine_pixel_color(data));
-				// int x = data->x - WIN_WIDTH/2;
-				// int y = WIN_HEIGHT/2 - data->y;
-				// t_objs	*camera = get_node(data->scene.objs, CAMERA);
-				// int z = -(WIN_HEIGHT/2)/tan(camera->fov * 0.5);
-				// float dx = (2 * ((float)data->x + 0,5) / (float)WIN_WIDTH - 1) * camera->fov * WIN_WIDTH;
-				// float dy = (1 - 2 * ((float)data->y + 0,5) / (float)WIN_HEIGHT) * WIN_HEIGHT ;
-				// int dx = data->x / WIN_WIDTH;
-				// int dy = data->y / WIN_HEIGHT;
-				// img_pix_put(data, dx, dy, determine_pixel_color(data));
-
-
-
+				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+				
 				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
-				// printf("INTERSECTION FOUND\n");
-				// exit(1);
 				/* if (data->direct_light == false)
 				{
 					mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
@@ -210,9 +205,8 @@ void	ray_generation(t_data *data)
 /* 			else
 			{
 				img_pix_put(data, data->x, data->y, 15132390);
-				// printf("INTERSECTION NOT FOUND\n");
+				//printf("INTERSECTION NOT FOUND\n");
 			} */
-			// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 			data->x++;
 		}
 		data->y++;

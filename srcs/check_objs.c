@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/08 17:49:50 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:52:26 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,12 @@ bool	check_ambiant(char **value, t_data *data)
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Lightness must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
+	}
 	if (three_params_int(value[2], &data->scene) == false)
 		return (false);
 	ambiant = lst_new_objs();
@@ -425,7 +430,12 @@ bool	check_light(char **value, t_data *data)
 	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
 	if (check_isdigit_float(value[2]) == false)
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Lightness must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
+	}
 	light = lst_new_objs();
 	if (!light)
 		return (false);
@@ -489,7 +499,12 @@ bool	check_sphere(char **value, t_data *data)
 	if (three_params_float(value[1], &data->scene) == false) //position
 		return (false);
 	if (check_isdigit_float(value[2]) == false) //diameter
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Diameter must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
+	}
 	if (three_params_int(value[3], &data->scene) == false) //color
 		return (false);
 	sphere = lst_new_objs();
@@ -506,7 +521,6 @@ bool	check_sphere(char **value, t_data *data)
 		free(sphere);
 		return (false);
 	}
-
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
@@ -583,9 +597,19 @@ bool	check_cylinder(char **value, t_data *data)
 	if (three_params_float(value[2], &data->scene) == false)
 		return (false);
 	if (check_isdigit_float(value[3]) == false)
-		return (false);
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Diameter must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
+			return (false);
+	}
 	if (check_isdigit_float(value[4]) == false)
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Height must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			data->scene.line);
 		return (false);
+	}
 	if (three_params_int(value[5], &data->scene) == false)
 		return (false);
 	cylinder = lst_new_objs();

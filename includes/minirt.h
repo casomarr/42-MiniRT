@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/09 15:37:29 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/10 14:35:03 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_data
 	bool	direct_light;
 	float	distance_of_projection;
 	t_vec	current_pixel;
+	float	norm;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -210,15 +211,16 @@ t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
 float	DotProduct(t_vec a, t_vec b);
+float	DotProductFloat(t_vec b, float a);
 t_vec	vecMultiplyFloat(t_vec a, float f);
 float	vecMagnitude(t_vec a);
 
 /*Intersections*/
 // void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
 // void	sphere_light_intersection(t_data *data, t_objs *object);
-void check_intersection_init(t_objs *object, t_ray *ray);
-void check_intersection_camera(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
-void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
+void	check_intersection_sphere(t_objs *object, t_ray *ray);
+void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
 
 /*Color*/
@@ -238,5 +240,11 @@ float		shadows(t_data *data);
 
 /*Utils*/
 t_objs	*get_node(t_objs *objs, int type);
+
+/*Plane intersection*/
+void	get_norm2(t_vec *a, t_data *data);
+void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data);
+void	intersection_point_plan(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+
 
 #endif

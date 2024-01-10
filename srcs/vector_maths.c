@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_maths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/09 16:10:42 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/10 14:29:38 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,11 @@ t_vec	vecSqrt(t_vec a)
 float	DotProduct(t_vec a, t_vec b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+float	DotProductFloat(t_vec b, float a)
+{
+	return (a * b.x + a * b.y + a * b.z);
 }
 float	vecMagnitude(t_vec a)
 {

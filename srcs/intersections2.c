@@ -1,64 +1,5 @@
 #include "minirt.h"
 
-void check_intersection_init(t_objs *object, t_ray *ray)
-{
-	ray->point.x = DotProduct(ray->direction, ray->direction); //norme au carré
-	ray->point.y = 2 * DotProduct(ray->direction, vecSubstract(ray->origin, object->position));
-	ray->point.z = DotProduct(vecSubstract(ray->origin, object->position), vecSubstract(ray->origin, object->position)) - powf(object->diameter / 2, 2);
-	ray->discriminant = powf(ray->point.y, 2) - (4 * ray->point.x * ray->point.z); // b2 - 4ac
-	if (ray->discriminant >= 0)
-	{
-		if ((-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x) < (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x))
-			ray->t = (-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x);
-		else
-			ray->t = (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x);
-	}
-}
-
-/* void check_intersection_init(t_objs *object, t_ray *ray)
-	t_vec	origin_fov;
-
-	origin_fov = create_vec(object->position.x, object->position.y, 0.0);
-
-	ray->point.x = DotProduct(ray->direction, ray->direction);
-	ray->point.y = 2 * DotProduct(ray->direction, vecSubstract(vecSubstract(ray->origin, origin_fov), object->position));
-	ray->point.z = DotProduct(vecSubstract(vecSubstract(ray->origin, origin_fov), object->position), vecSubstract(vecSubstract(ray->origin, origin_fov), object->position)) - powf(object->diameter, 2);
-	ray->discriminant = powf(ray->point.y, 2) - (4 * ray->point.x * ray->point.z);
-	if (ray->discriminant >= 0)
-	{
-		if ((-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x) < (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x))
-			ray->t = (-ray->point.y + sqrtf(ray->discriminant)) / (2 * ray->point.x);
-		else
-			ray->t = (-ray->point.y - sqrtf(ray->discriminant)) / (2 * ray->point.x);
-	}
-} */
-
-void check_intersection_camera(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
-{
-	if (ray->discriminant >= 0)
-	{
-		*intersection = true;
-		if (ray->t > 0)
-		{
-			data->intersection_point = vecAdd(data->ray.origin, vecMultiplyFloat(data->ray.direction, ray->t));
-			//ici faire transorfmation x et y
-			//multiplier par cosinus 
-			/* t_objs *camera = get_node(data->scene.objs, CAMERA);
-			t_vec gamaprim = create_vec(object->position.x, object->position.y, 0.0);
-			data->intersection_point.x *= (camera->position.z - object->position.x) / sqrtf(DotProduct(vecSubstract(gamaprim, camera->position), vecSubstract(gamaprim, camera->position))); */
-			if (ray->t > 0 && ray->t < data->z_index) //ray->t > 0 car sinon derriere camera
-			{
-				// printf("z_index updated\n");
-				data->z_index = ray->t; // et non data->intersection_point.z car peut etre négatif vu que 3D
-				data->closest_intersection_point = data->intersection_point;
-				data->closest_object_type = object->type;
-				data->current_object = *object;
-				data->front_object_color = object->color.full;
-			}
-		}
-	}
-}
-
 /*Checks if the light source is reachable by a straight
 line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
@@ -99,7 +40,7 @@ void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray 
 				new_light_ray = light_ray; //necessaire? je pense que je peux modifier light_ray a chaque fois
 				if (object->type == SPHERE)
 				{
-					check_intersection_init(object, new_light_ray); //modifie new_light_ray
+					check_intersection_sphere(object, new_light_ray); //modifie new_light_ray
 					if (light_ray->t > 0) //si intersection sur le meme axe
 					{
 						new_intersection = vecAdd(new_light_ray->origin, vecMultiplyFloat(new_light_ray->direction, new_light_ray->t));
@@ -143,18 +84,25 @@ bool	intersection(t_data *data)
 	object = data->scene.objs;
 	intersection = false;
 	data->z_index = FLT_MAX;
+	data->closest_intersection_point = create_vec(0.0, 0.0, 0.0);
 	while (object)
 	{
 		if (object->type == SPHERE)
 		{
 			//mettre toutes ces fonctions en static dans un fichier spheres.c
-			check_intersection_init(object, &data->ray); //camera ray
-			check_intersection_camera(&intersection, data, object, &data->ray);
+			check_intersection_sphere(object, &data->ray); //camera ray
+			intersection_point_sphere(&intersection, data, object, &data->ray);
+			// data->ray.norm = 0.0;
+			// data->ray.discriminant = 0.0;
+			// data->ray.t = 0.0;
 		}
-		/* else if (object->type == CYLINDER)
-			cylinder_intersection(&intersection, data);
+		// else if (object->type == CYLINDER)
+		// 	cylinder_intersection(&intersection, data);
 		else if (object->type == PLANE)
-			plane_intersection(&intersection, data); */
+		{
+			check_intersection_plan(object, &data->ray, data);
+			intersection_point_plan(&intersection, data, object, &data->ray);
+		}
 		object = object->next;
 	}
 	return (intersection);

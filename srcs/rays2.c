@@ -90,7 +90,7 @@ void	generate_camera_ray(t_data *data)
 	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
 	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
 	float y = (1 - 2 * ((data->y + 0.5) / WIN_HEIGHT)) * fov_adjustment;
-	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, y, 1)); // -1 = focal length
+	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, -y, 1)); // -1 = focal length
 	// printf("x = %f\n", x);
 	// printf("y = %f\n", y);
 
@@ -172,12 +172,12 @@ void	distance_of_projection(t_data *data)
 } */
 
 /*Calculates each ray's direction.*/
-void	ray_generation(t_data *data)
+void ray_generation(t_data *data)
 {
-	//ray_init(data);
-	//t_vec	pixel;
-	// int trigger;
-	
+	// ray_init(data);
+	// t_vec	pixel;
+	//  int trigger;
+
 	data->y = 0;
 	// trigger = 1;
 	while (data->y < WIN_HEIGHT)
@@ -193,26 +193,35 @@ void	ray_generation(t_data *data)
 			{
 				// printf("data->closest_intersection_point = %f,%f,%f\n", data->closest_intersection_point.x, data->closest_intersection_point.y, data->closest_intersection_point.z);
 				// sleep(5);
-				
-				generate_light_ray(data);
-				check_intersection_light(data, /* object,  */&data->ray);
-				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
-				
-				//mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+
+				if (data->closest_object_type == SPHERE)
+				{
+					generate_light_ray(data);
+					check_intersection_light(data, /* object,  */&data->ray);
+					img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+				}
+				// if (data->closest_object_type == SPHERE)
+				// 	img_pix_put(data, data->x, data->y, 255);
+				else
+					img_pix_put(data, data->x, data->y, 16711680);
+
+				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 				/* if (data->direct_light == false)
 				{
 					mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 					pause();
 				} */
 			}
-/* 			else
+			else
 			{
 				img_pix_put(data, data->x, data->y, 15132390);
-				//printf("INTERSECTION NOT FOUND\n");
-			} */
+				// printf("INTERSECTION NOT FOUND\n");
+			}
 			data->x++;
 		}
 		data->y++;
 	}
+	printf("FINISHED\n");
 }
 
+// 255 0 0 = 1111 1111 0000 0000 0000 0000 0000 0000 = 16711680

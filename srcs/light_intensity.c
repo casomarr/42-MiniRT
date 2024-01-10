@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/08 13:30:40 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:16:21 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ function that takes as parameters the direction of
 the ray when entering and leaving the object. If the
 angle that we get is narrow, the light intensity will
 be higher (more intense).*/
-float	brdf(t_data *data)
+float		brdf(t_data *data)
 {
 //get_norm() ne marche que pour t_ray -->le changer pour  que ça colle avec tout
 

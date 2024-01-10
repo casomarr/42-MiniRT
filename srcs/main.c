@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/08 13:20:40 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:49:15 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 		y++;
 	}
 } */
-void	ft_stop(t_data *data) // TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FREE
+void	ft_stop(t_data *data) //TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FREE
 {
 	t_objs	*tmp;
 	while (data->scene.objs != NULL)
@@ -44,14 +44,14 @@ void	ft_stop(t_data *data) // TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FRE
 		data->scene.objs = tmp;
 	}
 	data->scene.objs = NULL;
-	// if (data->mlx_ptr && data->win_ptr)
-	// {
-	// 	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	// 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// 	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
-	// 	mlx_destroy_display(data->mlx_ptr);
-	// 	free(data->mlx_ptr);
-	// }
+	if (data->mlx_ptr && data->win_ptr)
+	{
+		// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
 	exit(EXIT_SUCCESS);
 
 }

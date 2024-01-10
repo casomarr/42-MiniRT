@@ -188,6 +188,7 @@ void ray_generation(t_data *data)
 			// pixel = determine_pixel(data->x, data->y, trigger);
 			// trigger = 0;
 
+
 			generate_camera_ray(data);
 			if (intersection(data) == true)
 			{
@@ -203,7 +204,8 @@ void ray_generation(t_data *data)
 				// if (data->closest_object_type == SPHERE)
 				// 	img_pix_put(data, data->x, data->y, 255);
 				else
-					img_pix_put(data, data->x, data->y, 16711680);
+					img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+					// img_pix_put(data, data->x, data->y, 16711680);
 
 				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 				/* if (data->direct_light == false)
@@ -212,11 +214,11 @@ void ray_generation(t_data *data)
 					pause();
 				} */
 			}
-			else
-			{
-				img_pix_put(data, data->x, data->y, 15132390);
-				// printf("INTERSECTION NOT FOUND\n");
-			}
+			// else
+			// {
+			// 	img_pix_put(data, data->x, data->y, 15132390);
+			// 	// printf("INTERSECTION NOT FOUND\n");
+			// }
 			data->x++;
 		}
 		data->y++;

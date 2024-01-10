@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/10 15:16:21 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:19:43 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ float	distance_light_object(t_data *data)
 	result = vecSqrt(result);
 	distance = sqrtf(result.x + result.y + result.z);
 
-	//soit juste : distance_to_light = vecMagnitude(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
+	//soit juste : distance_to_light = vec_pythagore(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
 	// printf("distance = %f\n", distance);
 	
 	return distance; */
@@ -84,7 +84,7 @@ float		brdf(t_data *data)
 
 	surface_normal = vecSubstract(data->current_object.position, data->closest_intersection_point);
 	
-	float magnitude = vecMagnitude(surface_normal);
+	float magnitude = vec_pythagore(surface_normal);
 	surface_normal.x /= magnitude;
 	surface_normal.y /= magnitude;
 	surface_normal.z /= magnitude;

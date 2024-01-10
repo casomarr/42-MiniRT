@@ -1,18 +1,30 @@
 #     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER                       COLOR (BGR)
 
 
-C 0,0,0                 0,0,1                53
+C 0,0,0                 0,0,1                70
 
-A                                                            0.3                                   255,255,255
+A                                                            0.4                                   255,255,255
 
-L   0,0,0                                                    0.6
+L   -0,0,15                                                    0.6
+#La light est au dessus de la sphere bleue, legerement a gauche de celle-ci et est entre la sphere bleue et la sphere violette 
 
-pl 0,2,20                      0,1,0                                                             0,0,255
+sp 2,-2,20                                                                  5                   255,0,0
+#Sphere qui est bleu et la plus eloignee de la camera
+sp -7,-2,10                                                                  5                   255,0,0
+
+
+
+sp 2,-2,10                                                                   4                   255,255,255
+#Sphere qui est violette et la plus proche de la camera
+
+
+
 #L   0,0,0                                                    0.0
 
-sp -6,-3,40                                                                  5                   255,0,0
+pl 0,2,20                      0,1,0                                                             0,0,255
+#Plan droit TG pas touche
 
-sp 0 ,-3,30                                                                   3                   255,0,255
+pl 1,2,20                      1,0.5,0                                                             0,0,170
 
 
 

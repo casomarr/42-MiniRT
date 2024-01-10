@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/10 14:35:03 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:31:13 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_data
 	float	distance_of_projection;
 	t_vec	current_pixel;
 	float	norm;
+	float	initial_z;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -213,7 +214,7 @@ t_vec	vecSqrt(t_vec a);
 float	DotProduct(t_vec a, t_vec b);
 float	DotProductFloat(t_vec b, float a);
 t_vec	vecMultiplyFloat(t_vec a, float f);
-float	vecMagnitude(t_vec a);
+float	vec_pythagore(t_vec a);
 
 /*Intersections*/
 // void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);

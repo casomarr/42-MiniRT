@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/10 14:30:04 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:56:39 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,45 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object,
 			}
 		}
 	}
+}
+
+void	check_intersection_light(t_data *data, t_ray *ray)
+{
+	t_objs *light;
+	t_objs *object;
+	int trigger = 0;
+	data->z_index = FLT_MAX;
+	
+	if (ray->discriminant >= 0)
+	{
+		light = get_node(data->scene.objs, LIGHT);
+		if (light == NULL)
+		{
+			//gerer ce cas et proteger tous les autres get_node
+			return ;
+		}
+		object = data->scene.objs;
+		if (ray->t > 0)
+		{
+			while(object)
+			{
+				// if (object->type == SPHERE)
+				// {
+					check_intersection_sphere(object, ray);
+					data->intersection_point = vecAdd(data->ray.origin, vecMultiplyFloat(data->ray.direction, ray->t));
+					//printf("data->intersection_point = %f,%f,%f\n\n", data->intersection_point.x, data->intersection_point.y, data->intersection_point.z);
+					if (trigger == 0)
+					{
+						data->initial_z = ray->t;
+						trigger = 1;
+					}
+					if (ray->t > 0 && ray->t < data->z_index) //ray->t > 0 car sinon derriere camera
+						data->z_index = ray->t; // et non data->intersection_point.z car peut etre négatif vu que 3D
+				// }
+				object = object->next;
+			}
+		}
+	}
+	if(data->initial_z == data->z_index)
+		data->direct_light = true;
 }

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/10 14:29:38 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:20:11 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ float	DotProductFloat(t_vec b, float a)
 {
 	return (a * b.x + a * b.y + a * b.z);
 }
-float	vecMagnitude(t_vec a)
+float	vec_pythagore(t_vec a)
 {
 	return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
 }

@@ -90,7 +90,10 @@ void	generate_camera_ray(t_data *data)
 	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
 	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
 	float y = (1 - 2 * ((data->y + 0.5) / WIN_HEIGHT)) * fov_adjustment;
-	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, y, -1)); // -1 = focal length
+	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, y, 1)); // -1 = focal length
+	// printf("x = %f\n", x);
+	// printf("y = %f\n", y);
+
 	
 	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin); //n'a pas les bonnes valeurs pour le premier pixel
 	get_norm(&data->ray);
@@ -195,7 +198,7 @@ void	ray_generation(t_data *data)
 				check_intersection_light(data, /* object,  */&data->ray);
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 				
-				// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+				//mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 				/* if (data->direct_light == false)
 				{
 					mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);

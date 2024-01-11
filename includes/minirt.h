@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/10 18:31:13 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 1000
-# define WIN_WIDTH 1000
+# define WIN_HEIGHT 900
+# define WIN_WIDTH 1600
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -121,6 +121,7 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	t_ray	ray;
+	t_ray	light_ray;
 	t_scene	scene;
 	int		x;
 	int		y;
@@ -136,6 +137,13 @@ typedef struct s_data
 	t_vec	current_pixel;
 	float	norm;
 	float	initial_z;
+
+//probablement pas besoin de toutes ces variables en double
+	float	z_index_light;
+	// t_vec	closest_intersection_point_light;
+	// int		closest_object_type_light;
+	// t_objs	current_object_light;
+	// int		front_object_color_light;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -211,8 +219,8 @@ t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
-float	DotProduct(t_vec a, t_vec b);
-float	DotProductFloat(t_vec b, float a);
+float	dot_product(t_vec a, t_vec b);
+float	dot_productFloat(t_vec b, float a);
 t_vec	vecMultiplyFloat(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 

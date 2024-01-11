@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/10 18:38:47 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:22:02 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	get_color(unsigned char color, float light_intensity)
 		return(255);
 	else
 		return((t_uint8)(color + 0.5)); */
-
 	float new_color = (float)color * light_intensity;
     new_color = roundf(new_color); // Rounds the float to the nearest integer
 
@@ -54,7 +53,10 @@ float	determine_pixel_color(t_data *data)
 	t_rgb	color;
 
 	color.full = data->front_object_color;
-	if (data->direct_light == false) //FALSE ET TRUE SONT INVERSÉS!!!
+	
+	if (data->closest_object_type == LIGHT)
+		return (color.full);
+	if (data->direct_light == true) //FALSE ET TRUE SONT INVERSÉS!!!
 	{
 		light_intensity = /* distance_light_object(data) * */ brdf(data);
 		color.argb[0] = get_color(color.argb[0], light_intensity);
@@ -63,7 +65,7 @@ float	determine_pixel_color(t_data *data)
 	}
 	else
 	{
-		light_intensity = /* shadows(data) *  */brdf(data);
+		light_intensity = /* shadows(data) *   */brdf(data);
 		//light_intensity = 0.4;
 		color.argb[0] = get_color(color.argb[0], light_intensity); //au lieu de shadows(data);
 		color.argb[1] = get_color(color.argb[1], light_intensity);

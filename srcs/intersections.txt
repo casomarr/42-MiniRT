@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#              #
-#    Updated: 2024/01/10 18:19:43 by casomarr         ###   ########.fr        #
+#    Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,9 @@ void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere
 	float	discriminant;
 	float	t;
 
-	a = DotProduct(data->ray.direction, data->ray.direction);
-	b = 2 * DotProduct(data->ray.direction, vecSubstract(data->ray.origin, sphere->position));
-	c = DotProduct(vecSubstract(data->ray.origin, sphere->position), vecSubstract(data->ray.origin, sphere->position)) - powf(sphere->diameter, 2);
+	a = dot_product(data->ray.direction, data->ray.direction);
+	b = 2 * dot_product(data->ray.direction, vecSubstract(data->ray.origin, sphere->position));
+	c = dot_product(vecSubstract(data->ray.origin, sphere->position), vecSubstract(data->ray.origin, sphere->position)) - powf(sphere->diameter, 2);
 	
 	discriminant = powf(b, 2) - (4 * a * c);
 	if (discriminant == 0)
@@ -92,9 +92,9 @@ bool	sphere_intersection_check(t_ray *light_ray, t_objs *object, float light_dis
 	float	discriminant;
 	float	t;
 
-    a = DotProduct(light_ray->direction, light_ray->direction);
-    b = 2 * DotProduct(light_ray->direction, vecSubstract(light_ray->origin, object->position));
-    c = DotProduct(vecSubstract(light_ray->origin, object->position), vecSubstract(light_ray->origin, object->position)) - powf(object->diameter, 2);
+    a = dot_product(light_ray->direction, light_ray->direction);
+    b = 2 * dot_product(light_ray->direction, vecSubstract(light_ray->origin, object->position));
+    c = dot_product(vecSubstract(light_ray->origin, object->position), vecSubstract(light_ray->origin, object->position)) - powf(object->diameter, 2);
     discriminant = powf(b, 2) - (4 * a * c);
 
     if (discriminant >= 0)

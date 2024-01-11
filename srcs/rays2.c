@@ -62,11 +62,11 @@ void	generate_light_ray(t_data *data)
 	t_objs *light;
 
 	light = get_node(data->scene.objs, LIGHT);
-	data->ray.origin = light->position;
-	//data->ray.origin = data->closest_intersection_point; //peut etre que ca a permi que true et false s inversent fans determine_color?
-	data->ray.direction = vecSubstract(light->position, data->closest_intersection_point);
-	get_norm(&data->ray);
-	normalize_direction_vector(&data->ray);
+	data->light_ray.origin = light->position;
+	// data->light_ray.origin = data->closest_intersection_point; //peut etre que ca a permis que true et false s inversent fans determine_color?
+	data->light_ray.direction = vecSubstract(light->position, data->closest_intersection_point);
+	get_norm(&data->light_ray);
+	normalize_direction_vector(&data->light_ray);
 	data->direct_light = false;
 }
 
@@ -84,18 +84,17 @@ void	generate_camera_ray(t_data *data)
 		return ;
 	}
 	data->ray.origin = camera->position;
-	//data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
+	data->ray.current_pixel = create_vec(data->x, data->y, 1); //1 = focal length
 	
 	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
 	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
 	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
-	float y = (1 - 2 * ((data->y + 0.5) / WIN_HEIGHT)) * fov_adjustment;
-	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, -y, 1)); // -1 = focal length
-	// printf("x = %f\n", x);
-	// printf("y = %f\n", y);
+	float y = (/* 1 -  */2 * ((data->y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
+	//calculs de rotation de la camera
+	data->ray.current_pixel = vecAdd(data->ray.origin, create_vec(x, y, 1)); // 1 = focal length
 
 	
-	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin); //n'a pas les bonnes valeurs pour le premier pixel
+	data->ray.direction = vecSubstract(data->ray.current_pixel, data->ray.origin);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
 	//distance_of_projection(data);
@@ -178,6 +177,7 @@ void ray_generation(t_data *data)
 	// t_vec	pixel;
 	//  int trigger;
 
+	data->direct_light = false; //initialiser ici sinon qd light == NULL ou lightness == 0 elle n est pas initialisee donc conditional jump dans determine color
 	data->y = 0;
 	// trigger = 1;
 	while (data->y < WIN_HEIGHT)
@@ -197,8 +197,12 @@ void ray_generation(t_data *data)
 
 				if (data->closest_object_type == SPHERE)
 				{
-					generate_light_ray(data);
-					check_intersection_light(data, /* object,  */&data->ray);
+					if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
+					{
+						generate_light_ray(data);
+						check_intersection_sphere(&data->current_object, &data->light_ray);
+						check_intersection_light(data, /* object,  */&data->light_ray);
+					}
 					img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 				}
 				// if (data->closest_object_type == SPHERE)

@@ -110,9 +110,9 @@ bool	intersection(t_data *data)
 			//create a little sphere to represent the light (yellow sphere)
 			t_objs *light = get_node(data->scene.objs, LIGHT);
 			light->diameter = 3.5;
-			light->color.argb[0] = 255;
+			light->color.argb[0] = 0;
 			light->color.argb[1] = 255;
-			light->color.argb[2] = 0;
+			light->color.argb[2] = 255;
 			check_intersection_sphere(object, &data->ray); //camera ray
 			intersection_point_sphere(&intersection, data, object, &data->ray);
 		}

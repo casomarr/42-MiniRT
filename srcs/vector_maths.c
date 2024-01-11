@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/10 18:20:11 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ t_vec	vecSqrt(t_vec a)
 }
 
 //produit scalaire 
-float	DotProduct(t_vec a, t_vec b)
+float	dot_product(t_vec a, t_vec b)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	return ((float)(a.x * b.x + a.y * b.y + a.z * b.z));
 }
 
-float	DotProductFloat(t_vec b, float a)
+float	dot_productFloat(t_vec b, float a)
 {
 	return (a * b.x + a * b.y + a * b.z);
 }

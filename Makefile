@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/10 14:34:15 by casomarr         ###   ########.fr        #
+#    Updated: 2024/01/12 14:41:23 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,13 +52,13 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
 	   $(PATH_SRCS)/color.c \
-	   $(PATH_SRCS)/intersections2.c \
+	   $(PATH_SRCS)/intersections.c \
 	   $(PATH_SRCS)/light_intensity.c \
 	   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/parse_file.c \
 	   $(PATH_SRCS)/plane_intersection.c \
-	   $(PATH_SRCS)/rays2.c \
+	   $(PATH_SRCS)/rays.c \
 	   $(PATH_SRCS)/render.c \
 	   $(PATH_SRCS)/sphere_intersection.c \
 	   $(PATH_SRCS)/utils.c \

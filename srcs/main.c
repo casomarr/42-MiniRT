@@ -6,13 +6,13 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 13:53:11 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:42:01 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	ft_stop(t_data *data) //TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FREE
+void	ft_stop(t_data *data, short error)
 {
 	t_objs	*tmp;
 	while (data->scene.objs != NULL)

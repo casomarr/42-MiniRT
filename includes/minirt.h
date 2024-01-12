@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:33:30 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:41:14 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,8 +238,6 @@ t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 
 /*Intersections*/
-// void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
-// void	sphere_light_intersection(t_data *data, t_objs *object);
 void	check_intersection_sphere(t_objs *object, t_ray *ray);
 void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);

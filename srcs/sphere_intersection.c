@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/11 16:28:05 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:31:42 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object,
 	}
 }
 
+/*Checks if the light source is reachable by a straight
+line from the point of intersection. We thus iterate through
+each object and compare if the distance from the intersection
+point is higher than the distance from other intersection points
+from other objects. If yes, it means other objects are closer
 void	check_intersection_light(t_data *data, t_ray *light_ray)
 {
 	t_objs *light;

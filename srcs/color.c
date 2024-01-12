@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/11 18:22:02 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:34:38 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,15 @@
 
 int	get_color(unsigned char color, float light_intensity)
 {
-	// float	color;
-
-	// printf("color = %d\n", (int)color);
-	// printf("light_intensity = %f\n", light_intensity);
-
-/* 	color = (float)color * light_intensity;
-
-	// printf("result = %f\n", (float)color);
-	
-	if (color >= 255.0) //au cas ou on essayerait de rendre le blanc encore plus blanc
-		return(255);
-	else
-		return((t_uint8)(color + 0.5)); */
 	float new_color = (float)color * light_intensity;
-    new_color = roundf(new_color); // Rounds the float to the nearest integer
+	new_color = roundf(new_color); // Rounds the float to the nearest integer
 
-    if (new_color > 255.0)
-        return 255;
-    else if (new_color < 0.0)
-        return 0;
-    else
-        return (int)new_color;
+	if (new_color > 255.0)
+		return 255;
+	else if (new_color < 0.0)
+		return 0;
+	else
+		return (int)new_color; //return((t_uint8)(color + 0.5));
 }
 
 /*In case of intersection between the ray leaving the camera and

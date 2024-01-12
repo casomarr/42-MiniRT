@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-void	ft_stop(t_data *data)
+void	ft_stop(t_data *data, short error)
 {
 	t_objs	*tmp;
 	while (data->scene.objs != NULL)
@@ -12,6 +12,13 @@ void	ft_stop(t_data *data)
 		data->scene.objs = tmp;
 	}
 	data->scene.objs = NULL;
+	if (error == STOP)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
 	exit(EXIT_SUCCESS);
 
 }
@@ -28,9 +35,9 @@ int	main(int argc, char **argv)
 	if (parsing(argv[1], &data) == false)
 	{
 		ft_dprintf(2, "Error\nParsing failed\n");
-		ft_stop(&data);
+		ft_stop(&data, PARSING_ERROR);
 		return (0); //need to change this return to 1 and continue test from action
 	}
-	ft_stop(&data);
+	ft_stop(&data, STOP);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:06:28 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/19 13:29:40 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:05:59 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ bool	open_file(char *path, t_data *data)
 	int	fd;
 
 	fd = open(path, O_RDONLY);
+	data->scene.file_name = path;
 	if (fd > 0)
 	{
 			if (parse_file(fd, data) == false)
@@ -38,7 +39,7 @@ bool	check_filename(char *file_name)
 {
 	if (ft_strstr(file_name, ".rt") == EXIT_SUCCESS)
 		return (true);
-	printf("Error: file must be a .rt\n");
+	printf("Error\nFile must be a .rt\n");
 	return (false);
 }
 

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
 /*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
@@ -49,7 +49,14 @@ peut faire une image petite pour augmenter les fps.*/
 # define AMBIENT	4
 # define LIGHT		5
 
+# define STOP 0
+# define PARSING_ERROR 1
+
 # define ESC_KEY 65307
+
+# define ERROR_MSG1 "Error\n\x1B[1m"
+# define ERROR_MSG2 "\x1B[31merror:\x1B[0m\x1B[1m "
+
 
 typedef struct s_vec
 {
@@ -113,6 +120,8 @@ typedef struct s_scene
 	int			nb_ambiant;
 	int			nb_light;
 	int			nb_objs;
+	int			line;
+	char		*file_name;
 } t_scene;
 
 typedef struct s_data
@@ -189,18 +198,22 @@ bool	check_cylinder(char **value, t_data *data);
 void	ft_free_split(char **value);
 void	init_data(t_data *data);
 t_objs	*lst_new_objs(void);
-bool	check_lightness(t_objs *objs);
-bool	check_color(t_objs *objs);
-bool	check_vector(t_objs *objs);
-bool	check_fov(t_objs *objs);
-bool	check_height(t_objs *objs);
-bool	check_data_objs(t_objs *objs);
-bool	check_diameter(t_objs *objs);
-bool	check_coords(t_objs *objs);
+bool	check_lightness(t_objs *objs, t_scene *scene);
+bool	check_color(t_objs *objs, t_scene *scene);
+bool	check_vector(t_objs *objs, t_scene *scene);
+bool	check_fov(t_objs *objs, t_scene *scene);
+bool	check_height(t_objs *objs, t_scene *scene);
+bool	check_data_objs(t_objs *objs, t_scene *scene);
+bool	check_diameter(t_objs *objs, t_scene *scene);
+bool	check_coords(t_objs *objs, t_scene *scene);
+
+void	ft_stop(t_data *data, short error);
+
 
 /*Main*/
 int		initialisation(t_data *data);
-
+int		esc_close(int keycode, t_data *data);
+int		cross_close(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
 void	ray_generation(t_data *data);

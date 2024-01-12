@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
+#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/12 14:41:23 by casomarr         ###   ########.fr        #
+#    Updated: 2024/01/12 14:38:42 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,9 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/render.c \
 	   $(PATH_SRCS)/sphere_intersection.c \
 	   $(PATH_SRCS)/utils.c \
-	   $(PATH_SRCS)/vector_maths.c
+	   $(PATH_SRCS)/vector_maths.c \
+	   $(PATH_SRCS)/init.c \
+	   $(PATH_SRCS)/check_params.c
 
 SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:41:14 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:05:35 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 900
-# define WIN_WIDTH 1600
+// # define WIN_HEIGHT 900
+// # define WIN_WIDTH 1600
+
+# define WIN_HEIGHT 300
+# define WIN_WIDTH 600
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000

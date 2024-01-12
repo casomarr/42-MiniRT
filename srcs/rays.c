@@ -32,7 +32,7 @@ void	generate_light_ray(t_data *data)
 	t_objs *light;
 
 	light = get_node(data->scene.objs, LIGHT);
-	data->light_ray.origin = light->position;
+	data->light_ray.origin = data->closest_intersection_point;
 	data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point);
 	get_norm(&data->light_ray);
 	normalize_direction_vector(&data->light_ray);
@@ -85,12 +85,6 @@ void ray_generation(t_data *data)
 				if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 				{
 					generate_light_ray(data);
-					if (data->closest_object_type == SPHERE)
-						check_intersection_sphere(&data->current_object, &data->light_ray);
-					// if (data->closest_object_type == PLANE)
-					// 	check_intersection_plane(&data->current_object, &data->light_ray);
-					// if (data->closest_object_type == CYLINDER)
-					// 	check_intersection_cylinder(&data->current_object, &data->light_ray);
 					check_intersection_light(data, &data->light_ray);
 				}
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));

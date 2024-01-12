@@ -52,13 +52,13 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
 	   $(PATH_SRCS)/color.c \
-	   $(PATH_SRCS)/intersections2.c \
+	   $(PATH_SRCS)/intersections.c \
 	   $(PATH_SRCS)/light_intensity.c \
 	   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/parse_file.c \
 	   $(PATH_SRCS)/plane_intersection.c \
-	   $(PATH_SRCS)/rays2.c \
+	   $(PATH_SRCS)/rays.c \
 	   $(PATH_SRCS)/render.c \
 	   $(PATH_SRCS)/sphere_intersection.c \
 	   $(PATH_SRCS)/utils.c \

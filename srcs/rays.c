@@ -1,0 +1,103 @@
+#include "minirt.h"
+
+/*Calculates the norm of the angle of the ray from
+camera to object and object to light source and then
+calculates the norm of this angle.*/
+void	get_norm(t_ray *ray)
+{
+//get_norm() ne marche que pour t_ray -->le changer pour eviter get_norm2()
+	ray->norm = sqrtf(ray->direction.x * ray->direction.x + \
+				ray->direction.y * ray->direction.y + \
+				ray->direction.z * ray->direction.z);
+}
+
+void	normalize_direction_vector(t_ray *ray)
+{
+    if (ray->norm > 0)
+    {
+        ray->direction.x /= ray->norm;
+        ray->direction.y /= ray->norm;
+        ray->direction.z /= ray->norm;
+    }
+    else
+    {
+		ray->direction.x = 0.0f;
+		ray->direction.y = 0.0f;
+		ray->direction.z = 0.0f;
+    }
+}
+
+void	generate_light_ray(t_data *data)
+{
+	t_objs *light;
+
+	light = get_node(data->scene.objs, LIGHT);
+	data->light_ray.origin = light->position;
+	data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point);
+	get_norm(&data->light_ray);
+	normalize_direction_vector(&data->light_ray);
+	data->direct_light = false;
+}
+
+/*Generates each ray. They all have the same origin (the camera center)
+but their direction changes (they reach a different pixel on the canevas
+and continue in that direction into the scene)*/
+void	generate_camera_ray(t_data *data)
+{
+	t_objs	*camera;
+
+	camera = get_node(data->scene.objs, CAMERA);
+	if (camera == NULL)
+	{
+		ft_dprintf(2, "Error\nCrash getting camera node\n");
+		return ;
+	}
+	data->ray.origin = camera->position;
+	data->ray.current_pixel = create_vec(data->x, data->y, 1);
+	
+	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
+	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
+	float y = (/* 1 -  */2 * ((data->y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
+	//calculs de rotation de la camera
+	data->ray.current_pixel = vec_add(data->ray.origin, create_vec(x, y, 1));
+	
+	data->ray.direction = vec_substract(data->ray.current_pixel, data->ray.origin);
+	get_norm(&data->ray);
+	normalize_direction_vector(&data->ray);
+	//distance_of_projection(data);
+}
+
+/*Calculates each ray's direction.*/
+void ray_generation(t_data *data)
+{
+
+	data->direct_light = false; //initialiser ici sinon qd light == NULL ou lightness == 0 elle n est pas initialisee donc conditional jump dans determine color
+	data->y = 0;
+	while (data->y < WIN_HEIGHT)
+	{
+		data->x = 0;
+		while (data->x < WIN_WIDTH)
+		{
+			generate_camera_ray(data);
+			if (intersection(data) == true)
+			{
+				if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
+				{
+					generate_light_ray(data);
+					if (data->closest_object_type == SPHERE)
+						check_intersection_sphere(&data->current_object, &data->light_ray);
+					// if (data->closest_object_type == PLANE)
+					// 	check_intersection_plane(&data->current_object, &data->light_ray);
+					// if (data->closest_object_type == CYLINDER)
+					// 	check_intersection_cylinder(&data->current_object, &data->light_ray);
+					check_intersection_light(data, &data->light_ray);
+				}
+				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
+			}
+			data->x++;
+		}
+		data->y++;
+	}
+	printf("FINISHED\n");
+}

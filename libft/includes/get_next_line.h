@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:46:42 by amugnier          #+#    #+#             */
-/*   Updated: 2023/12/12 16:03:18 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:37:08 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 2
 # endif
 
 # include <unistd.h>

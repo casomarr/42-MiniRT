@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/30 17:55:30 by amugnier          #+#    #+#              #
-#    Updated: 2023/12/06 14:23:31 by amugnier         ###   ########.fr        #
+#    Updated: 2024/01/08 15:56:05 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
 	@mkdir -p $(OBJ_DIR)
 	cc $(FLAGS) -c $< -o $@ -I $(PATH_HEADER)
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g3
 
 OPTION = -c
 

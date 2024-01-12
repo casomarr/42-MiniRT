@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 13:34:38 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:49:14 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_color(unsigned char color, float light_intensity)
 }
 
 /*In case of intersection between the ray leaving the camera and
-an object of the scene, this function make the ray go from the
+an object of the scene, this function makes the ray go from the
 intersection to the light source.
 - If the light source is attainable, we calculate the distance
 betwen the light source and the object, and the BRDF.
@@ -41,43 +41,13 @@ float	determine_pixel_color(t_data *data)
 
 	color.full = data->front_object_color;
 	
+	//temporaire pour afficher lumiere
 	if (data->closest_object_type == LIGHT)
 		return (color.full);
-	if (data->direct_light == true) //FALSE ET TRUE SONT INVERSÉS!!!
-	{
-		light_intensity = /* distance_light_object(data) * */ brdf(data);
-		color.argb[0] = get_color(color.argb[0], light_intensity);
-		color.argb[1] = get_color(color.argb[1], light_intensity);
-		color.argb[2] = get_color(color.argb[2], light_intensity);
-	}
-	else
-	{
-		light_intensity = /* shadows(data) *   */brdf(data);
-		//light_intensity = 0.4;
-		color.argb[0] = get_color(color.argb[0], light_intensity); //au lieu de shadows(data);
-		color.argb[1] = get_color(color.argb[1], light_intensity);
-		color.argb[2] = get_color(color.argb[2], light_intensity);
-	}
+		
+	light_intensity = brdf(data);
+	color.argb[0] = get_color(color.argb[0], light_intensity);
+	color.argb[1] = get_color(color.argb[1], light_intensity);
+	color.argb[2] = get_color(color.argb[2], light_intensity);
 	return (color.full);
 }
-
-// void	determine_pixel(t_data *data)
-// {
-// 	//fonction patou
-//
-// 	int tmp;
-// 	int x;
-// 	int y;
-
-// 	tmp = ray_location.x + WIN_WIDTH * ray_location.y;
-// 	x = tmp % WIN_WIDTH;
-// 	y = tmp / WIN_WIDTH;
-
-// 	while (tmp < WIN_WIDTH * WIN_HEIGHT)
-// 	{
-// 		tmp++;
-// 		x = tmp % WIN_WIDTH;
-// 		y = tmp / WIN_WIDTH;
-// 		printf("on est sur le pixel %d:%d\n", x, y);
-// 	}
-// }

@@ -26,7 +26,7 @@ bool	intersection(t_data *data)
 			check_intersection_plan(object, &data->ray, data);
 			intersection_point_plan(&intersection, data, object, &data->ray);
 		}
-		else if (object->type == LIGHT) //temporaire
+		else if (object->type == LIGHT) //temporaire pour afficher lumiere
 		{
 			t_objs *light = get_node(data->scene.objs, LIGHT);
 			light->diameter = 3.5;
@@ -36,8 +36,11 @@ bool	intersection(t_data *data)
 			check_intersection_sphere(object, &data->ray);
 			intersection_point_sphere(&intersection, data, object, &data->ray);
 		}
-		// else if (object->type == CYLINDER)
-		// 	cylinder_intersection(&intersection, data);
+		/* else if (object->type == CYLINDER)
+		{
+			check_intersection_cylinder(object, &data->ray);
+			intersection_point_cylinder(&intersection, data, object, &data->ray);
+		} */
 		object = object->next;
 	}
 	return (intersection);

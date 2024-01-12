@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/14 11:47:22 by casomarr          #+#    #+#              #
-#    Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr        #
+#    Updated: 2024/01/12 14:32:56 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,8 @@ void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere
 	float	t;
 
 	a = dot_product(data->ray.direction, data->ray.direction);
-	b = 2 * dot_product(data->ray.direction, vecSubstract(data->ray.origin, sphere->position));
-	c = dot_product(vecSubstract(data->ray.origin, sphere->position), vecSubstract(data->ray.origin, sphere->position)) - powf(sphere->diameter, 2);
+	b = 2 * dot_product(data->ray.direction, vec_substract(data->ray.origin, sphere->position));
+	c = dot_product(vec_substract(data->ray.origin, sphere->position), vec_substract(data->ray.origin, sphere->position)) - powf(sphere->diameter, 2);
 	
 	discriminant = powf(b, 2) - (4 * a * c);
 	if (discriminant == 0)
@@ -58,7 +58,7 @@ void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere
 	else
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 	
-	data->intersection_point = vecAdd(data->ray.origin, vecMultiplyFloat(data->ray.direction, t));
+	data->intersection_point = vec_add(data->ray.origin, vec_multiply_float(data->ray.direction, t));
 
 	if (discriminant >= 0 && t > 0 && t < data->z_index) //t > 0 car sinon derriere camera
 	{
@@ -93,8 +93,8 @@ bool	sphere_intersection_check(t_ray *light_ray, t_objs *object, float light_dis
 	float	t;
 
     a = dot_product(light_ray->direction, light_ray->direction);
-    b = 2 * dot_product(light_ray->direction, vecSubstract(light_ray->origin, object->position));
-    c = dot_product(vecSubstract(light_ray->origin, object->position), vecSubstract(light_ray->origin, object->position)) - powf(object->diameter, 2);
+    b = 2 * dot_product(light_ray->direction, vec_substract(light_ray->origin, object->position));
+    c = dot_product(vec_substract(light_ray->origin, object->position), vec_substract(light_ray->origin, object->position)) - powf(object->diameter, 2);
     discriminant = powf(b, 2) - (4 * a * c);
 
     if (discriminant >= 0)
@@ -105,7 +105,7 @@ bool	sphere_intersection_check(t_ray *light_ray, t_objs *object, float light_dis
 			t = (-b - sqrtf(discriminant)) / (2 * a);
         if (t > 0)
         {
-            float distance_to_light = vec_pythagore(vecSubstract(vecAdd(light_ray->origin, vecMultiplyFloat(light_ray->direction, t)), light_ray->origin));
+            float distance_to_light = vec_pythagore(vec_substract(vec_add(light_ray->origin, vec_multiply_float(light_ray->direction, t)), light_ray->origin));
             if (distance_to_light < light_distance) //check si intersection point est plus proche que la light source
                 return true; //rien sur le chemin du rayon
         }
@@ -121,7 +121,7 @@ void sphere_light_intersection(t_data *data, t_objs *object)
 
 	light = get_node(data->scene.objs, LIGHT);
     light_ray.origin = light->position;
-    light_ray.direction = vecSubstract(light->position, data->intersection_point);
+    light_ray.direction = vec_substract(light->position, data->intersection_point);
 
 	light_distance = sqrtf(light_ray.direction.x * light_ray.direction.x + \
 				light_ray.direction.y * light_ray.direction.y + \

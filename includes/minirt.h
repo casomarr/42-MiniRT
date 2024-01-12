@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:33:30 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <math.h>
 # include <float.h>
 
-
+//effacer, juste pour tests
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -227,14 +227,14 @@ void	distance_of_projection(t_data *data);
 
 /*Vector Maths*/
 t_vec	create_vec(float x, float y, float z);
-t_vec	vecSubstract(t_vec a, t_vec b);
-t_vec	vecAdd(t_vec a, t_vec b);
-t_vec	vecMultiply(t_vec a, t_vec b);
-t_vec	vecSquared(t_vec a);
-t_vec	vecSqrt(t_vec a);
+t_vec	vec_substract(t_vec a, t_vec b);
+t_vec	vec_add(t_vec a, t_vec b);
+t_vec	vec_multiply(t_vec a, t_vec b);
+t_vec	vec_squared(t_vec a);
+t_vec	vec_sqrt(t_vec a);
 float	dot_product(t_vec a, t_vec b);
-float	dot_productFloat(t_vec b, float a);
-t_vec	vecMultiplyFloat(t_vec a, float f);
+float	dot_product_float(t_vec b, float a);
+t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 
 /*Intersections*/

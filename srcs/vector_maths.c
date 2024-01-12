@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:33:31 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_vec	create_vec(float x, float y, float z)
 }
 
 /*Function to subtract two vectors*/
-t_vec	vecSubstract(t_vec a, t_vec b)
+t_vec	vec_substract(t_vec a, t_vec b)
 {
 	t_vec result;
 
@@ -39,7 +39,7 @@ t_vec	vecSubstract(t_vec a, t_vec b)
 }
 
 /*Function to add two vectors*/
-t_vec	vecAdd(t_vec a, t_vec b)
+t_vec	vec_add(t_vec a, t_vec b)
 {
 	t_vec result;
 	
@@ -50,7 +50,7 @@ t_vec	vecAdd(t_vec a, t_vec b)
 }
 
 /*Function to multiply two vectors*/
-t_vec	vecMultiply(t_vec a, t_vec b)
+t_vec	vec_multiply(t_vec a, t_vec b)
 {
 	t_vec result;
 	
@@ -61,7 +61,7 @@ t_vec	vecMultiply(t_vec a, t_vec b)
 }
 
 /*Function to multiply two vectors*/
-t_vec	vecMultiplyFloat(t_vec a, float f)
+t_vec	vec_multiply_float(t_vec a, float f)
 {
 	t_vec result;
 	
@@ -71,7 +71,7 @@ t_vec	vecMultiplyFloat(t_vec a, float f)
 	return (result);
 }
 
-t_vec	vecSquared(t_vec a)
+t_vec	vec_squared(t_vec a)
 {
 	t_vec result;
 	
@@ -81,7 +81,7 @@ t_vec	vecSquared(t_vec a)
 	return (result);
 }
 
-t_vec	vecSqrt(t_vec a)
+t_vec	vec_sqrt(t_vec a)
 {
 	t_vec result;
 	
@@ -97,7 +97,7 @@ float	dot_product(t_vec a, t_vec b)
 	return ((float)(a.x * b.x + a.y * b.y + a.z * b.z));
 }
 
-float	dot_productFloat(t_vec b, float a)
+float	dot_product_float(t_vec b, float a)
 {
 	return (a * b.x + a * b.y + a * b.z);
 }

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/08 17:03:26 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:32:54 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 	else
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"'%s' not a valid object\n\x1B[0m", data->scene.file_name,\
+			"'%s' not a valid object\n\x1B[0m", data->scene.fname,\
 			data->scene.line, value[0]);
 		ft_free_split(value);
 		return (false);
@@ -109,17 +109,7 @@ bool	check_chars(char **value, t_data *data)
 	if (value[0][ft_strlen(value[0]) - 1] == '\n')
 		value[0][ft_strlen(value[0]) - 1] = '\0';
 	ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-		"'%s' not a valid object\n\x1B[0m", data->scene.file_name, \
+		"'%s' not a valid object\n\x1B[0m", data->scene.fname, \
 		data->scene.line, value[0]);
 	return (false);
-}
-
-void	init_data(t_data *data)
-{
-	data->scene.nb_camera = 0;
-	data->scene.nb_ambiant = 0;
-	data->scene.nb_light = 0;
-	data->scene.nb_objs = 0;
-	data->scene.objs = NULL;
-	data->scene.line = 1;
 }

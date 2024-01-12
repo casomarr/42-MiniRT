@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
 /*   Updated: 2024/01/12 14:32:56 by casomarr         ###   ########.fr       */
@@ -36,7 +36,7 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object,
 		{
 			data->intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, ray->t));
 			//ici faire transorfmation x et y
-			//multiplier par cosinus 
+			//multiplier par cosinus
 			/* t_objs *camera = get_node(data->scene.objs, CAMERA);
 			t_vec gamaprim = create_vec(object->position.x, object->position.y, 0.0);
 			data->intersection_point.x *= (camera->position.z - object->position.x) / sqrtf(dot_product(vec_substract(gamaprim, camera->position), vec_substract(gamaprim, camera->position))); */
@@ -104,3 +104,4 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 	if(data->initial_z == data->z_index_light)
 		data->direct_light = true;
 }
+*/

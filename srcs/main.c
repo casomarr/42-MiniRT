@@ -6,32 +6,12 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/11 16:54:18 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:53:11 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-//effacer
-#include <sys/wait.h>
-
-/* void	init_img_black(t_data *data)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WIN_HEIGHT)
-	{
-		x = 0;
-		while (x < WIN_WIDTH)
-		{
-			img_pix_put(data, x, y, 65536); //black + 1 car sinon beugue
-			x++;
-		}
-		y++;
-	}
-} */
 void	ft_stop(t_data *data) //TODO CREATE A FUCKING FLAG TO CHOICE WHAT NEED FREE
 {
 	t_objs	*tmp;

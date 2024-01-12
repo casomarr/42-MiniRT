@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:05:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 18:54:06 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ peut faire une image petite pour augmenter les fps.*/
 // # define WIN_HEIGHT 900
 // # define WIN_WIDTH 1600
 
-# define WIN_HEIGHT 300
-# define WIN_WIDTH 600
+# define WIN_HEIGHT 1300
+# define WIN_WIDTH 1600
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -90,7 +90,6 @@ typedef struct s_img
 typedef struct s_ray
 {
 	t_vec	origin;
-	t_vec	current_pixel;
 	t_vec	location;
 	t_vec	direction;
 	float	norm;
@@ -138,24 +137,10 @@ typedef struct s_data
 	int		x;
 	int		y;
 	float	z_index;
-	float	light_distance;
-	int		front_object_color;
-	t_vec	intersection_point;
 	t_vec	closest_intersection_point;
-	int		closest_object_type;
-	t_objs	current_object;
+	t_objs	closest_object;
 	bool	direct_light;
-	float	distance_of_projection;
-	t_vec	current_pixel;
 	float	norm;
-	float	initial_z;
-
-//probablement pas besoin de toutes ces variables en double
-	float	z_index_light;
-	// t_vec	closest_intersection_point_light;
-	// int		closest_object_type_light;
-	// t_objs	current_object_light;
-	// int		front_object_color_light;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -262,10 +247,10 @@ void	img_pix_put(t_data *data, int x, int y, int color);
 // void	add_pixel_to_img(t_data *data, int color);
 
 /*Light Intensity*/
-bool	direct_light(t_data *data);
-float	distance_light_object(t_data *data);
-float		brdf(t_data *data);
-float		shadows(t_data *data);
+float	clamp(float value, float min, float max);
+float	lerp(float ratio, float min, float max);
+float	brdf(t_data *data);
+float	bouncing(t_data *data);
 
 /*Utils*/
 t_objs	*get_node(t_objs *objs, int type);

@@ -45,6 +45,7 @@ and continue in that direction into the scene)*/
 void	generate_camera_ray(t_data *data)
 {
 	t_objs	*camera;
+	t_vec	current_pixel;
 
 	camera = get_node(data->scene.objs, CAMERA);
 	if (camera == NULL)
@@ -53,19 +54,18 @@ void	generate_camera_ray(t_data *data)
 		return ;
 	}
 	data->ray.origin = camera->position;
-	data->ray.current_pixel = create_vec(data->x, data->y, 1);
+	current_pixel = create_vec(data->x, data->y, 1);
 	
 	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
 	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
 	float x = (2 * ((data->x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
 	float y = (/* 1 -  */2 * ((data->y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
 	//calculs de rotation de la camera
-	data->ray.current_pixel = vec_add(data->ray.origin, create_vec(x, y, 1));
+	current_pixel = vec_add(data->ray.origin, create_vec(x, y, 1));
 	
-	data->ray.direction = vec_substract(data->ray.current_pixel, data->ray.origin);
+	data->ray.direction = vec_substract(current_pixel, data->ray.origin);
 	get_norm(&data->ray);
 	normalize_direction_vector(&data->ray);
-	//distance_of_projection(data);
 }
 
 /*Calculates each ray's direction.*/
@@ -84,8 +84,10 @@ void ray_generation(t_data *data)
 			{
 				if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 				{
+					data->light_ray.discriminant = 0.0;
 					generate_light_ray(data);
 					check_intersection_light(data, &data->light_ray);
+					//bouncing
 				}
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 			}

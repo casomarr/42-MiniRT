@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:12:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:40:16 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:32:26 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ bool	three_params_int(char *value, t_scene *scene)
 bool	three_params_float(char *value, t_scene *scene)
 {
 	char	**params;
+	int		i;
 
+	i = 0;
 	params = ft_split(value, ',');
 	if (count_params(params) != 3)
 	{
@@ -75,16 +77,16 @@ bool	three_params_float(char *value, t_scene *scene)
 		ft_free_split(params);
 		return (false);
 	}
-	while (*params)
+	while (params[i])
 	{
-		if (check_isdigit_float(*params) == false)
+		if (check_isdigit_float(params[i]) == false)
 		{
 			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
 				"number is not a FLOAT\n\x1B[0m", scene->fname, scene->line);
 			ft_free_split(params);
 			return (false);
 		}
-		params++;
+		i++;
 	}
 	ft_free_split(params);
 	return (true);

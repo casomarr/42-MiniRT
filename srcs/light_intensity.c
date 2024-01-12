@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:31:43 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/12 18:21:35 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ float		brdf(t_data *data)
 	t_objs	*ambient;
 	float var_brdf;
 
-	surface_normal = vec_substract(data->closest_intersection_point, data->current_object.position);
+	surface_normal = vec_substract(data->closest_intersection_point, data->closest_object.position);
 	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 	{
 		float magnitude = vec_pythagore(surface_normal);
@@ -51,4 +51,12 @@ float		brdf(t_data *data)
 	ambient = get_node(data->scene.objs, AMBIENT);
 	var_brdf = var_brdf + ambient->lightness;
 	return var_brdf;
+}
+
+float		bouncing(t_data *data)
+{
+	/*determine l'influence de la couleur de l'objet
+	sur le chemin de la lumiere*/
+	(void)data;
+	return (1.0); //TODO
 }

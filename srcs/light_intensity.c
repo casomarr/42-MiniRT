@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/11 17:57:18 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:31:43 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ line from the point of intersection. If not, it means the
 current pixel is in the shadow.*/
 // bool	direct_light(t_data *data)
 // {
-	
+
 // 	///test
 // 	(void)data;
 // 	return (true); //bleu
@@ -26,7 +26,7 @@ current pixel is in the shadow.*/
 
 /*The closer the object is to the light source, the
 higher is the light intensity reflected on the object.
-This equation is called Inverse Square Law.*/
+ equation is called Inverse Square Law.*/
 float	distance_light_object(t_data *data)
 {
 /* 	t_vec	result;
@@ -42,7 +42,7 @@ float	distance_light_object(t_data *data)
 
 	//soit juste : distance_to_light = vec_pythagore(vecSubstract(vecAdd(ray->origin, vecMultiplyFloat(ray->direction, ray->t)), ray->origin));
 	// printf("distance = %f\n", distance);
-	
+
 	return distance; */
 
 //donne cercle rouge avec interieur noir
@@ -98,17 +98,17 @@ float		brdf(t_data *data)
 	float var_brdf;
 
 	surface_normal = vecSubstract(data->closest_intersection_point, data->current_object.position);
-	
+
 	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 	{
 		float magnitude = vec_pythagore(surface_normal);
 		surface_normal.x /= magnitude;
 		surface_normal.y /= magnitude;
 		surface_normal.z /= magnitude;
-		
+
 		// printf("direction light : %f:%f:%f\n", data->light_ray.direction.x, data->light_ray.direction.y, data->light_ray.direction.z);
 		// printf("Surface normal : %f:%f:%f\n", surface_normal.x, surface_normal.y, surface_normal.z);
-		
+
 		var_brdf = dot_product(data->light_ray.direction, surface_normal);
 
 		// if (var_brdf > 0.0 && var_brdf < 1.0)
@@ -121,7 +121,7 @@ float		brdf(t_data *data)
 		// 	var_brdf = 0.0;
 		// var_brdf = -var_brdf;
 
-		
+
 		// var_brdf = (((clamp(var_brdf, -1.0, 0.0)))) * -1;
 
 		var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
@@ -154,7 +154,7 @@ float	shadows(t_data *data)
 	brightness = max_attenuation − min_attenuation / attenuation − min_attenuation
 	final_color = brightness * object_color
 	*/
-	
+
 	float	constant_attenuation = 0.1;
 	float	linear_attenuation = 0.007;
 	float	quadratic_attenuation = 0.01;

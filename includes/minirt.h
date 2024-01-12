@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:41:41 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_scene
 	int			nb_light;
 	int			nb_objs;
 	int			line;
-	char		*file_name;
+	char		*fname;
 } t_scene;
 
 typedef struct s_data
@@ -206,6 +206,12 @@ bool	check_height(t_objs *objs, t_scene *scene);
 bool	check_data_objs(t_objs *objs, t_scene *scene);
 bool	check_diameter(t_objs *objs, t_scene *scene);
 bool	check_coords(t_objs *objs, t_scene *scene);
+int		count_params(char **value);
+bool	check_isdigit_int(char *value, t_scene *scene);
+bool	check_isdigit_float(char *value);
+bool	three_params_float(char *value, t_scene *scene);
+bool	three_params_int(char *value, t_scene *scene);
+
 
 void	ft_stop(t_data *data, short error);
 

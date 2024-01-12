@@ -6,21 +6,11 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/09 14:52:26 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:42:13 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	count_params(char **value)
-{
-	int	i;
-
-	i = 0;
-	while (value[i])
-		i++;
-	return (i);
-}
 
 bool	check_isdigit_int(char *value, t_scene *scene)
 {
@@ -34,8 +24,8 @@ bool	check_isdigit_int(char *value, t_scene *scene)
 		if (ft_isdigit(value[i]) == false)
 		{
 			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-				"This number is not an INT\n\x1B[0m",\
-				scene->file_name, scene->line);
+				"number is not an INT\n\x1B[0m",\
+				scene->fname, scene->line);
 			return (false);
 		}
 		i++;
@@ -69,78 +59,6 @@ bool	check_isdigit_float(char *value)
 		if (value[i] == '\n')
 			value[i] = '\0';
 	}
-	return (true);
-}
-
-bool	three_params_int(char *value, t_scene *scene)
-{
-	int		i;
-	char	**params;
-
-	i = 0;
-	params = ft_split(value, ',');
-	if (!params)
-		return (false);
-	if (count_params(params) != 3)
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters\n\x1B[0m",\
-			scene->file_name, scene->line);
-		ft_free_split(params);
-		return (false);
-	}
-	while (params[i])
-	{
-		if (check_isdigit_int(params[i], scene) == false)
-		{
-			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-				"This number is not an INT\n\x1B[0m",\
-				scene->file_name, scene->line);
-			ft_free_split(params);
-			return (false);
-		}
-		if (ft_strlen(params[i]) >= 4)
-		{
-			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-				"Wrong lenght colors parameters\n\x1B[0m",\
-				scene->file_name, scene->line);
-			ft_free_split(params);
-			return (false);
-		}
-		i++;
-	}
-	ft_free_split(params);
-	return (true);
-}
-
-bool	three_params_float(char *value, t_scene *scene)
-{
-	int		i;
-	char	**params;
-
-	i = 0;
-	params = ft_split(value, ',');
-	if (count_params(params) != 3) //TODO maybe change to count commas
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters\n\x1B[0m",\
-			scene->file_name, scene->line);
-		ft_free_split(params);
-		return (false);
-	}
-	while (params[i])
-	{
-		if (check_isdigit_float(params[i]) == false)
-		{
-			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-				"This number is not a FLOAT\n\x1B[0m",\
-				scene->file_name, scene->line);
-			ft_free_split(params);
-			return (false);
-		}
-		i++;
-	}
-	ft_free_split(params);
 	return (true);
 }
 /*
@@ -241,7 +159,7 @@ float	ft_atof(char *str)
 	sign = 1;
 	dec = 0;
 	reti = 0;
-	if (*str == '-')
+	if (*str == '-') //TODO CHECK IF + IT'S OK BUT I DON'T THINK SO
 	{
 		sign = -1.;
 		str++;
@@ -290,7 +208,7 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
 		|| (ft_atoi(split[2]) > 255 || ft_atoi(split[2]) < 0))
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Color must be between 0 and 255\n\x1B[0m", scene->file_name,\
+			"Color must be between 0 and 255\n\x1B[0m", scene->fname,\
 			scene->line);
 		ft_free_split(split);
 		return (false);
@@ -311,14 +229,14 @@ bool	check_camera(char **value, t_data *data)
 	if (data->scene.nb_camera > 1)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Only one camera is allowed\n\x1B[0m", data->scene.file_name,\
+			"Only one camera is allowed\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Camera\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Camera\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -363,21 +281,21 @@ bool	check_ambiant(char **value, t_data *data)
 	if (data->scene.nb_ambiant > 1)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Only one ambiant is allowed\n\x1B[0m", data->scene.file_name,\
+			"Only one ambiant is allowed\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 3)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Ambiant\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Ambiant\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Lightness must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			"Lightness must be a FLOAT\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -416,14 +334,14 @@ bool	check_light(char **value, t_data *data)
 	if (data->scene.nb_light > 1)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Only one light is allowed\n\x1B[0m", data->scene.file_name,\
+			"Only one light is allowed\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
 	if (count_params(value) != 3)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Light\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Light\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -432,7 +350,7 @@ bool	check_light(char **value, t_data *data)
 	if (check_isdigit_float(value[2]) == false)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Lightness must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			"Lightness must be a FLOAT\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -460,29 +378,6 @@ bool	check_light(char **value, t_data *data)
 	return (true);
 }
 
-t_objs	*lst_new_objs(void)
-{
-	t_objs	*new;
-
-	new = malloc(sizeof(t_objs));
-	if (!new)
-		return (NULL);
-	new->type = 0;
-	new->position.x = 0;
-	new->position.y = 0;
-	new->position.z = 0;
-	new->direction.x = 0;
-	new->direction.y = 0;
-	new->direction.z = 0;
-	new->color.full = 0;
-	new->diameter = 0;
-	new->height = 0;
-	new->fov = 0;
-	new->lightness = 0;
-	new->next = NULL;
-	return (new);
-}
-
 bool	check_sphere(char **value, t_data *data)
 {
 	t_objs	*tmp	;
@@ -492,7 +387,7 @@ bool	check_sphere(char **value, t_data *data)
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Sphere\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Sphere\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -501,7 +396,7 @@ bool	check_sphere(char **value, t_data *data)
 	if (check_isdigit_float(value[2]) == false) //diameter
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Diameter must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			"Diameter must be a FLOAT\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -542,7 +437,7 @@ bool	check_plan(char **value, t_data *data)
 	if (count_params(value) != 4)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Plan\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Plan\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -588,7 +483,7 @@ bool	check_cylinder(char **value, t_data *data)
 	if (count_params(value) != 6)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Cylinder\n\x1B[0m", data->scene.file_name,\
+			"Wrong number of parameters for Cylinder\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}
@@ -599,14 +494,14 @@ bool	check_cylinder(char **value, t_data *data)
 	if (check_isdigit_float(value[3]) == false)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Diameter must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			"Diameter must be a FLOAT\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 			return (false);
 	}
 	if (check_isdigit_float(value[4]) == false)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Height must be a FLOAT\n\x1B[0m", data->scene.file_name,\
+			"Height must be a FLOAT\n\x1B[0m", data->scene.fname,\
 			data->scene.line);
 		return (false);
 	}

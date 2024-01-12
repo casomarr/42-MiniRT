@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/05 17:44:47 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,17 @@ t_vec	vecSqrt(t_vec a)
 	return (result);
 }
 
-//pour vecteur normaliser vecteurs pour la norme
-float	DotProduct(t_vec a, t_vec b)
+//produit scalaire 
+float	dot_product(t_vec a, t_vec b)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	return ((float)(a.x * b.x + a.y * b.y + a.z * b.z));
 }
-float	vecMagnitude(t_vec a)
+
+float	dot_productFloat(t_vec b, float a)
+{
+	return (a * b.x + a * b.y + a * b.z);
+}
+float	vec_pythagore(t_vec a)
 {
 	return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
 }

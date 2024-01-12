@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/08 16:31:24 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:04:04 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-
 # define MAX_OBJS 256
+#define PI 3.14159265358979323846
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 1000
-# define WIN_WIDTH 1000
+# define WIN_HEIGHT 900
+# define WIN_WIDTH 1600
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -130,6 +130,7 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	t_ray	ray;
+	t_ray	light_ray;
 	t_scene	scene;
 	int		x;
 	int		y;
@@ -141,6 +142,17 @@ typedef struct s_data
 	int		closest_object_type;
 	t_objs	current_object;
 	bool	direct_light;
+	float	distance_of_projection;
+	t_vec	current_pixel;
+	float	norm;
+	float	initial_z;
+
+//probablement pas besoin de toutes ces variables en double
+	float	z_index_light;
+	// t_vec	closest_intersection_point_light;
+	// int		closest_object_type_light;
+	// t_objs	current_object_light;
+	// int		front_object_color_light;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -209,7 +221,9 @@ void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
 void	generate_camera_ray(t_data *data);
+// void	generate_camera_ray(t_data *data, float x, float y);
 void	generate_light_ray(t_data *data);
+void	distance_of_projection(t_data *data);
 
 /*Vector Maths*/
 t_vec	create_vec(float x, float y, float z);
@@ -218,16 +232,17 @@ t_vec	vecAdd(t_vec a, t_vec b);
 t_vec	vecMultiply(t_vec a, t_vec b);
 t_vec	vecSquared(t_vec a);
 t_vec	vecSqrt(t_vec a);
-float	DotProduct(t_vec a, t_vec b);
+float	dot_product(t_vec a, t_vec b);
+float	dot_productFloat(t_vec b, float a);
 t_vec	vecMultiplyFloat(t_vec a, float f);
-float	vecMagnitude(t_vec a);
+float	vec_pythagore(t_vec a);
 
 /*Intersections*/
 // void	camera_sphere_intersection(bool *intersection, t_data *data, t_objs *sphere);
 // void	sphere_light_intersection(t_data *data, t_objs *object);
-void check_intersection_init(t_objs *object, t_ray *ray);
-void check_intersection_camera(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
-void check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
+void	check_intersection_sphere(t_objs *object, t_ray *ray);
+void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
 
 /*Color*/
@@ -247,5 +262,11 @@ float		shadows(t_data *data);
 
 /*Utils*/
 t_objs	*get_node(t_objs *objs, int type);
+
+/*Plane intersection*/
+void	get_norm2(t_vec *a, t_data *data);
+void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data);
+void	intersection_point_plan(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+
 
 #endif

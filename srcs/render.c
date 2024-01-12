@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:21:40 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/30 17:20:51 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/11 14:43:10 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	img_pix_put(t_data *data, int x, int y, int color)
 		printf("Error\nimg.width is not initialized\n");
 		return;
 	} */
-
-	pixel = data->img.addr + (y * data->img.width + x * (data->img.bpp / 8)); //magie voudou demander a patou
+	(void)y;
+	pixel = data->img.addr + ((WIN_HEIGHT - 1 - y) * data->img.width + x * (data->img.bpp / 8)); //magie voudou demander a patou
 	while (i >= 0)
 	{
 		/* big endian, MSB is the leftmost bit */

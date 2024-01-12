@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
 /*   Updated: 2024/01/08 14:57:06 by amugnier         ###   ########.fr       */
@@ -83,7 +83,8 @@ int	initialisation(t_data *data)
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.width,
 						&data->img.endian);
-	// init_img_black(data); //pas sûre que ce soit nécessaire
+	data->current_pixel.x = 0;
+	data->current_pixel.y = 0;
 	return (EXIT_SUCCESS);
 }
 

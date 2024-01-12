@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_data_objs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
 /*   Updated: 2024/01/08 16:33:31 by amugnier         ###   ########.fr       */
@@ -28,7 +28,7 @@ bool	check_coords(t_objs *objs, t_scene *scene)//je separe Camera, Light, Ambian
 
 bool	check_diameter(t_objs *objs, t_scene *scene)
 {
-	if (objs->diameter <= 0 || objs->diameter > 50)
+	if (objs->diameter <= 0 || objs->diameter > 200)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
 			"Diameter must be between 0 and 50\n\x1B[0m", scene->file_name,\

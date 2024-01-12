@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:32:56 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:48:58 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 	data->z_index_light = FLT_MAX;
 	data->initial_z = 0.0;
 	light_ray->t = 0;
-	
+
 	if (light_ray->discriminant >= 0.0)
 	{
 		light = get_node(data->scene.objs, LIGHT);
@@ -104,4 +104,3 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 	if(data->initial_z == data->z_index_light)
 		data->direct_light = true;
 }
-*/

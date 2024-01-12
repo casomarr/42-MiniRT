@@ -5,7 +5,7 @@ C 0,2,0                 0,0,1                      70
 A                                                            0.1                                 255,255,255
 
 L   2,10,20                                                  0.9
-#La light est au dessus de la sphere bleue, legerement a gauche de celle-ci et est entre la sphere bleue et la sphere violette 
+#La light est au dessus de la sphere bleue, legerement a gauche de celle-ci et est entre la sphere bleue et la sphere violette
 
 sp 2,0,20                                                                   2                   255,0,0
 sp 2,5,20                                                                   5                   255,0,0

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 18:54:06 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:30:46 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_img
 typedef struct s_ray
 {
 	t_vec	origin;
-	t_vec	location;
 	t_vec	direction;
 	float	norm;
 	int		color;
@@ -232,8 +231,8 @@ t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 
 /*Intersections*/
-void	check_intersection_sphere(t_objs *object, t_ray *ray);
-void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
+void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere, t_ray *ray);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
 
@@ -241,6 +240,10 @@ bool	intersection(t_data *data);
 int		get_color(unsigned char color, float light_intensity);
 float		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
+
+/*Cylinder*/
+void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);
+void	intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylinder, t_ray *camera_ray);
 
 /*Render*/
 void	img_pix_put(t_data *data, int x, int y, int color);
@@ -257,8 +260,8 @@ t_objs	*get_node(t_objs *objs, int type);
 
 /*Plane intersection*/
 void	get_norm2(t_vec *a, t_data *data);
-void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data);
-void	intersection_point_plan(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
+void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
 
 
 #endif

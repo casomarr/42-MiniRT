@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:05:16 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 18:39:42 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:29:18 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_norm2(t_vec *a, t_data *data)
 	data->norm = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
-void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data)
+void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data)
 {
 	(void)data;
 	//get_norm2(&object->position, data);
@@ -31,7 +31,7 @@ void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data)
 		ray->t = FLT_MAX;
 }
 
-void	intersection_point_plan(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
+void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
 {
 	t_vec intersection_point;
 	

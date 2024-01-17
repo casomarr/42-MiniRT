@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/12 14:38:42 by amugnier         ###   ########.fr        #
+#    Updated: 2024/01/17 16:12:36 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
 	   $(PATH_SRCS)/color.c \
+	   $(PATH_SRCS)/cylinder.c \
 	   $(PATH_SRCS)/intersections.c \
 	   $(PATH_SRCS)/light_intensity.c \
 	   $(PATH_SRCS)/main.c \

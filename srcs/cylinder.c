@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/17 18:50:21 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/18 15:49:43 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,23 @@ void intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylin
 	// Check if intersection points are within cylinder height
 	float y = camera_ray->origin.y + camera_ray->t * dot_product(camera_ray->direction, cylinder->direction);
 
-	// printf("cylinder height: %f\n", cylinder->height);
-	if (camera_ray->discriminant >= 0 && (y >= 0 && y <= cylinder->height))
+	//printf("y = %f, cylinder height: %f\n", y, cylinder->height);
+	if (camera_ray->discriminant >= 0 && y >= 0 && y <= cylinder->height)
 	{
 		// printf("cylinder intersection found\n");
 		*intersection = true;  // Intersection within cylinder height
-		if (camera_ray->t > 0 && camera_ray->t < data->z_index) //camera_ray->t > 0 car sinon derriere camera
-		{
-			data->z_index = camera_ray->t;
-
+		t_vec intersection_point_local = vec_add(camera_ray->origin, vec_multiply_float(camera_ray->direction, camera_ray->t));
+		// if ((powf(intersection_point_local.x, 2) + powf(intersection_point_local.z, 2)) <= powf(cylinder->diameter / 2, 2))
+		// {
+			//printf("cylinder intersection found\n");
 			// Transform intersection point back to world space
-			t_vec intersection_point_local = vec_add(camera_ray->origin, vec_multiply_float(camera_ray->direction, camera_ray->t));
 			t_vec intersection_point_world = vec_add(vec_rotate(intersection_point_local, cylinder->direction), cylinder->position);
-
-			data->closest_intersection_point = intersection_point_world;
-			data->closest_object = *cylinder;
-		}
+			if (camera_ray->t > 0 && camera_ray->t < data->z_index) //camera_ray->t > 0 car sinon derriere camera
+			{
+				data->z_index = camera_ray->t;
+				data->closest_intersection_point = intersection_point_world;
+				data->closest_object = *cylinder;
+			}
+		// }
 	}
 }

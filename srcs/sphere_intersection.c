@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/17 18:30:13 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/18 18:10:03 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+/* void	check_intersection_sphere_light(object, light_ray)
+{
+	//puts in ray->t the t that is closer to the camera (au lieu du plus petit t)
+	t_vec	calc;
+	
+	calc.x = dot_product(ray->direction, ray->direction); //norme au carré
+	calc.y = 2 * dot_product(ray->direction, vec_substract(ray->origin, sphere->position));
+	calc.z = dot_product(vec_substract(ray->origin, sphere->position), vec_substract(ray->origin, sphere->position)) - powf(sphere->diameter / 2, 2);
+	ray->discriminant = powf(calc.y, 2) - (4 * calc.x * calc.z); // b2 - 4ac
+	if (ray->discriminant >= 0)
+	{
+		// if (ray->discriminant == 0)
+		// 	printf("OUI\n");
+		if ((-calc.y + sqrtf(ray->discriminant)) / (2 * calc.x) < (-calc.y - sqrtf(ray->discriminant)) / (2 * calc.x))
+			ray->t = (-calc.y + sqrtf(ray->discriminant)) / (2 * calc.x);
+		else
+			ray->t = (-calc.y - sqrtf(ray->discriminant)) / (2 * calc.x);
+	}
+	
+} */
 
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray)
 {

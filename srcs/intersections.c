@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/17 18:28:23 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/18 19:09:11 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec li
     return t_value;
 }
 
+float	get_norm3(t_vec vec)
+{
+	return(sqrtf(vec.x * vec.x + \
+				vec.y * vec.y + \
+				vec.z * vec.z));
+}
+
 /*Checks if the light source is reachable by a straight
 line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
@@ -100,21 +107,31 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 	//initial intersection object's t for light ray
 	// if (data->closest_object.type == SPHERE)
 		//intersection_with_light_from_closest_point_from_camera(&data->closest_object, &data->ray);
-		initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction); //TODO: returns the "t" from closest intersection point from camera from light
-		// check_intersection_sphere(&data->closest_object, light_ray);
+	initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction);
+	// check_intersection_sphere(&data->closest_object, light_ray);
 	// initial_t = light_ray->t;
+
+	// //normale du point d'intersection (calcul different pour chaque type d'objet)
+	// float intersection_norm = get_norm3(data->closest_intersection_point);
+/* 	// vecteurA = intersection - sphere->position
+	t_vec	vectorA = vec_substract(data->closest_intersection_point, data->closest_object.position);
+	//normaliser vecteurA
+	float	variateur = get_norm3(vectorA);
+	//rajouter un pourcentage de la normale de vecteur A au point d'intersection dans la ligne suivante
+	initial_t = calculate_t_value(vec_multiply_float(data->closest_intersection_point, variateur * 0.2), light->position, light_ray->direction); */
 	
 	object = data->scene.objs;
 	while(object)
 	{
 		light_ray->t = 0.0f;
 		if (object->type == SPHERE)
-			check_intersection_sphere(object, light_ray);
+			check_intersection_sphere(object, light_ray); //c'est ca qui cree les ombres et ne cree pas le bruit
+			// check_intersection_sphere(&data->closest_object, light_ray);
 			// further_point_from_same_object_of_intersection_point(object, light_ray);
-/* 		else if (object->type == PLANE) //si en commentaire le plan alors pas de bruit!
+		else if (object->type == PLANE) //si en commentaire le plan alors pas de bruit!
 			check_intersection_plane(object, light_ray, data);
-		else if (object->type == CYLINDER)
-			check_intersection_cylinder(object, light_ray); */
+		// else if (object->type == CYLINDER)
+		// 	check_intersection_cylinder(object, light_ray);
 		if (light_ray->t > 0.0f && light_ray->t < initial_t) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
 		{
 			//condition avec != au lieu de < : ombres sur plans apparaissent

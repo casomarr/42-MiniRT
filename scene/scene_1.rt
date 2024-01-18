@@ -2,7 +2,7 @@
 
 C 0,2,0                 0,0,1                      70
 
-A                                                            0.2                                            255,255,255
+A                                                            0.1                                            255,255,255
 
 L   2,10,20                                                  0.9
 #La light est au dessus de la sphere bleue, legerement a gauche de celle-ci et est entre la sphere bleue et la sphere violette 
@@ -18,8 +18,9 @@ sp 3,0,10                                                                   4   
 #L   0,0,0                                                    0.0
 
 pl 0,-2,20                      0,1,0                                                                         0,0,255
+pl 0,100,20                      0,1,0                                                                         100,0,255
 #Plan droit TG pas touche
 
-pl 3,-1,20                      1,-0.5,0                                                                      0,255,0
+pl 3,-1,20                      1,-0.5,0                                                                      110,255,140
 
-cy 0,0,8                      0,0,0                                       2              2             150,0,150
+#cy 0,0,8                      0,0,0                                       1              2             150,0,150

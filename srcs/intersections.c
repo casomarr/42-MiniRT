@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/19 17:40:40 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:18:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,10 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 				}
 		
 		}
-		// else if (object->type == PLANE)
-		// 	check_intersection_plane(object, light_ray, data);
-		// else if (object->type == CYLINDER)
-		// 	check_intersection_cylinder(object, light_ray);
+		else if (object->type == PLANE)
+			check_intersection_plane(object, light_ray, data);
+		else if (object->type == CYLINDER)
+			check_intersection_cylinder(object, light_ray);
 		if (light_ray->t > 0 && light_ray->t < initial_t) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
 		{
 			data->direct_light = false;

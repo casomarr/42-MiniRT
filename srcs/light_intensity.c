@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 18:21:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:16:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ float		brdf(t_data *data)
 	float var_brdf;
 
 	surface_normal = vec_substract(data->closest_intersection_point, data->closest_object.position);
-	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
+
+	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness > 0.0)
 	{
 		float magnitude = vec_pythagore(surface_normal);
 		surface_normal.x /= magnitude;
 		surface_normal.y /= magnitude;
 		surface_normal.z /= magnitude;
-		var_brdf = dot_product(data->light_ray.direction, surface_normal);
+		// Reverse the direction of the light ray
+        //t_vec reversed_light_direction = vec_multiply_float(data->light_ray.direction, -1.0);
+		//var_brdf = dot_product(reversed_light_direction, surface_normal);
+		var_brdf = dot_product(data->light_ray.direction, surface_normal); //inverser la direction du rayon? vu que ne va plus vers ala lumiere mais l inverse
 		var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/17 18:30:46 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:00 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,12 +229,14 @@ float	dot_product(t_vec a, t_vec b);
 float	dot_product_float(t_vec b, float a);
 t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
+t_vec	vec_add_float(t_vec vec, float nb);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
 void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere, t_ray *ray);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
+float	get_norm3(t_vec vec);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);

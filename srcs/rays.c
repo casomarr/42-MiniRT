@@ -27,13 +27,29 @@ void	normalize_direction_vector(t_ray *ray)
     }
 }
 
-void	generate_light_ray(t_data *data)
+//part du point d'intersection vers la light
+/* void	generate_light_ray(t_data *data)
 {
 	t_objs *light;
 
 	light = get_node(data->scene.objs, LIGHT);
 	data->light_ray.origin = data->closest_intersection_point;
 	data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point);
+	get_norm(&data->light_ray);
+	normalize_direction_vector(&data->light_ray);
+	data->direct_light = true;
+} */
+
+//part de la light ers le point d'intersection
+void	generate_light_ray(t_data *data)
+{
+	t_objs *light;
+
+	light = get_node(data->scene.objs, LIGHT);
+	data->light_ray.origin = light->position; //fait que la lumiere soit a l envers au niveau du brdf
+	data->light_ray.direction = vec_substract(data->closest_intersection_point, light->position);
+	// data->light_ray.origin = data->closest_intersection_point; //TEST
+	// data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point); //TEST
 	get_norm(&data->light_ray);
 	normalize_direction_vector(&data->light_ray);
 	data->direct_light = true;

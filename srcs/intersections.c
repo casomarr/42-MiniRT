@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/18 19:09:11 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:40:40 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,37 @@ bool	intersection(t_data *data)
 	return (intersection);
 }
 
-
 float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec light_direction)
 {
-    // Calculate the vector from the light position to the intersection point
-    t_vec light_to_intersection = vec_substract(intersection_point, light_position);
+	// Calculate the vector from the light position to the intersection point
+	// t_vec light_to_intersection = vec_substract(intersection_point, light_position);
+	t_vec light_to_intersection = vec_substract(light_position, intersection_point); //TEST //ne change rien
 
-    // Calculate the magnitude of the vector (length of the vector)
-    float distance_from_light_to_intersection = vec_pythagore(light_to_intersection);
+	// Calculate the magnitude of the vector (length of the vector)
+	float distance_from_light_to_intersection = vec_pythagore(light_to_intersection);
 
-    // Calculate the magnitude of the direction of the light ray
-    float light_direction_magnitude = vec_pythagore(light_direction);
+	// Calculate the magnitude of the direction of the light ray
+	float light_direction_magnitude = vec_pythagore(light_direction);
 
-    // Calculate the parameter 't' along the light ray
-    float t_value = distance_from_light_to_intersection / light_direction_magnitude;
+	// Calculate the parameter 't' along the light ray
+	float t_value = distance_from_light_to_intersection / light_direction_magnitude;
 
-    return t_value;
+	return t_value;
 }
+
 
 float	get_norm3(t_vec vec)
 {
 	return(sqrtf(vec.x * vec.x + \
 				vec.y * vec.y + \
 				vec.z * vec.z));
+}
+
+bool	vec_compare(t_vec a, t_vec b)
+{
+	if (a.x == b.x && a.y == b.y && a.z == b.z)
+		return (true);
+	return (false);
 }
 
 /*Checks if the light source is reachable by a straight
@@ -92,9 +100,6 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 {
 	t_objs *light;
 	t_objs *object;
-	float	initial_t;
-	// initial_t = FLT_MAX;
-	data->light_ray.discriminant = 0.0;
 	
 	light = get_node(data->scene.objs, LIGHT);
 	if (light == NULL || light->lightness == 0.0)
@@ -103,41 +108,52 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 		return ;
 	}
 	data->direct_light = true;
-	
-	//initial intersection object's t for light ray
-	// if (data->closest_object.type == SPHERE)
-		//intersection_with_light_from_closest_point_from_camera(&data->closest_object, &data->ray);
-	initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction);
-	// check_intersection_sphere(&data->closest_object, light_ray);
-	// initial_t = light_ray->t;
-
-	// //normale du point d'intersection (calcul different pour chaque type d'objet)
-	// float intersection_norm = get_norm3(data->closest_intersection_point);
-/* 	// vecteurA = intersection - sphere->position
-	t_vec	vectorA = vec_substract(data->closest_intersection_point, data->closest_object.position);
-	//normaliser vecteurA
-	float	variateur = get_norm3(vectorA);
-	//rajouter un pourcentage de la normale de vecteur A au point d'intersection dans la ligne suivante
-	initial_t = calculate_t_value(vec_multiply_float(data->closest_intersection_point, variateur * 0.2), light->position, light_ray->direction); */
-	
 	object = data->scene.objs;
+	t_vec	current_intersection;
+	float	current_t;
+
+	//direction du centre de la pshere vers le point d'intersection
+	t_vec	direction = vec_substract(data->closest_intersection_point, object->position);
+	// t_vec	direction = vec_substract(data->closest_intersection_point, light->position); //TEST //ne change rien
+	float	sphere_normal = get_norm3(direction);
+	t_vec	initial_intersect = vec_add_float(data->closest_intersection_point, (sphere_normal / 100000.0));
+	float initial_t = calculate_t_value(initial_intersect, light->position, light_ray->direction);
+	// float initial_t = calculate_t_value(light->position, initial_intersect, light_ray->direction); //TEST
+
+	//float initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction);
+	
 	while(object)
 	{
-		light_ray->t = 0.0f;
+		light_ray->t = 0.0;
+		current_intersection = create_vec(0.0, 0.0, 0.0);
 		if (object->type == SPHERE)
-			check_intersection_sphere(object, light_ray); //c'est ca qui cree les ombres et ne cree pas le bruit
-			// check_intersection_sphere(&data->closest_object, light_ray);
-			// further_point_from_same_object_of_intersection_point(object, light_ray);
-		else if (object->type == PLANE) //si en commentaire le plan alors pas de bruit!
-			check_intersection_plane(object, light_ray, data);
+		{
+			check_intersection_sphere(object, light_ray);
+			if (light_ray->discriminant >= 0)
+				if (light_ray->t > 0)
+				{
+					current_intersection = vec_add(light_ray->origin, vec_multiply_float(light_ray->direction, light_ray->t));
+					direction = vec_substract(current_intersection, object->position);
+					// direction = vec_substract(data->closest_intersection_point, light->position); //TEST //ne change rien
+					sphere_normal = get_norm3(direction);
+					current_intersection = vec_add_float(current_intersection, (sphere_normal / 100000.0));
+					current_t = calculate_t_value(current_intersection, light->position, light_ray->direction);
+					// current_t = calculate_t_value(light->position, initial_intersect, light_ray->direction); //TEST
+
+				}
+		
+		}
+		// else if (object->type == PLANE)
+		// 	check_intersection_plane(object, light_ray, data);
 		// else if (object->type == CYLINDER)
 		// 	check_intersection_cylinder(object, light_ray);
-		if (light_ray->t > 0.0f && light_ray->t < initial_t) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
+		if (light_ray->t > 0 && light_ray->t < initial_t) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
 		{
-			//condition avec != au lieu de < : ombres sur plans apparaissent
-			// printf("aqui\n");
 			data->direct_light = false;
+			break;
 		}
 		object = object->next;
 	}
+	// if (vec_compare(current_intersection, data->closest_intersection_point) == false) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
+	// 		data->direct_light = false;
 }

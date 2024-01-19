@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_maths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/17 15:39:55 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/19 14:21:45 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,14 @@ float	dot_product_float(t_vec b, float a)
 float	vec_pythagore(t_vec a)
 {
 	return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
+}
+
+t_vec	vec_add_float(t_vec vec, float nb)
+{
+	t_vec	res;
+
+	res.x = vec.x + nb;
+	res.y = vec.y + nb;
+	res.z = vec.z + nb;
+	return (res);
 }

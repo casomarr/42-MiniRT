@@ -27,7 +27,8 @@ void	normalize_direction_vector(t_ray *ray)
     }
 }
 
-void	generate_light_ray(t_data *data)
+//part du point d'intersection vers la light
+/* void	generate_light_ray(t_data *data)
 {
 	t_objs *light;
 
@@ -36,7 +37,22 @@ void	generate_light_ray(t_data *data)
 	data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point);
 	get_norm(&data->light_ray);
 	normalize_direction_vector(&data->light_ray);
-	data->direct_light = false;
+	data->direct_light = true;
+} */
+
+//part de la light ers le point d'intersection
+void	generate_light_ray(t_data *data)
+{
+	t_objs *light;
+
+	light = get_node(data->scene.objs, LIGHT);
+	data->light_ray.origin = light->position; //fait que la lumiere soit a l envers au niveau du brdf
+	data->light_ray.direction = vec_substract(data->closest_intersection_point, light->position);
+	// data->light_ray.origin = data->closest_intersection_point; //TEST
+	// data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point); //TEST
+	get_norm(&data->light_ray);
+	normalize_direction_vector(&data->light_ray);
+	data->direct_light = true;
 }
 
 /*Generates each ray. They all have the same origin (the camera center)
@@ -72,7 +88,7 @@ void	generate_camera_ray(t_data *data)
 void ray_generation(t_data *data)
 {
 
-	data->direct_light = false; //initialiser ici sinon qd light == NULL ou lightness == 0 elle n est pas initialisee donc conditional jump dans determine color
+	data->direct_light = true; //initialiser ici sinon qd light == NULL ou lightness == 0 elle n est pas initialisee donc conditional jump dans determine color
 	data->y = 0;
 	while (data->y < WIN_HEIGHT)
 	{
@@ -84,13 +100,14 @@ void ray_generation(t_data *data)
 			{
 				if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 				{
-					data->light_ray.discriminant = 0.0;
 					generate_light_ray(data);
 					check_intersection_light(data, &data->light_ray);
 					//bouncing
 				}
 				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 			}
+/* 			else
+				img_pix_put(data, data->x, data->y, GREEN); */
 			data->x++;
 		}
 		data->y++;

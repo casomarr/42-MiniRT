@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 18:57:09 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:14:48 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,11 @@ float	determine_pixel_color(t_data *data)
 	//temporaire pour afficher lumiere
 	if (data->closest_object.type == LIGHT)
 		return (color.full);
-	
-	//TEST
-	//(void)light_intensity;
-	// if (data->direct_light == false) //true et false inverses
-	// 	color.full = data->data->closest_object.color;
-	// else
-	// 	color.full = RED; //test
 
-	if (data->direct_light == false)
+	if (data->direct_light == true) //points spheres : direct_light = false
 		light_intensity = brdf(data);
 	else
 		light_intensity = get_node(data->scene.objs, AMBIENT)->lightness;
-
-	//light_intensity = brdf(data);
 	
 	color.argb[0] = get_color(color.argb[0], light_intensity);
 	color.argb[1] = get_color(color.argb[1], light_intensity);

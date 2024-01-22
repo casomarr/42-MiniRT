@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/19 14:22:00 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:48:51 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_data
 	t_objs	closest_object;
 	bool	direct_light;
 	float	norm;
+	float	light_intensity;
 }	t_data;
 
 /* typedef struct s_check_objs

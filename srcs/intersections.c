@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/19 18:18:52 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:50:49 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	intersection(t_data *data)
 		}
 		else if (object->type == PLANE)
 		{
-			check_intersection_plane(object, &data->ray, data);
+			//check_intersection_plane(object, &data->ray, data);
 			intersection_point_plane(&intersection, data, object, &data->ray);
 		}
 		else if (object->type == CYLINDER) //fait apparaitre un bout de plan de droite en haut ovalé
@@ -58,7 +58,7 @@ bool	intersection(t_data *data)
 	return (intersection);
 }
 
-float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec light_direction)
+/* float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec light_direction)
 {
 	// Calculate the vector from the light position to the intersection point
 	// t_vec light_to_intersection = vec_substract(intersection_point, light_position);
@@ -74,7 +74,7 @@ float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec li
 	float t_value = distance_from_light_to_intersection / light_direction_magnitude;
 
 	return t_value;
-}
+} */
 
 
 float	get_norm3(t_vec vec)
@@ -91,6 +91,31 @@ bool	vec_compare(t_vec a, t_vec b)
 	return (false);
 }
 
+t_vec	get_intersection_point_sphere(t_objs *object, t_ray *ray)
+{
+	t_vec	calc;
+	float 	delta;
+	t_vec	intersection_point;
+	float	t;
+	
+	calc.x = dot_product(ray->direction, ray->direction); //norme au carré
+	calc.y = 2 * dot_product(ray->direction, vec_substract(ray->origin, object->position));
+	calc.z = dot_product(vec_substract(ray->origin, object->position), vec_substract(ray->origin, object->position)) - powf(object->diameter / 2, 2);
+	delta = powf(calc.y, 2) - (4 * calc.x * calc.z); // b2 - 4ac
+	t = 0.0;
+	intersection_point = create_vec(0.0, 0.0, 0.0);
+	if (delta >= 0)
+	{
+		if ((-calc.y + sqrtf(delta)) / (2 * calc.x) < (-calc.y - sqrtf(delta)) / (2 * calc.x))
+			t = (-calc.y + sqrtf(delta)) / (2 * calc.x);
+		else
+			t = (-calc.y - sqrtf(delta)) / (2 * calc.x);
+	}
+	if (t > 0)
+		intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
+	return (intersection_point);
+}
+
 /*Checks if the light source is reachable by a straight
 line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
@@ -98,62 +123,55 @@ point is higher than the distance from other intersection points
 from other objects. If yes, it means other objects are closer*/
 void	check_intersection_light(t_data *data, t_ray *light_ray)
 {
+	float	initial_distance;
+	float	current_distance;
+	t_vec	current_intersection_point;
 	t_objs *light;
 	t_objs *object;
-	
+
+	data->direct_light = true;
+	object = data->scene.objs;
 	light = get_node(data->scene.objs, LIGHT);
 	if (light == NULL || light->lightness == 0.0)
 	{
 		//TODO gerer ce cas et proteger tous les autres get_node
 		return ;
 	}
-	data->direct_light = true;
-	object = data->scene.objs;
-	t_vec	current_intersection;
-	float	current_t;
 
-	//direction du centre de la pshere vers le point d'intersection
-	t_vec	direction = vec_substract(data->closest_intersection_point, object->position);
-	// t_vec	direction = vec_substract(data->closest_intersection_point, light->position); //TEST //ne change rien
-	float	sphere_normal = get_norm3(direction);
-	t_vec	initial_intersect = vec_add_float(data->closest_intersection_point, (sphere_normal / 100000.0));
-	float initial_t = calculate_t_value(initial_intersect, light->position, light_ray->direction);
-	// float initial_t = calculate_t_value(light->position, initial_intersect, light_ray->direction); //TEST
-
-	//float initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction);
+	initial_distance = get_norm3(vec_substract(light_ray->origin, data->closest_intersection_point));
 	
 	while(object)
 	{
-		light_ray->t = 0.0;
-		current_intersection = create_vec(0.0, 0.0, 0.0);
+		current_intersection_point = create_vec(0.0, 0.0, 0.0);
+		current_distance = 0.0;
 		if (object->type == SPHERE)
 		{
-			check_intersection_sphere(object, light_ray);
-			if (light_ray->discriminant >= 0)
-				if (light_ray->t > 0)
-				{
-					current_intersection = vec_add(light_ray->origin, vec_multiply_float(light_ray->direction, light_ray->t));
-					direction = vec_substract(current_intersection, object->position);
-					// direction = vec_substract(data->closest_intersection_point, light->position); //TEST //ne change rien
-					sphere_normal = get_norm3(direction);
-					current_intersection = vec_add_float(current_intersection, (sphere_normal / 100000.0));
-					current_t = calculate_t_value(current_intersection, light->position, light_ray->direction);
-					// current_t = calculate_t_value(light->position, initial_intersect, light_ray->direction); //TEST
-
-				}
-		
+			current_intersection_point = get_intersection_point_sphere(object, light_ray);
+			current_distance = get_norm3(vec_substract(light_ray->origin, current_intersection_point));
+			if (current_distance < initial_distance)
+			{
+				data->direct_light = false;
+				return ;
+			}
 		}
-		else if (object->type == PLANE)
-			check_intersection_plane(object, light_ray, data);
-		else if (object->type == CYLINDER)
-			check_intersection_cylinder(object, light_ray);
-		if (light_ray->t > 0 && light_ray->t < initial_t) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
+		/* else if (object->type == PLANE)
 		{
-			data->direct_light = false;
-			break;
+			
+			if (current_distance < initial_distance)
+			{
+				data->direct_light = false;
+				return ;
+			}
 		}
+		else if (object->type == CYLINDER)
+		{
+			
+			if (current_distance < initial_distance)
+			{
+				data->direct_light = false;
+				return ;
+			}
+		} */
 		object = object->next;
 	}
-	// if (vec_compare(current_intersection, data->closest_intersection_point) == false) //si intersection avec l'un des objets  //light_ray->t > 0 car sinon derriere camera
-	// 		data->direct_light = false;
 }

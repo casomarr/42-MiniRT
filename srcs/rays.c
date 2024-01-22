@@ -40,6 +40,11 @@ void	normalize_direction_vector(t_ray *ray)
 	data->direct_light = true;
 } */
 
+float vec_length(t_vec v)
+{
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
 //part de la light ers le point d'intersection
 void	generate_light_ray(t_data *data)
 {
@@ -50,9 +55,14 @@ void	generate_light_ray(t_data *data)
 	data->light_ray.direction = vec_substract(data->closest_intersection_point, light->position);
 	// data->light_ray.origin = data->closest_intersection_point; //TEST
 	// data->light_ray.direction = vec_substract(light->position, data->closest_intersection_point); //TEST
+	// data->light_ray.direction = create_vec(1.0, 0.0, 0.0); //TEST
 	get_norm(&data->light_ray);
 	normalize_direction_vector(&data->light_ray);
 	data->direct_light = true;
+
+
+	// float distance = vec_length(data->light_ray.direction);
+	// data->light_intensity *= 1.0 / (distance * distance);
 }
 
 /*Generates each ray. They all have the same origin (the camera center)

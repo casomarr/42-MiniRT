@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/19 18:14:48 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:06:31 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ float	determine_pixel_color(t_data *data)
 		return (color.full);
 
 	if (data->direct_light == true) //points spheres : direct_light = false
-		light_intensity = brdf(data);
+		//light_intensity = brdf(data);
+		light_intensity = 0.9;
 	else
-		light_intensity = get_node(data->scene.objs, AMBIENT)->lightness;
+		light_intensity = get_node(data->scene.objs, AMBIENT)->lightness/*  * brdf(data) */;
 	
 	color.argb[0] = get_color(color.argb[0], light_intensity);
 	color.argb[1] = get_color(color.argb[1], light_intensity);

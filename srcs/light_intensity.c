@@ -33,7 +33,7 @@ be higher (more intense).*/
 float		brdf(t_data *data)
 {
 	t_vec	surface_normal;
-	//t_objs	*ambient;
+	t_objs	*ambient;
 	float var_brdf;
 
 	surface_normal = vec_substract(data->closest_intersection_point, data->closest_object.position);
@@ -50,11 +50,10 @@ float		brdf(t_data *data)
 		var_brdf = dot_product(data->light_ray.direction, surface_normal); //inverser la direction du rayon? vu que ne va plus vers ala lumiere mais l inverse
 		var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
 	}
-	var_brdf = dot_product(data->light_ray.direction, surface_normal);
-	var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
-	
-	// ambient = get_node(data->scene.objs, AMBIENT);
-	// var_brdf = var_brdf + ambient->lightness;
+	else
+		var_brdf = 0.0;
+	ambient = get_node(data->scene.objs, AMBIENT);
+	var_brdf = var_brdf + ambient->lightness;
 	return var_brdf;
 }
 

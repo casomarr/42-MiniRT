@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/22 14:48:51 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:38:48 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere,
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
 bool	intersection(t_data *data);
 float	get_norm3(t_vec vec);
+t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);
@@ -265,6 +266,7 @@ t_objs	*get_node(t_objs *objs, int type);
 void	get_norm2(t_vec *a, t_data *data);
 void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
 void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
 
 
 #endif

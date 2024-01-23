@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/22 19:50:49 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:09:43 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	intersection(t_data *data)
 	{
 		if (object->type == SPHERE)
 		{
-			check_intersection_sphere(object, &data->ray);
+			//check_intersection_sphere(object, &data->ray);
 			intersection_point_sphere(&intersection, data, object, &data->ray);
 		}
 		else if (object->type == PLANE)
@@ -50,7 +50,7 @@ bool	intersection(t_data *data)
 			light->color.argb[0] = 0;
 			light->color.argb[1] = 255;
 			light->color.argb[2] = 255;
-			check_intersection_sphere(object, &data->ray);
+			//check_intersection_sphere(object, &data->ray);
 			intersection_point_sphere(&intersection, data, object, &data->ray);
 		}
 		object = object->next;
@@ -91,31 +91,6 @@ bool	vec_compare(t_vec a, t_vec b)
 	return (false);
 }
 
-t_vec	get_intersection_point_sphere(t_objs *object, t_ray *ray)
-{
-	t_vec	calc;
-	float 	delta;
-	t_vec	intersection_point;
-	float	t;
-	
-	calc.x = dot_product(ray->direction, ray->direction); //norme au carré
-	calc.y = 2 * dot_product(ray->direction, vec_substract(ray->origin, object->position));
-	calc.z = dot_product(vec_substract(ray->origin, object->position), vec_substract(ray->origin, object->position)) - powf(object->diameter / 2, 2);
-	delta = powf(calc.y, 2) - (4 * calc.x * calc.z); // b2 - 4ac
-	t = 0.0;
-	intersection_point = create_vec(0.0, 0.0, 0.0);
-	if (delta >= 0)
-	{
-		if ((-calc.y + sqrtf(delta)) / (2 * calc.x) < (-calc.y - sqrtf(delta)) / (2 * calc.x))
-			t = (-calc.y + sqrtf(delta)) / (2 * calc.x);
-		else
-			t = (-calc.y - sqrtf(delta)) / (2 * calc.x);
-	}
-	if (t > 0)
-		intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
-	return (intersection_point);
-}
-
 /*Checks if the light source is reachable by a straight
 line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
@@ -128,7 +103,9 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 	t_vec	current_intersection_point;
 	t_objs *light;
 	t_objs *object;
+	t_vec	empty_vec; ///demandr a antoone comment passer la norme sans ca
 
+	empty_vec = create_vec(0.0, 0.0, 0.0);
 	data->direct_light = true;
 	object = data->scene.objs;
 	light = get_node(data->scene.objs, LIGHT);
@@ -138,32 +115,42 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 		return ;
 	}
 
-	initial_distance = get_norm3(vec_substract(light_ray->origin, data->closest_intersection_point));
-	
+	initial_distance = get_norm3(vec_substract(light->position, data->closest_intersection_point));	
 	while(object)
 	{
 		current_intersection_point = create_vec(0.0, 0.0, 0.0);
 		current_distance = 0.0;
 		if (object->type == SPHERE)
 		{
-			current_intersection_point = get_intersection_point_sphere(object, light_ray);
-			current_distance = get_norm3(vec_substract(light_ray->origin, current_intersection_point));
-			if (current_distance < initial_distance)
+			current_intersection_point = get_intersection_point_sphere(object, light_ray, data);
+			if (vec_compare(current_intersection_point, empty_vec) == false) //if intersection
 			{
-				data->direct_light = false;
-				return ;
+				// current_distance = get_norm3(vec_substract(current_intersection_point, data->closest_intersection_point));
+				current_distance = get_norm3(vec_substract(data->closest_intersection_point, current_intersection_point));
+				//printf("current distance, `%f`, initial distance, `%f`\n", current_distance, initial_distance);
+				if (current_distance < initial_distance)
+				{
+					data->direct_light = false;
+					return ;
+				}
 			}
 		}
-		/* else if (object->type == PLANE)
+/* 		else if (object->type == PLANE)
 		{
-			
-			if (current_distance < initial_distance)
+			current_intersection_point = get_intersection_point_plane(data, object, light_ray);
+			if (vec_compare(current_intersection_point, empty_vec) == false) //if intersection
 			{
-				data->direct_light = false;
-				return ;
+				printf("here 1\n");
+				current_distance = get_norm3(vec_substract(data->closest_intersection_point, current_intersection_point));
+				if (current_distance < initial_distance)
+				{
+					printf("here 2\n");
+					data->direct_light = false;
+					return ;
+				}
 			}
-		}
-		else if (object->type == CYLINDER)
+		} */
+		/* else if (object->type == CYLINDER)
 		{
 			
 			if (current_distance < initial_distance)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_maths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/19 14:21:45 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:07:48 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ convertir toutes ces fonctions en fonctions variadiques
 pour pouvoir par exemple multiplier plus de seulement 2
 vecteurs a la fois. */
 
-t_vec	create_vec(float x, float y, float z)
+t_vec	create_vec(float x, float y, float z) //essayer de remplacer par (t_vec){x, y, z}
 {
 	t_vec vector;
-	
+
 	vector.x = x;
 	vector.y = y;
 	vector.z = z;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 18:50:25 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:21:11 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	initialisation(t_data *data)
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	data->img.addr  = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.width,
 						&data->img.endian);
+	data->scene.cam = get_node(data->scene.objs, CAMERA);
 	return (EXIT_SUCCESS);
 }
 
@@ -83,7 +84,7 @@ int	main(int argc, char **argv)
 	}
 	if (initialisation(&data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	ray_generation(&data);
+	minirt(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
 	mlx_hook(data.win_ptr, 17, 1L<< 17, cross_close, &data);
 	mlx_key_hook(data.win_ptr, esc_close, &data);

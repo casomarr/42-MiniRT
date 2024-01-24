@@ -6,7 +6,7 @@
 #    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/17 16:12:36 by octonaute        ###   ########.fr        #
+#    Updated: 2024/01/24 17:25:03 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ NAME = minirt
 
 CC = clang
 #caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
-CFLAGS = -Wall -Wextra -Werror -g3 -gdwarf-4
+CFLAGS = -Wall -Wextra -g3 -gdwarf-4
+#/!\ ATTENTION, FAUT ENLEVER LE # DE LA PROCHAINE LIGNE AVANT LE RENDU /!\
+#CFLAGS+= -Werror
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
 # LX11 = /usr/lib/x86_64-linux-gnu/libX11.a

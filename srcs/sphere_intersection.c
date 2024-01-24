@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/23 16:18:54 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/24 21:11:50 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@
 	}
 } */
 
-// code patou reel
-void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere, t_ray *ray)
+/* void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere, t_ray *ray)
 {
 	float	a;
 	float	b;
@@ -179,6 +178,84 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere,
 			data->closest_object = *sphere;
 		}
 	}
+} */
+
+// code patou reel
+
+float	ft_fabs(float f)
+{
+	if (f < 0)
+		return (f * -1.);
+	return (f);
+}
+
+t_vec	get_vec_abc()
+{
+	//TODO: diviser intersection_point_sphere en plusieurs fonctions pour norme
+	// + essayer de faire marcher les plans
+}
+
+void	intersection_point_sphere(t_inter *inter, t_objs *sphere)
+{
+	t_ray	ray;
+	float	a;
+	float	b;
+	float	c;
+	float	delta;
+	float	t;
+	t_vec	vecb;
+	t_vec cpr2;
+	t_vec dcsp;
+	// t_objs	*camera;
+	// float	t1;
+	// float	t2;
+	
+	ray = inter->cam_ray;
+	a = dot_product(ray.dir, ray.dir); //norme au carré
+	cpr2 = vec_multiply_float(vec_multiply(ray.origin, ray.dir), 2.);
+	// vecb = cpr2 - dir * sphere.dpos
+	vecb = vec_substract(cpr2, vec_multiply(ray.dir, vec_multiply_float(sphere->position, 2.)));
+	b = vecb.x + vecb.y + vecb.z;
+	// b = crp2.x - ray->direction.x * (sphere->position.x * 2) + crp2.y - \
+	// ray->direction.y * (sphere->position.y * 2) + crp2.z - ray->direction.z * \
+	// (sphere->position.z * 2);
+	
+	dcsp = vec_multiply_float(vec_multiply(ray.origin, sphere->position), 2.);
+	c = powf(ray.origin.x, 2.) + powf(sphere->position.x, 2.) - dcsp.x + \
+	powf(ray.origin.y, 2.) + powf(sphere->position.y, 2.) - dcsp.y + \
+	powf(ray.origin.z, 2.) + powf(sphere->position.z, 2.) - dcsp.z - \
+	powf(sphere->diameter / 2., 2.);
+
+	delta = b * b - 4. * a * c; // b2 - 4ac
+	if (delta > 0.)
+	{
+		//vérifier si le plus petit est inférieur à 0
+		if ((-b + sqrtf(delta)) / (2. * a) < (-b - sqrtf(delta)) / (2. * a))
+ 			t = (-b + sqrtf(delta)) / (2. * a);
+ 		else
+ 			t = (-b - sqrtf(delta)) / (2. * a);
+	}
+	else if (delta == 0.)
+		t = -b / (2. * a);
+	else
+		return ; //no intersection
+	if (t > 0. && t < inter->dist)
+	{
+		inter->dist = t;
+		inter->obj = sphere;
+		//Décaler point de la norme de la normale à la sphère * 0.00000001
+		inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
+		inter->normal = normalize_vec(vec_substract(inter->point, sphere->position));
+		inter->point = vec_add(inter->point, vec_multiply_float(inter->normal, 0.000001));
+		// *intersection = true;
+		// if (t > 0 && t < data->z_index) //t > 0 car sinon derriere camera
+		// {
+		// 	data->z_index = t;
+		// 	//intersection : calcul a moi, pas patou
+		// 	data->closest_intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
+		// 	//patou calculait la normale ici
+		// 	data->closest_object = *sphere;
+	}
 }
 
 /* t_vec	get_intersection_point_sphere(t_objs *object, t_ray *ray, t_data *data)
@@ -213,7 +290,7 @@ void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere,
 	return (intersection_point);
 } */
 
-t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data)
+/* t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data)
 {
 	//ne marche pas car on doit changer l'origine du rayon
 	//ai change camera->position par light->position
@@ -256,4 +333,4 @@ t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data)
 	if (delta >= 0 && t > 0) //t tjrs < a 0!!
 		intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
 	return(intersection_point); //no intersection
-}
+} */

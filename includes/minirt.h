@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/23 15:38:48 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/24 20:20:44 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_vec
 typedef unsigned int t_uint32;
 typedef unsigned char t_uint8;
 
-typedef union	u_rgb
+typedef union	u_rgb //le changer à bgra
 {
 	t_uint32	full;
 	t_uint8		argb[4];
@@ -90,7 +90,7 @@ typedef struct s_img
 typedef struct s_ray
 {
 	t_vec	origin;
-	t_vec	direction;
+	t_vec	dir;
 	float	norm;
 	int		color;
 	float	discriminant;
@@ -113,10 +113,18 @@ typedef struct s_objs
 	struct s_objs	*next;
 } t_objs;
 
+typedef struct 	s_inter {
+	t_ray	cam_ray;
+	t_vec	point;
+	t_vec	normal;
+	float	dist;
+	t_objs	*obj;
+}				t_inter;
 
 typedef struct s_scene
 {
 	t_objs		*objs;
+	t_objs		*cam;
 	int			nb_camera;
 	int			nb_ambiant;
 	int			nb_light;
@@ -130,9 +138,12 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
+	t_scene	scene;
+
+
+
 	t_ray	ray;
 	t_ray	light_ray;
-	t_scene	scene;
 	int		x;
 	int		y;
 	float	z_index;
@@ -210,12 +221,13 @@ int		esc_close(int keycode, t_data *data);
 int		cross_close(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
-void	ray_generation(t_data *data);
+void	minirt(t_data *data);
 void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
-void	generate_camera_ray(t_data *data);
-// void	generate_camera_ray(t_data *data, float x, float y);
+t_ray	compute_screen_ray(int x, int y, t_objs *camera);
+int		compute_pixel(int x, int y, t_data *data);
+// void	compute_ray(t_data *data, float x, float y);
 void	generate_light_ray(t_data *data);
 void	distance_of_projection(t_data *data);
 
@@ -234,11 +246,12 @@ t_vec	vec_add_float(t_vec vec, float nb);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
-void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *sphere, t_ray *ray);
+void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
-bool	intersection(t_data *data);
+t_inter	closest_intersection(t_ray cam_ray, t_objs *object);
 float	get_norm3(t_vec vec);
 t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
+float	ft_fabs(float f);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);
@@ -267,6 +280,6 @@ void	get_norm2(t_vec *a, t_data *data);
 void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
 void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
 t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
-
+t_vec	normalize_vec(t_vec v);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:05:16 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/24 19:14:22 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/25 20:10:54 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_norm2(t_vec *a, t_data *data)
 	data->norm = sqrtf(a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
-t_vec normalize_vec(t_vec v)
+t_vec vec_normalize(t_vec v)
 {
     float length = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
     t_vec result;
@@ -46,12 +46,12 @@ t_vec normalize_vec(t_vec v)
 // void    check_intersection_plane(t_objs *object, t_ray *ray, t_data *data)
 // {
 //     (void)data;
-//     //get_norm2(&object->position, data);
-//     t_vec normal = normalize_vec(object->direction); //direction de la normale du plan
-//     ray->discriminant = dot_product(ray->direction, normal);
+//     //get_norm2(&object->pos, data);
+//     t_vec normal = vec_normalize(object->dir); //dir de la normale du plan
+//     ray->discriminant = dot_product(ray->dir, normal);
 //     //if (ray->discriminant != 0)
 //     if (ray->discriminant > 1*10e-6) // != 0    
-//         ray->t = dot_product(vec_substract(object->position, ray->origin), normal) / ray->discriminant;
+//         ray->t = dot_product(vec_substract(object->pos, ray->origin), normal) / ray->discriminant;
 //     else
 //         ray->t = FLT_MAX;
 // }
@@ -63,12 +63,12 @@ t_vec normalize_vec(t_vec v)
 //     if (ray->t > 1*10e-6) // != 0
 //     {
 //         *intersection = true;
-//         intersection_point = vec_add(data->ray.origin, vec_multiply_float(data->ray.direction, ray->t));
+//         intersection_point = vec_add(data->ray.origin, vec_multiply_float(data->ray.dir, ray->t));
 //         //ici faire transorfmation x et y
 //         //multiplier par cosinus 
 //         /* t_objs *camera = get_node(data->scene.objs, CAMERA);
-//         t_vec gamaprim = create_vec(object->position.x, object->position.y, 0.0);
-//         intersection_point.x *= (camera->position.z - object->position.x) / sqrtf(dot_product(vec_substract(gamaprim, camera->position), vec_substract(gamaprim, camera->position))); */
+//         t_vec gamaprim = create_vec(object->pos.x, object->pos.y, 0.0);
+//         intersection_point.x *= (camera->pos.z - object->pos.x) / sqrtf(dot_product(vec_substract(gamaprim, camera->pos), vec_substract(gamaprim, camera->pos))); */
 //         if (ray->t > 0 && ray->t < data->z_index) //ray->t > 0 car sinon derriere camera
 //         {
 //             data->z_index = ray->t;
@@ -85,16 +85,16 @@ t_vec normalize_vec(t_vec v)
 	t_vec	b;
 	float	t;
 
-	ray->origin = normalize_vec(ray->origin);
-	object->position = normalize_vec(object->position);
-	distance = vec_substract(ray->origin, object->position);
-	b = vec_multiply_float(ray->direction, -1);
-	t = (dot_product(distance, object->direction)) / dot_product(b, object->direction);
+	ray->origin = vec_normalize(ray->origin);
+	object->pos = vec_normalize(object->pos);
+	distance = vec_substract(ray->origin, object->pos);
+	b = vec_multiply_float(ray->dir, -1);
+	t = (dot_product(distance, object->dir)) / dot_product(b, object->dir);
 	if (t > 0.0 && t < data->z_index)
 	{
 		data->z_index = t;
 		data->closest_object = *object;
-		data->closest_intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
+		data->closest_intersection_point = vec_add(ray->origin, vec_multiply_float(ray->dir, t));
 		*intersection = true;
 	}
 } */
@@ -108,65 +108,67 @@ void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, 
 	float 	D;
 
 	camera = get_node(data->scene.objs, CAMERA);
-	if (dot_product(object->direction, ray->direction) != 0.0)
+	if (dot_product(object->dir, ray->dir) != 0.0)
 	{
 		*intersection = true;
-		D = dot_product(object->direction, object->position);
-		t = (D - object->direction.x * camera->position.x - object->direction.y * \
-		camera->position.y - object->direction.z * camera->position.z) / \
-		dot_product(object->direction, ray->direction);
-		intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
+		D = dot_product(object->dir, object->pos);
+		t = (D - object->dir.x * camera->pos.x - object->dir.y * \
+		camera->pos.y - object->dir.z * camera->pos.z) / \
+		dot_product(object->dir, ray->dir);
+		intersection_point = vec_add(ray->origin, vec_multiply_float(ray->dir, t));
 		data->closest_intersection_point = intersection_point;
 		data->closest_object = *object;
 	}
 } */
 
 //calculs Patou en reel
-// void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
-// {
-// 	float	div;
-// 	float	t;
-// 	float	D;
-// 	t_objs	*camera;
+void	intersection_point_plane(t_inter *inter, t_objs *plane)
+{
+	float	div;
+	float	t;
+	float	dot;
+	t_ray	ray;
 	
-// 	camera = get_node(data->scene.objs, CAMERA);
-// 	div = dot_product(object->direction, ray->direction);
-// 	if (div != 0.0)
-// 	{
-// 		D = dot_product(object->direction, object->position);
-// 		t = (D - object->direction.x * camera->position.x - object->direction.y * \
-// 		camera->position.y - object->direction.z * camera->position.z) / div;
-// 		if (t >= 0)
-// 		{
-// 			*intersection = true;
-// 			// data->closest_intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, \
-// 			// dot_product(vec_substract(object->position, ray->origin), object->direction) / div));
-// 			data->closest_intersection_point = vec_multiply_float(vec_add(camera->position, ray->direction), t);
-// 			data->closest_object = *object;
-// 		}
-// 	}
-// }
+	ray = inter->cam_ray;
+	div = dot_product(plane->dir, ray.dir);
+	if (div != 0.0)
+	{
+		dot = dot_product(plane->dir, plane->pos);
+		t = (dot - plane->dir.x * ray.origin.x - plane->dir.y * \
+		ray.origin.y - plane->dir.z * ray.origin.z) / div;
+		if (t > 0 && t < inter->dist)
+		{
+			inter->dist = t;
+			inter->obj = plane;
+			inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
+			if (dot_product(plane->dir, inter->cam_ray.dir) < 0)
+				inter->normal = plane->dir;
+			else
+				inter->normal = vec_multiply_float(plane->dir, -1);
+		}
+	}
+}
 
-// //coordonnees reel
-// t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray)
-// {
-// 	float	div;
-// 	float	t;
-// 	float	D;
-// 	t_objs	*camera;
-// 	t_vec	intersection_point;
+//coordonnees reel
+/* t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray)
+{
+	float	div;
+	float	t;
+	float	D;
+	t_objs	*camera;
+	t_vec	intersection_point;
 	
-// 	intersection_point = create_vec(0.0, 0.0, 0.0);
-// 	camera = get_node(data->scene.objs, CAMERA);
-// 	div = dot_product(object->direction, ray->direction);
-// 	if (div != 0.0)
-// 	{
-// 		D = dot_product(object->direction, object->position);
-// 		t = (D - object->direction.x * camera->position.x - object->direction.y * \
-// 		camera->position.y - object->direction.z * camera->position.z) / div;
-// 		if (t >= 0)
-// 			data->closest_intersection_point = vec_multiply_float(vec_add(camera->position, ray->direction), t);
-// 			//intersection_point = vec_add(ray->origin, vec_multiply_float(ray->direction, t));
-// 	}
-// 	return(intersection_point);
-// }
+	intersection_point = create_vec(0.0, 0.0, 0.0);
+	camera = get_node(data->scene.objs, CAMERA);
+	div = dot_product(object->dir, ray->dir);
+	if (div != 0.0)
+	{
+		D = dot_product(object->dir, object->pos);
+		t = (D - object->dir.x * camera->pos.x - object->dir.y * \
+		camera->pos.y - object->dir.z * camera->pos.z) / div;
+		if (t >= 0)
+			data->closest_intersection_point = vec_multiply_float(vec_add(camera->pos, ray->dir), t);
+			//intersection_point = vec_add(ray->origin, vec_multiply_float(ray->dir, t));
+	}
+	return(intersection_point);
+} */

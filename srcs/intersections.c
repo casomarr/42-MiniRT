@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/24 20:22:45 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/25 20:39:27 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,35 @@ object that intersects with the ray, so that our image doesn't show
 the "hidden" objects.*/
 
 
-t_inter	closest_intersection(t_ray cam_ray, t_objs *object)
+t_inter	closest_intersection(t_ray cam_ray, t_objs *object, float dist)
 {
 	t_inter	inter;
 
 	inter.cam_ray = cam_ray;
-	inter.dist = FLT_MAX;
+	inter.dist = dist;
 	inter.obj = NULL;
 	while (object)
 	{
 		if (object->type == SPHERE)
 			intersection_point_sphere(&inter, object);
-		//else if (object->type == PLANE)
-		//	intersection_point_plane(&intersection, object, inter);
+		else if (object->type == PLANE)
+			intersection_point_plane(&inter, object);
+		// else if (object->type == CYLINDER)
+		// 	intersection_point_cylinder(&inter, object);
 /* 			else if (object->type == LIGHT) //temporaire pour afficher lumiere
 			{
 				t_objs *light = get_node(data->scene.objs, LIGHT);
 				light->diameter = 1.5;
-				light->color.argb[0] = 0;
-				light->color.argb[1] = 255;
-				light->color.argb[2] = 255;
+				light->color.bgra[0] = 0;
+				light->color.bgra[1] = 255;
+				light->color.bgra[2] = 255;
 				//check_intersection_sphere(object, &data->ray);
 				intersection_point_sphere(&intersection, data, object, &data->ray);
 			} */
 		object = object->next;
 	}
+	if (inter.obj)
+		inter.point = vec_add(inter.point, vec_multiply_float(inter.normal, 0.0005));
 	// return (inter.obj != NULL) //return true if inter->obj est != NULL
 	// return (inter.obj) // return NULL si pas d'objet
 	return (inter);
@@ -51,14 +55,14 @@ t_inter	closest_intersection(t_ray cam_ray, t_objs *object)
 
 /* float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec light_direction)
 {
-	// Calculate the vector from the light position to the intersection point
+	// Calculate the vector from the light pos to the intersection point
 	// t_vec light_to_intersection = vec_substract(intersection_point, light_position);
 	t_vec light_to_intersection = vec_substract(light_position, intersection_point); //TEST //ne change rien
 
 	// Calculate the magnitude of the vector (length of the vector)
 	float distance_from_light_to_intersection = vec_pythagore(light_to_intersection);
 
-	// Calculate the magnitude of the direction of the light ray
+	// Calculate the magnitude of the dir of the light ray
 	float light_direction_magnitude = vec_pythagore(light_direction);
 
 	// Calculate the parameter 't' along the light ray
@@ -68,7 +72,7 @@ t_inter	closest_intersection(t_ray cam_ray, t_objs *object)
 } */
 
 
-float	get_norm3(t_vec vec)
+float	get_norm(t_vec vec)
 {
 	return(sqrtf(vec.x * vec.x + \
 				vec.y * vec.y + \
@@ -106,7 +110,7 @@ from other objects. If yes, it means other objects are closer*/
 // 		return ;
 // 	}
 
-// 	initial_distance = get_norm3(vec_substract(light->position, data->closest_intersection_point));	
+// 	initial_distance = get_norm(vec_substract(light->pos, data->closest_intersection_point));	
 // 	while(object)
 // 	{
 // 		current_intersection_point = create_vec(0.0, 0.0, 0.0);
@@ -116,8 +120,8 @@ from other objects. If yes, it means other objects are closer*/
 // 			current_intersection_point = get_intersection_point_sphere(object, light_ray, data);
 // 			if (vec_compare(current_intersection_point, empty_vec) == false) //if intersection
 // 			{
-// 				// current_distance = get_norm3(vec_substract(current_intersection_point, data->closest_intersection_point));
-// 				current_distance = get_norm3(vec_substract(data->closest_intersection_point, current_intersection_point));
+// 				// current_distance = get_norm(vec_substract(current_intersection_point, data->closest_intersection_point));
+// 				current_distance = get_norm(vec_substract(data->closest_intersection_point, current_intersection_point));
 // 				//printf("current distance, `%f`, initial distance, `%f`\n", current_distance, initial_distance);
 // 				if (current_distance < initial_distance)
 // 				{
@@ -132,7 +136,7 @@ from other objects. If yes, it means other objects are closer*/
 // 			if (vec_compare(current_intersection_point, empty_vec) == false) //if intersection
 // 			{
 // 				printf("here 1\n");
-// 				current_distance = get_norm3(vec_substract(data->closest_intersection_point, current_intersection_point));
+// 				current_distance = get_norm(vec_substract(data->closest_intersection_point, current_intersection_point));
 // 				if (current_distance < initial_distance)
 // 				{
 // 					printf("here 2\n");

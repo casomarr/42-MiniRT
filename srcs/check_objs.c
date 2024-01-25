@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:42:13 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:05:35 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ bool	get_tvec_from_str(char *str, t_vec *v)
 	return (true);
 }
 
-bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
+bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
 {
 	char	**split;
 
@@ -213,9 +213,9 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
 		ft_free_split(split);
 		return (false);
 	}
-	rgb->argb[0] = (t_uint8)ft_atoi(split[0]);
-	rgb->argb[1] = (t_uint8)ft_atoi(split[1]);
-	rgb->argb[2] = (t_uint8)ft_atoi(split[2]);
+	rgb->bgra[2] = (t_uint8)ft_atoi(split[0]);
+	rgb->bgra[1] = (t_uint8)ft_atoi(split[1]);
+	rgb->bgra[0] = (t_uint8)ft_atoi(split[2]);
 	ft_free_split(split);
 	return (true);
 }
@@ -250,9 +250,9 @@ bool	check_camera(char **value, t_data *data)
 	if (!camera)
 		return (false);
 	camera->type = 3;
-	if (get_tvec_from_str(value[1], &camera->position) == false)
+	if (get_tvec_from_str(value[1], &camera->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &camera->direction) == false)
+	if (get_tvec_from_str(value[2], &camera->dir) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
 	if (check_data_objs(camera, &data->scene) == false)
@@ -358,7 +358,7 @@ bool	check_light(char **value, t_data *data)
 	if (!light)
 		return (false);
 	light->type = 5;
-	if (get_tvec_from_str(value[1], &light->position) == false)
+	if (get_tvec_from_str(value[1], &light->pos) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
 	if (check_data_objs(light, &data->scene) == false)
@@ -391,7 +391,7 @@ bool	check_sphere(char **value, t_data *data)
 			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1], &data->scene) == false) //position
+	if (three_params_float(value[1], &data->scene) == false) //pos
 		return (false);
 	if (check_isdigit_float(value[2]) == false) //diameter
 	{
@@ -406,7 +406,7 @@ bool	check_sphere(char **value, t_data *data)
 	if (!sphere)
 		return (false);
 	sphere->type = 0;
-	if (get_tvec_from_str(value[1], &sphere->position) == false)
+	if (get_tvec_from_str(value[1], &sphere->pos) == false)
 		return (false);
 	sphere->diameter = ft_atof(value[2]);
 	if (get_trgb_from_str(value[3], &sphere->color, &data->scene) == false)
@@ -451,9 +451,9 @@ bool	check_plan(char **value, t_data *data)
 	if (!plan)
 		return (false);
 	plan->type = 2;
-	if (get_tvec_from_str(value[1], &plan->position) == false)
+	if (get_tvec_from_str(value[1], &plan->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &plan->direction) == false)
+	if (get_tvec_from_str(value[2], &plan->dir) == false)
 		return (false);
 	if (get_trgb_from_str(value[3], &plan->color, &data->scene) == false)
 		return (false);
@@ -511,9 +511,9 @@ bool	check_cylinder(char **value, t_data *data)
 	if (!cylinder)
 		return (false);
 	cylinder->type = 1;
-	if (get_tvec_from_str(value[1], &cylinder->position) == false)
+	if (get_tvec_from_str(value[1], &cylinder->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &cylinder->direction) == false)
+	if (get_tvec_from_str(value[2], &cylinder->dir) == false)
 		return (false);
 	cylinder->diameter = ft_atof(value[3]);
 	cylinder->height = ft_atof(value[4]);

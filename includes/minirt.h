@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/24 20:20:44 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/25 20:10:54 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ peut faire une image petite pour augmenter les fps.*/
 
 # define ESC_KEY 65307
 
+#define MAX_DIST_CAMERA	FLT_MAX
+
 # define ERROR_MSG1 "Error\n\x1B[1m"
 # define ERROR_MSG2 "\x1B[31merror:\x1B[0m\x1B[1m "
 
@@ -71,11 +73,11 @@ typedef struct s_vec
 typedef unsigned int t_uint32;
 typedef unsigned char t_uint8;
 
-typedef union	u_rgb //le changer à bgra
+typedef union	u_color //le changer à bgra
 {
 	t_uint32	full;
-	t_uint8		argb[4];
-}	t_rgb;
+	t_uint8		bgra[4];
+}	t_color;
 
 typedef struct s_img
 {
@@ -103,9 +105,9 @@ typedef struct s_ray
 typedef struct s_objs
 {
 	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			position; //all
-	t_vec			direction; //plan and cylinder
-	t_rgb			color;
+	t_vec			pos; //all
+	t_vec			dir; //plan and cylinder
+	t_color			color;
 	float			diameter; //sphere and cylinder
 	float			height; //cylinder only
 	int				fov; //camera only
@@ -222,7 +224,7 @@ int		cross_close(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
 void	minirt(t_data *data);
-void	get_norm(t_ray *ray);
+// void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
 t_ray	compute_screen_ray(int x, int y, t_objs *camera);
@@ -243,13 +245,14 @@ float	dot_product_float(t_vec b, float a);
 t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 t_vec	vec_add_float(t_vec vec, float nb);
+t_vec	vec_div_float(t_vec a, float f);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
 void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
-t_inter	closest_intersection(t_ray cam_ray, t_objs *object);
-float	get_norm3(t_vec vec);
+t_inter	closest_intersection(t_ray cam_ray, t_objs *object, float dist);
+float	get_norm(t_vec vec);
 t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
 float	ft_fabs(float f);
 
@@ -278,8 +281,9 @@ t_objs	*get_node(t_objs *objs, int type);
 /*Plane intersection*/
 void	get_norm2(t_vec *a, t_data *data);
 void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
-void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+// void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	intersection_point_plane(t_inter *inter, t_objs *plane);
 t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
-t_vec	normalize_vec(t_vec v);
+t_vec	vec_normalize(t_vec v);
 
 #endif

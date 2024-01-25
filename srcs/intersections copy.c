@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                                    :+:      :+:    :+:   */
+/*   intersections copy.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/19 15:50:45 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:07:27 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ bool	intersection(t_data *data)
 		{
 			t_objs *light = get_node(data->scene.objs, LIGHT);
 			light->diameter = 1.5;
-			light->color.argb[0] = 0;
-			light->color.argb[1] = 255;
-			light->color.argb[2] = 255;
+			light->color.bgra[0] = 0;
+			light->color.bgra[1] = 255;
+			light->color.bgra[2] = 255;
 			check_intersection_sphere(object, &data->ray);
 			intersection_point_sphere(&intersection, data, object, &data->ray);
 		}
@@ -60,13 +60,13 @@ bool	intersection(t_data *data)
 
 // float calculate_t_value(t_vec intersection_point, t_vec light_position, t_vec light_direction)
 // {
-// 	// Calculate the vector from the light position to the intersection point
+// 	// Calculate the vector from the light pos to the intersection point
 // 	t_vec light_to_intersection = vec_substract(intersection_point, light_position);
 
 // 	// Calculate the magnitude of the vector (length of the vector)
 // 	float distance_from_light_to_intersection = vec_pythagore(light_to_intersection);
 
-// 	// Calculate the magnitude of the direction of the light ray
+// 	// Calculate the magnitude of the dir of the light ray
 // 	float light_direction_magnitude = vec_pythagore(light_direction);
 
 // 	// Calculate the parameter 't' along the light ray
@@ -80,13 +80,13 @@ float calculate_t_value(t_vec ray_origin, t_vec intersection_point, t_vec ray_di
 	// Calculate the vector from the ray origin to the intersection point
 	t_vec origin_to_intersection = vec_substract(intersection_point, ray_origin);
 
-	// Calculate the dot product of the above vector and the ray direction
+	// Calculate the dot product of the above vector and the ray dir
 	float t_value = dot_product(origin_to_intersection, ray_direction);
 
 	return t_value;
 }
 
-float	get_norm3(t_vec vec)
+float	get_norm(t_vec vec)
 {
 	return(sqrtf(vec.x * vec.x + \
 				vec.y * vec.y + \
@@ -120,28 +120,28 @@ void	check_intersection_light(t_data *data, t_ray *light_ray)
 
 	object = data->scene.objs;
 
-	//direction du centre de la pshere vers le point d'intersection
-	t_vec direction = vec_substract(data->closest_intersection_point, object->position);
+	//dir du centre de la pshere vers le point d'intersection
+	t_vec dir = vec_substract(data->closest_intersection_point, object->pos);
 	// printf("data->closest_intersection_point.x = %f, data->closest_intersection_point.y = %f, data->closest_intersection_point.z = %f\n", data->closest_intersection_point.x, data->closest_intersection_point.y, data->closest_intersection_point.z);
-	float	sphere_normal = get_norm3(direction);
+	float	sphere_normal = get_norm(dir);
 	t_vec 	new_intersect = vec_add_float(data->closest_intersection_point, (sphere_normal / 1000.0));
 	// printf("new_intersect.x = %f, new_intersect.y = %f, new_intersect.z = %f\n", new_intersect.x, new_intersect.y, new_intersect.z);
 	
 	
-	initial_t = calculate_t_value(new_intersect, light->position, light_ray->direction);
+	initial_t = calculate_t_value(new_intersect, light->pos, light_ray->dir);
 	
-	//initial_t = calculate_t_value(data->closest_intersection_point, light->position, light_ray->direction);
+	//initial_t = calculate_t_value(data->closest_intersection_point, light->pos, light_ray->dir);
 	// check_intersection_sphere(&data->closest_object, light_ray);
 	// initial_t = light_ray->t;
 
 	// //normale du point d'intersection (calcul different pour chaque type d'objet)
-	// float intersection_norm = get_norm3(data->closest_intersection_point);
-/* 	// vecteurA = intersection - sphere->position
-	t_vec	vectorA = vec_substract(data->closest_intersection_point, data->closest_object.position);
+	// float intersection_norm = get_norm(data->closest_intersection_point);
+/* 	// vecteurA = intersection - sphere->pos
+	t_vec	vectorA = vec_substract(data->closest_intersection_point, data->closest_object.pos);
 	//normaliser vecteurA
-	float	variateur = get_norm3(vectorA);
+	float	variateur = get_norm(vectorA);
 	//rajouter un pourcentage de la normale de vecteur A au point d'intersection dans la ligne suivante
-	initial_t = calculate_t_value(vec_multiply_float(data->closest_intersection_point, variateur * 0.2), light->position, light_ray->direction); */
+	initial_t = calculate_t_value(vec_multiply_float(data->closest_intersection_point, variateur * 0.2), light->pos, light_ray->dir); */
 	
 	while(object)
 	{

@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/24 17:07:48 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/25 16:35:39 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,16 @@ t_vec	vec_multiply_float(t_vec a, float f)
 	result.x = a.x * f;
 	result.y = a.y * f;
 	result.z = a.z * f;
+	return (result);
+}
+
+t_vec	vec_div_float(t_vec a, float f)
+{
+	t_vec result;
+	
+	result.x = a.x / f;
+	result.y = a.y / f;
+	result.z = a.z / f;
 	return (result);
 }
 

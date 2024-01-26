@@ -6,40 +6,40 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/25 19:14:36 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/26 19:11:56 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// t_vec vec_rotate(t_vec vector, t_vec axis) {
-// 	t_vec result;
+/* t_vec vec_rotate(t_vec vector, t_vec axis) {
+	t_vec result;
 
-// 	float cos_theta = cosf(axis.x);
-// 	float sin_theta = sinf(axis.x);
+	float cos_theta = cosf(axis.x);
+	float sin_theta = sinf(axis.x);
 
-// 	float x_rot = vector.x;
-// 	float y_rot = cos_theta * vector.y - sin_theta * vector.z;
-// 	float z_rot = sin_theta * vector.y + cos_theta * vector.z;
+	float x_rot = vector.x;
+	float y_rot = cos_theta * vector.y - sin_theta * vector.z;
+	float z_rot = sin_theta * vector.y + cos_theta * vector.z;
 
-// 	result.x = x_rot;
-// 	result.y = cosf(axis.y) * y_rot + sinf(axis.y) * z_rot;
-// 	result.z = -sinf(axis.y) * y_rot + cosf(axis.y) * z_rot;
+	result.x = x_rot;
+	result.y = cosf(axis.y) * y_rot + sinf(axis.y) * z_rot;
+	result.z = -sinf(axis.y) * y_rot + cosf(axis.y) * z_rot;
 
-// 	return result;
-// }
+	return result;
+}
 
-// t_vec vec_invert(t_vec vector) {
-// 	t_vec result;
+t_vec vec_invert(t_vec vector) {
+	t_vec result;
 
-// 	result.x = -vector.x;
-// 	result.y = -vector.y;
-// 	result.z = -vector.z;
+	result.x = -vector.x;
+	result.y = -vector.y;
+	result.z = -vector.z;
 
-// 	return result;
-// }
+	return result;
+}
 
-/* void check_intersection_cylinder(t_objs *cylinder, t_ray *ray)
+void check_intersection_cylinder(t_objs *cylinder, t_ray *ray)
 {
 	t_vec calc;
 
@@ -92,3 +92,45 @@ void intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylin
 		// }
 	}
 } */
+
+
+
+
+
+
+
+
+
+/* t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
+{
+	t_vec	maths;
+	t_ray	ray;
+
+
+	ray = inter->cam_ray;
+
+	maths.x = 
+
+	maths.y = 
+ 
+	maths.z = 
+
+	return (maths);
+}
+
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
+{
+	t_vec	maths;
+
+	maths = get_vec_abc(inter, cylinder);
+
+	if (delta >= 0 && t > 0. && t < inter->dist)
+	{
+		inter->dist = t;
+		inter->obj = cylinder;
+		inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
+		inter->normal = vec_normalize(vec_substract(inter->point, Q));
+	}
+} */
+
+// https://www.illusioncatalyst.com/notes_files/mathematics/line_cylinder_intersection.php

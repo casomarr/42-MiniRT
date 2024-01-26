@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/25 20:10:54 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/26 18:25:41 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 t_vec	vec_add_float(t_vec vec, float nb);
 t_vec	vec_div_float(t_vec a, float f);
+t_vec	vec_product(t_vec a, t_vec b);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);

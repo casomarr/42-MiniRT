@@ -2,9 +2,9 @@
 
 C 0,0,0                 0,0,1                      70
 
-A                                                           0.8                                            255,255,0
+A                                                           1                                            255,255,0
 
-L   0,10,20                                                  0.2
+L   1,10,20                                                  0.2
 #L   0,0,0                                                    0.0
 
 # sp 2,0,20                                                                   2                                255,0,0
@@ -18,8 +18,15 @@ sp 2,0,20                                                                       
 sp -2,0,20                                                                       4                               255,255,255
 sp -8,0,20                                                                       4                               255,0,0
 
-pl 0,-2,40                      0,1,0                                                                         255,255,255
-pl 0,15,40                      0,1,0                                                                         100,0,255
-pl 20,-1,40                      -1,-0.5,0                                                                      110,255,140
+# plan du bas
+pl 0,-2,0                      0,1,0                                                                         255,255,255
+
+# # plan derrière
+# pl 0,15,0                      0,1,0                                                                         100,0,255
+# pl 0,15,0                      1,0,0                                                                         100,0,255
+# # bruit sur tous les objets --> normal car le plan passe par le milieu de la light donc seulement la moitié des rayons éclairent
+
+# # plan à droite
+# pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
 
 #cy 0,0,8                      0,0,0                                       1              2             150,0,150

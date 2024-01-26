@@ -140,6 +140,18 @@ t_vec	vec_clamp(t_vec v, float min, float max)
 	return ((t_vec){clamp(v.x, min, max),clamp(v.y, min, max),clamp(v.z, min, max)});
 }
 
+t_vec	vec_product(t_vec a, t_vec b)
+{
+	t_vec ret = (t_vec){a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
+	if (ret.x == -0.)
+		ret.x = 0;
+	if (ret.y == -0.)
+		ret.y = 0;
+	if (ret.z == -0.)
+		ret.z = 0;
+	return (ret);
+}
+
 int	compute_pixel(int x, int y, t_data *data)
 {
 	t_ray 	ray;
@@ -155,6 +167,20 @@ int	compute_pixel(int x, int y, t_data *data)
 		// 	return (color_from_rgb(255,0,0).full);
 		// if (inter.obj->type == PLANE)
 		// 	return (color_from_rgb(0,255,0).full);
+		
+		t_vec vec_right;
+		t_vec vec_up;
+
+		vec_right = vec_product(vec_normalize((t_vec){0., 0., 1.}), vec_normalize((t_vec){0.,1.,0.}));
+		//t_vec vec_color = (t_vec){ft_fabs(dot_product(inter.normal, vec_right)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
+		t_vec vec_color = (t_vec){(clamp(dot_product(inter.normal, vec_right), 0., 1.)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
+		vec_color = vec_multiply_float(vec_color, 255.);
+		return (color_from_vec(vec_color).full);
+
+
+
+
+
 		color = inter.obj->color;
 		float ratio_camera_dist =  1. - inter.dist / MAX_DIST_CAMERA;
 		float	ambiratio = get_node(data->scene.objs, AMBIENT)->lightness;
@@ -223,6 +249,8 @@ void minirt(t_data *data)
 		while (x < WIN_WIDTH)
 		{
 			color = compute_pixel(x, y, data);
+
+
 			//ray = compute_ray(x, y, data->camera);
 			//ce dont t'as besoin = f(datas,x,y)
 			/* compute_ray(data);

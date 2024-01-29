@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:09:34 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:12:23 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:06:44 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ t_objs	*lst_new_objs(void)
 	if (!new)
 		return (NULL);
 	new->type = 0;
-	new->position.x = 0;
-	new->position.y = 0;
-	new->position.z = 0;
-	new->direction.x = 0;
-	new->direction.y = 0;
-	new->direction.z = 0;
+	new->pos.x = 0;
+	new->pos.y = 0;
+	new->pos.z = 0;
+	new->dir.x = 0;
+	new->dir.y = 0;
+	new->dir.z = 0;
 	new->color.full = 0;
 	new->diameter = 0;
 	new->height = 0;

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/29 16:19:38 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:14:11 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,3 +152,56 @@ void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
 } */
 
 // https://www.illusioncatalyst.com/notes_files/mathematics/line_cylinder_intersection.php
+
+
+
+t_vec RotateByDir(t_vec dir_origin, t_vec dir_dest, t_vec p)
+{
+	t_vec r;
+
+    r = vec_normalize(vec_product(dir_origin, p));
+    return (vec_product(dir_dest, r));
+}
+
+static t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
+{
+	t_vec	maths;
+	t_ray	ray;
+
+	ray = inter->cam_ray;
+	maths.x = powf(ray.dir.y, 2);
+	maths.y = 2 * ray.origin.y * ray.dir.y;
+	maths.z = powf(ray.origin.y, 2) - powf(cylinder->diameter / 2, 2);
+	return (maths);
+}
+
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
+{
+	t_vec	maths;
+	float	delta;
+	float	t;
+
+	maths = get_vec_abc(inter, cylinder);
+
+	delta = powf(maths.y, 2) - 4 * maths.x * maths.z;
+	
+	if (delta >= 0)
+	{
+ 			float t1 = (-maths.y + sqrtf(delta)) / (2. * maths.x);
+ 			float t2 = (-maths.y - sqrtf(delta)) / (2. * maths.x);
+			if (t1 < t2)
+				t = t1;
+			else
+				t = t2;
+	}
+	if (t1 < 0 && t2 > 0)
+		//intersection
+	if (delta >= 0 && t > 0. && t<= cylinder->height && t < inter->dist)
+	{
+		inter->dist = t; //pas besoin de re rotater avant
+		inter->obj = cylinder;
+		inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
+		//besoin de re rotater avec RotateByDir
+		inter->normal = RotateByDir(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t), cylinder->pos);
+	}
+}

@@ -172,7 +172,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		// 	return (color_from_rgb(255,0,0).full);
 		// if (inter.obj->type == PLANE)
 		// 	return (color_from_rgb(0,255,0).full);
-		
+
 /* 		//TEST PATOU ROTATION CAMERA
 		t_vec vec_right;
 		t_vec vec_up;
@@ -205,7 +205,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		t_vec light_dir = vec_div_float(point_to_light, dist_light);
 		interlight = closest_intersection((t_ray){inter.point, light_dir}, data->scene.objs, dist_light);
 		l_rgb = vec_multiply_float(l_rgb, ft_fabs(dot_product(light_dir, inter.normal)));
-		
+
 		if (interlight.obj != NULL)
 		 	v_rgb = ambi_rgb;
 		else
@@ -227,7 +227,7 @@ void	prepare_scene(t_data *data)
 {
 	t_objs *objs;
 
-	
+
 	objs = get_node(objs, CAMERA);
 	data->scene.cam = objs;
 	data->scene.rdir = vec_product((t_vec){0.,1.,0.}, objs->dir);

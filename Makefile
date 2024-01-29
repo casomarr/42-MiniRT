@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
+#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/24 17:25:03 by octonaute        ###   ########.fr        #
+#    Updated: 2024/01/29 18:21:19 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/init.c \
 	   $(PATH_SRCS)/check_params.c \
-	   $(PATH_SRCS)/set_data.c
+	   $(PATH_SRCS)/set_data.c \
+	   $(PATH_SRCS)/write_scene_ppm.c
 
 SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/29 16:34:23 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/29 18:21:33 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ peut faire une image petite pour augmenter les fps.*/
 // # define WIN_HEIGHT 900
 // # define WIN_WIDTH 1600
 
-# define WIN_HEIGHT 1300
-# define WIN_WIDTH 1600
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
@@ -259,7 +259,8 @@ bool	check_isdigit_float(char *value);
 bool	three_params_float(char *value, t_scene *scene);
 bool	three_params_int(char *value, t_scene *scene);
 bool	get_tvec_from_str(char *str, t_vec *v);
-bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene);
+bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene);
+void	write_scene_ppm(t_data *data);
 
 
 void	ft_stop(t_data *data, short error);

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:52:46 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:57:55 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,25 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 	return (true);
 }
 
+bool	check_nb_objs(t_data *data)
+{
+	if (data->scene.nb_ambiant != 1)
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of AMBIANT light\n\x1B[0m", data->scene.fname,\
+			data->scene.line);
+		return (false);
+	}
+	if (data->scene.nb_camera < 1)
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Wrong number of CAMERA\n\x1B[0m", data->scene.fname,\
+			data->scene.line);
+		return (false);
+	}
+	return (true);
+}
+
 int	parse_file(int fd, t_data *data)
 {
 	char	*line;
@@ -83,6 +102,8 @@ int	parse_file(int fd, t_data *data)
 			data->scene.line++;
 		}
 		free(line);
+		if (check_nb_objs(data) == false)
+			return (false);
 		return (true);
 	}
 	return (false);

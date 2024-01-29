@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:04:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:05:04 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:41:08 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	get_tvec_from_str(char *str, t_vec *v)
 	return (true);
 }
 
-bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
+bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
 {
 	char	**split;
 
@@ -44,9 +44,9 @@ bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
 		ft_free_split(split);
 		return (false);
 	}
-	rgb->argb[0] = (t_uint8)ft_atoi(split[0]);
-	rgb->argb[1] = (t_uint8)ft_atoi(split[1]);
-	rgb->argb[2] = (t_uint8)ft_atoi(split[2]);
+	rgb->bgra[0] = (t_uint8)ft_atoi(split[2]);
+	rgb->bgra[1] = (t_uint8)ft_atoi(split[1]);
+	rgb->bgra[2] = (t_uint8)ft_atoi(split[0]);
 	ft_free_split(split);
 	return (true);
 }

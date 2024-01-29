@@ -67,7 +67,8 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/utils.c \
 	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/init.c \
-	   $(PATH_SRCS)/check_params.c
+	   $(PATH_SRCS)/check_params.c \
+	   $(PATH_SRCS)/set_data.c
 
 SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \

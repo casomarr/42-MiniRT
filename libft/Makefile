@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/30 17:55:30 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/08 15:56:05 by amugnier         ###   ########.fr        #
+#    Updated: 2024/01/12 15:08:01 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ HDRS = $(PATH_HEADER)/libft.h \
 	   $(PATH_HEADER)/ft_printf.h \
 
 SRCS = $(PATH_SRCS)/ft_atoi.c \
+	  $(PATH_SRCS)/ft_atof.c \
 	  $(PATH_SRCS)/ft_bzero.c \
 	  $(PATH_SRCS)/ft_calloc.c \
 	  $(PATH_SRCS)/ft_isalnum.c \

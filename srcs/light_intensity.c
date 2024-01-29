@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_intensity.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:55:14 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:31:43 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:10:54 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,45 @@ float	clamp(float value, float min, float max)
 		return(max);
 	return (value);
 }
+
 /*Bidirectional Reflectance Distribution Function :
-function that takes as parameters the direction of
+function that takes as parameters the dir of
 the ray when entering and leaving the object. If the
 angle that we get is narrow, the light intensity will
 be higher (more intense).*/
-float		brdf(t_data *data)
-{
-	t_vec	surface_normal;
-	t_objs	*ambient;
-	float var_brdf;
+// float		brdf(t_data *data)
+// {
+// 	t_vec	surface_normal;
+// 	t_vec	surface_normalised;
+// 	t_objs	*ambient;
+// 	float var_brdf;
 
-	surface_normal = vec_substract(data->closest_intersection_point, data->current_object.position);
-	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
-	{
-		float magnitude = vec_pythagore(surface_normal);
-		surface_normal.x /= magnitude;
-		surface_normal.y /= magnitude;
-		surface_normal.z /= magnitude;
-		var_brdf = dot_product(data->light_ray.direction, surface_normal);
-		var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
-	}
-	else
-		var_brdf = 0.0;
-	ambient = get_node(data->scene.objs, AMBIENT);
-	var_brdf = var_brdf + ambient->lightness;
-	return var_brdf;
+// 	surface_normal = vec_substract(data->closest_intersection_point, data->closest_object.pos);
+// 	surface_normalised = vec_normalize(surface_normal);
+
+// 	if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness > 0.0)
+// 	{
+// 		// float magnitude = vec_pythagore(surface_normal);
+// 		// surface_normal.x /= magnitude;
+// 		// surface_normal.y /= magnitude;
+// 		// surface_normal.z /= magnitude;
+// 		// Reverse the dir of the light ray
+//         //t_vec reversed_light_direction = vec_multiply_float(data->light_ray.dir, -1.0);
+// 		//var_brdf = dot_product(reversed_light_direction, surface_normal);
+// 		var_brdf = dot_product(data->light_ray.dir, surface_normalised); //inverser la dir du rayon? vu que ne va plus vers ala lumiere mais l inverse
+// 		var_brdf = (clamp(var_brdf, -1.0, 1.0) + 1) / 2;
+// 	}
+// 	else
+// 		var_brdf = 0.0;
+// 	ambient = get_node(data->scene.objs, AMBIENT);
+// 	var_brdf = var_brdf + ambient->lightness;
+// 	return var_brdf;
+// }
+
+float		bouncing(t_data *data)
+{
+	/*determine l'influence de la couleur de l'objet
+	sur le chemin de la lumiere*/
+	(void)data;
+	return (1.0); //TODO
 }

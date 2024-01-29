@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:33:31 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:14:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ convertir toutes ces fonctions en fonctions variadiques
 pour pouvoir par exemple multiplier plus de seulement 2
 vecteurs a la fois. */
 
-t_vec	create_vec(float x, float y, float z)
+t_vec	create_vec(float x, float y, float z) //essayer de remplacer par (t_vec){x, y, z}
 {
 	t_vec vector;
-	
+
 	vector.x = x;
 	vector.y = y;
 	vector.z = z;
@@ -35,6 +35,16 @@ t_vec	vec_substract(t_vec a, t_vec b)
 	result.x = a.x - b.x;
 	result.y = a.y - b.y;
 	result.z = a.z - b.z;
+	return (result);
+}
+
+t_vec	vec_substract_float(t_vec a, float b)
+{
+	t_vec result;
+
+	result.x = a.x - b;
+	result.y = a.y - b;
+	result.z = a.z - b;
 	return (result);
 }
 
@@ -71,6 +81,16 @@ t_vec	vec_multiply_float(t_vec a, float f)
 	return (result);
 }
 
+t_vec	vec_div_float(t_vec a, float f)
+{
+	t_vec result;
+	
+	result.x = a.x / f;
+	result.y = a.y / f;
+	result.z = a.z / f;
+	return (result);
+}
+
 t_vec	vec_squared(t_vec a)
 {
 	t_vec result;
@@ -101,7 +121,18 @@ float	dot_product_float(t_vec b, float a)
 {
 	return (a * b.x + a * b.y + a * b.z);
 }
+//magnitude
 float	vec_pythagore(t_vec a)
 {
 	return sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
+}
+
+t_vec	vec_add_float(t_vec vec, float nb)
+{
+	t_vec	res;
+
+	res.x = vec.x + nb;
+	res.y = vec.y + nb;
+	res.z = vec.z + nb;
+	return (res);
 }

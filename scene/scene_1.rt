@@ -1,25 +1,36 @@
-#     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER                       COLOR (BGR)
+#     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER         HEIGHT           COLOR (RGB)
 
-C 0,2,0                 0,0,1                      70
+C 0,0,0                 0,0,1                      70
+# Antoine TODO: ne pas chequer dans le parsing si la dir est entre -1 et 1
+A                                                           1                                            255,255,0
 
-A                                                            0.1                                 255,255,255
-
-L   2,10,20                                                  0.9
-#La light est au dessus de la sphere bleue, legerement a gauche de celle-ci et est entre la sphere bleue et la sphere violette
-
-sp 2,0,20                                                                   2                   255,0,0
-sp 2,5,20                                                                   5                   255,0,0
-#Sphere qui est bleu et la plus eloignee de la camera
-sp -3.1,3,15                                                                  5                   255,0,0
-
-sp 3,0,10                                                                   4                   255,255,255
-#Sphere qui est violette et la plus proche de la camera
-
+L   1,10,20                                                  0.2
 #L   0,0,0                                                    0.0
 
-#pl 0,-2,20                      0,1,0                                                             0,0,255
-#Plan droit TG pas touche
+sp 8,0,20                                                                       4                               0,0,255
+sp 2,0,20                                                                       4                               255,255,255
+sp -2,0,20                                                                       4                               255,255,255
+sp -8,0,20                                                                       4                               255,0,0
 
-#pl 3,-1,20                      1,-0.5,0                                                           0,0,170
+# plan du bas
+pl 0,-2,0                      0,1,0                                                                         255,255,255
 
-#cy 500,500,100                      0,0,1                1.5     1.5                                   0,255,0
+# plan derrière
+pl 0,15,0                        0,1,0                                                                         100,0,255
+# pl 0,15,0                      1,0,0                                                                         100,0,255
+# bruit sur tous les objets --> normal car le plan passe par le milieu de la light donc seulement la moitié des rayons éclairent
+
+# plan à droite
+pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
+
+cy 0,0,8                      0,0,0                                       1              2             150,0,150
+
+
+
+# #      X,Y,Z         Lightning       direction        fov     diameter    height     color
+# C      0,0,0                         0.25,0.25,1         53
+# sp     0,1,6                                                  2                      255,0,0
+# sp     2,0,6                                                  2                      0,0,255
+# sp     -1.5,0,6                                               1.5                    0,255,0
+# A                     0.3                                                            255,255,255
+# L      2,1,0          0.0                                                            

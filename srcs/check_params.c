@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:12:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:11:12 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:32:26 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	three_params_float(char *value, t_scene *scene)
 	char	**params;
 	int		i;
 
-	i = -1;
+	i = 0;
 	params = ft_split(value, ',');
 	if (count_params(params) != 3)
 	{
@@ -77,7 +77,7 @@ bool	three_params_float(char *value, t_scene *scene)
 		ft_free_split(params);
 		return (false);
 	}
-	while (params[++i])
+	while (params[i])
 	{
 		if (check_isdigit_float(params[i]) == false)
 		{
@@ -87,6 +87,7 @@ bool	three_params_float(char *value, t_scene *scene)
 			ft_free_split(params);
 			return (false);
 		}
+		i++;
 	}
 	ft_free_split(params);
 	return (true);

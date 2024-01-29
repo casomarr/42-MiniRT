@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/12 13:49:14 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:12:12 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,22 @@ of the current pixel.*/
 float	determine_pixel_color(t_data *data)
 {
 	float	light_intensity;
-	t_rgb	color;
+	t_color	color;
 
-	color.full = data->front_object_color;
+	color.full = data->closest_object.color.full;
 	
 	//temporaire pour afficher lumiere
-	if (data->closest_object_type == LIGHT)
+	if (data->closest_object.type == LIGHT)
 		return (color.full);
-		
-	light_intensity = brdf(data);
-	color.argb[0] = get_color(color.argb[0], light_intensity);
-	color.argb[1] = get_color(color.argb[1], light_intensity);
-	color.argb[2] = get_color(color.argb[2], light_intensity);
+
+	if (data->direct_light == true) //points spheres : direct_light = false
+		//light_intensity = brdf(data);
+		light_intensity = 0.9;
+	else
+		light_intensity = get_node(data->scene.objs, AMBIENT)->lightness/*  * brdf(data) */;
+	
+	color.bgra[0] = get_color(color.bgra[0], light_intensity);
+	color.bgra[1] = get_color(color.bgra[1], light_intensity);
+	color.bgra[2] = get_color(color.bgra[2], light_intensity);
 	return (color.full);
 }

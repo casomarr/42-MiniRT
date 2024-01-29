@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:06:31 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:34:23 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@
 
 /*Patou : si le sujet ne specifie pas de taille d'image on
 peut faire une image petite pour augmenter les fps.*/
-# define WIN_HEIGHT 900
+// # define WIN_HEIGHT 900
+// # define WIN_WIDTH 1600
+
+# define WIN_HEIGHT 1300
 # define WIN_WIDTH 1600
 
 # define WHITE 0xFFFFFF
@@ -54,6 +57,8 @@ peut faire une image petite pour augmenter les fps.*/
 
 # define ESC_KEY 65307
 
+#define MAX_DIST_CAMERA	FLT_MAX
+
 # define ERROR_MSG1 "Error\n\x1B[1m"
 # define ERROR_MSG2 "\x1B[31merror:\x1B[0m\x1B[1m "
 
@@ -68,11 +73,11 @@ typedef struct s_vec
 typedef unsigned int t_uint32;
 typedef unsigned char t_uint8;
 
-typedef union	u_rgb
+typedef union	u_color //le changer à bgra
 {
 	t_uint32	full;
-	t_uint8		argb[4];
-}	t_rgb;
+	t_uint8		bgra[4];
+}	t_color;
 
 typedef struct s_img
 {
@@ -87,10 +92,9 @@ typedef struct s_img
 typedef struct s_ray
 {
 	t_vec	origin;
-	t_vec	current_pixel;
-	t_vec	location;
-	t_vec	direction;
+	t_vec	dir;
 	float	norm;
+
 	int		color;
 	float	discriminant;
 	float	t;
@@ -99,12 +103,52 @@ typedef struct s_ray
 	float	pixel_delta_h;
 }	t_ray;
 
+/*
+typedef struct s_cam
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //12
+	t_vec			dir; //12
+	t_vec			rdir; //12
+	t_vec			udir;//12
+	int				fov; //4
+}			t_cam;
+
+
+[OBJ1]
+
+[OBJ2][OBJ3][OBJ4]
+
+typedef struct s_sphere
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //all
+	t_color			color;
+	float			diameter; //sphere and cylinder
+} t_sphere
+
+t_objs *obj;
+if (obj->type == SPHERE)
+	sphere = (t_sphere*)obj;
+if (obj->type == CAMERA)
+	camera = (t_camera*)obj;
+obj = obj->next;
+
 typedef struct s_objs
 {
 	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			position; //all
-	t_vec			direction; //plan and cylinder
-	t_rgb			color;
+	t_vec			pos; //all
+	t_vec			dir; //plan and cylinder
+	struct s_objs	*next;
+} t_objs;
+*/
+
+typedef struct s_objs
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //all
+	t_vec			dir; //plan and cylinder
+	t_color			color;
 	float			diameter; //sphere and cylinder
 	float			height; //cylinder only
 	int				fov; //camera only
@@ -112,16 +156,29 @@ typedef struct s_objs
 	struct s_objs	*next;
 } t_objs;
 
+typedef struct 	s_inter {
+	t_ray	cam_ray;
+	t_vec	point;
+	t_vec	normal;
+	float	dist;
+	t_objs	*obj;
+}				t_inter;
 
 typedef struct s_scene
 {
 	t_objs		*objs;
+	t_objs		*cam;
 	int			nb_camera;
 	int			nb_ambiant;
 	int			nb_light;
 	int			nb_objs;
 	int			line;
 	char		*fname;
+
+
+	//modification pas d'antoine TODO: Vérifier que ça fait pas de la merde au parsing
+	t_vec		rdir;
+	t_vec		udir;
 } t_scene;
 
 typedef struct s_data
@@ -129,30 +186,20 @@ typedef struct s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
+	t_scene	scene;
+
+
+
 	t_ray	ray;
 	t_ray	light_ray;
-	t_scene	scene;
 	int		x;
 	int		y;
 	float	z_index;
-	float	light_distance;
-	int		front_object_color;
-	t_vec	intersection_point;
 	t_vec	closest_intersection_point;
-	int		closest_object_type;
-	t_objs	current_object;
+	t_objs	closest_object;
 	bool	direct_light;
-	float	distance_of_projection;
-	t_vec	current_pixel;
 	float	norm;
-	float	initial_z;
-
-//probablement pas besoin de toutes ces variables en double
-	float	z_index_light;
-	// t_vec	closest_intersection_point_light;
-	// int		closest_object_type_light;
-	// t_objs	current_object_light;
-	// int		front_object_color_light;
+	float	light_intensity;
 }	t_data;
 
 /* typedef struct s_check_objs
@@ -224,12 +271,13 @@ int		esc_close(int keycode, t_data *data);
 int		cross_close(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
-void	ray_generation(t_data *data);
-void	get_norm(t_ray *ray);
+void	minirt(t_data *data);
+// void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
-void	generate_camera_ray(t_data *data);
-// void	generate_camera_ray(t_data *data, float x, float y);
+t_ray	compute_screen_ray(int x, int y, t_scene scene);
+int		compute_pixel(int x, int y, t_data *data);
+// void	compute_ray(t_data *data, float x, float y);
 void	generate_light_ray(t_data *data);
 void	distance_of_projection(t_data *data);
 
@@ -244,35 +292,49 @@ float	dot_product(t_vec a, t_vec b);
 float	dot_product_float(t_vec b, float a);
 t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
+t_vec	vec_add_float(t_vec vec, float nb);
+t_vec	vec_div_float(t_vec a, float f);
+t_vec	vec_product(t_vec a, t_vec b);
+t_vec	vec_substract_float(t_vec a, float b);
 
 /*Intersections*/
-void	check_intersection_sphere(t_objs *object, t_ray *ray);
-void	intersection_point_sphere(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
+void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
-bool	intersection(t_data *data);
+t_inter	closest_intersection(t_ray cam_ray, t_objs *object, float dist);
+float	get_norm(t_vec vec);
+t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
+float	ft_fabs(float f);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);
 float		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
 
+/*Cylinder*/
+// void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);
+// void	intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylinder, t_ray *camera_ray);
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder);
+
 /*Render*/
 void	img_pix_put(t_data *data, int x, int y, int color);
 // void	add_pixel_to_img(t_data *data, int color);
 
 /*Light Intensity*/
-bool	direct_light(t_data *data);
-float	distance_light_object(t_data *data);
-float		brdf(t_data *data);
-float		shadows(t_data *data);
+float	clamp(float value, float min, float max);
+float	lerp(float ratio, float min, float max);
+float	brdf(t_data *data);
+float	bouncing(t_data *data);
 
 /*Utils*/
 t_objs	*get_node(t_objs *objs, int type);
 
 /*Plane intersection*/
 void	get_norm2(t_vec *a, t_data *data);
-void	check_intersection_plan(t_objs *object, t_ray *ray, t_data *data);
-void	intersection_point_plan(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
-
+void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
+// void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
+void	intersection_point_plane(t_inter *inter, t_objs *plane);
+t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
+t_vec	vec_normalize(t_vec v);
 
 #endif

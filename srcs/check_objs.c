@@ -3,14 +3,222 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:07:19 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:05:35 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+bool	check_isdigit_int(char *value, t_scene *scene)
+{
+	int	i;
+
+	i = 0;
+	if (ft_is_sign(value[i]))
+		i++;
+	while (value[i] != '\0' && value[i] != '\n')
+	{
+		if (ft_isdigit(value[i]) == false)
+		{
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+				"number is not an INT\n\x1B[0m",\
+				scene->fname, scene->line);
+			return (false);
+		}
+		i++;
+	}
+	if (value[i] == '\n')
+		value[i] = '\0';
+	return (true);
+}
+
+bool	check_isdigit_float(char *value)
+{
+	int	i;
+	int	dot;
+
+	i = 0;
+	dot = 0;
+	if (ft_is_sign(value[i]))
+		i++;
+	while (value[i] != '\0' && value[i] != '\n')
+	{
+		if (value[i] != '.')
+		{
+			if (ft_isdigit(value[i]) == false)
+				return (false);
+		}
+		else
+			dot++;
+		if (dot > 1)
+			return (false);
+		i++;
+		if (value[i] == '\n')
+			value[i] = '\0';
+	}
+	return (true);
+}
+/*
+
+DEFINE OBJ_BUFF_SIZE 1024
+
+t_scene{
+	t_camera	*cam;
+	t_ambiant	ambiant;
+	t_light		light;
+	t_plane		planes[OBJ_BUFF_SIZE]
+}
+
+t_data{
+	t_scene scene;
+}
+
+t_vec3{
+	float x;
+	float y;
+	float z;
+}
+
+t_camera{
+	t_vec3	pos;
+	t_vec3	dir;
+	int		fov;
+}
+
+t_plane{
+	t_vec3	pos;
+	t_vec3	dir;
+	t_vec3i	color;
+}
+
+
+#            x  y  z          x  y  z               FOV           R G B
+C
+-50.0,0,20
+0,0,1
+70
+
+pl          0.0,0.0,-10.0     0.0,1.0,0.0                         0,0,225
+
+*/
+
+// t_camera *get_camera_data(char **line){
+// 	t_camera *ret;
+// 	ret = malloc(sizeof(t_camera));
+// 	if (!ret)
+// 		return 0;
+// 	/*
+// 	récupérer les datas de t_vec3 line[1], t_vec3 line[2] et int line[3]
+// 	*/
+// 	return ret;
+// }
+
+// float	ft_atof(char *str)
+// {
+// 	int	i;
+// 	int	sign;
+// 	float	res;
+// 	float dec;
+
+// 	i = 0;
+// 	sign = 1;
+// 	res = 0;
+// 	dec = 1;
+// 	if (str[i] == '-')
+// 	{
+// 		sign = -1;
+// 		i++;
+// 	}
+// 	while (str[i] != '.' && str[i] != '\0')
+// 	{
+// 		res = res * 10 + str[i] - '0';
+// 		i++;
+// 	}
+// 	if (str[i] == '.')
+// 	{
+// 		i++;
+// 		while (str[i] != '\0')
+// 		{
+// 			dec /= 10;
+// 			res = res + (str[i] - '0') * dec;
+// 			i++;
+// 		}
+// 	}
+// 	return (res * sign);
+// }
+
+float	ft_atof(char *str)
+{
+	int		reti;
+	float	dec;
+	float	sign;
+
+	sign = 1;
+	dec = 0;
+	reti = 0;
+	if (*str == '-') //TODO CHECK IF + IT'S OK BUT I DON'T THINK SO
+	{
+		sign = -1.;
+		str++;
+	}
+	while (*str)
+	{
+		if (*str != '.')
+		{
+			dec *= 10;
+			reti *= 10;
+			reti += (int)(*str - '0');
+		}
+		else
+			dec = 1;
+		str++;
+	}
+	if (dec > 0)
+		return (((float)reti * sign) / dec);
+	return ((float)reti * sign);
+}
+
+bool	get_tvec_from_str(char *str, t_vec *v)
+{
+	char	**split;
+
+	split = ft_split(str, ',');
+	if (!split)
+		return (false);
+	v->x = ft_atof(split[0]);
+	v->y = ft_atof(split[1]);
+	v->z = ft_atof(split[2]);
+	ft_free_split(split);
+	return (true);
+}
+
+bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
+{
+	char	**split;
+
+	split = ft_split(str, ',');
+	if (!split)
+		return (false);
+	rgb->full = 0;
+	if ((ft_atoi(split[0]) > 255 || ft_atoi(split[0]) < 0)\
+		|| (ft_atoi(split[1]) > 255 || ft_atoi(split[1]) < 0)\
+		|| (ft_atoi(split[2]) > 255 || ft_atoi(split[2]) < 0))
+	{
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+			"Color must be between 0 and 255\n\x1B[0m", scene->fname,\
+			scene->line);
+		ft_free_split(split);
+		return (false);
+	}
+	rgb->bgra[2] = (t_uint8)ft_atoi(split[0]);
+	rgb->bgra[1] = (t_uint8)ft_atoi(split[1]);
+	rgb->bgra[0] = (t_uint8)ft_atoi(split[2]);
+	ft_free_split(split);
+	return (true);
+}
 
 bool	check_camera(char **value, t_data *data)
 {
@@ -42,9 +250,9 @@ bool	check_camera(char **value, t_data *data)
 	if (!camera)
 		return (false);
 	camera->type = 3;
-	if (get_tvec_from_str(value[1], &camera->position) == false)
+	if (get_tvec_from_str(value[1], &camera->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &camera->direction) == false)
+	if (get_tvec_from_str(value[2], &camera->dir) == false)
 		return (false);
 	camera->fov = ft_atoi(value[3]);
 	if (check_data_objs(camera, &data->scene) == false)
@@ -150,7 +358,7 @@ bool	check_light(char **value, t_data *data)
 	if (!light)
 		return (false);
 	light->type = 5;
-	if (get_tvec_from_str(value[1], &light->position) == false)
+	if (get_tvec_from_str(value[1], &light->pos) == false)
 		return (false);
 	light->lightness = ft_atof(value[2]);
 	if (check_data_objs(light, &data->scene) == false)
@@ -183,7 +391,7 @@ bool	check_sphere(char **value, t_data *data)
 			data->scene.line);
 		return (false);
 	}
-	if (three_params_float(value[1], &data->scene) == false) //position
+	if (three_params_float(value[1], &data->scene) == false) //pos
 		return (false);
 	if (check_isdigit_float(value[2]) == false) //diameter
 	{
@@ -198,7 +406,7 @@ bool	check_sphere(char **value, t_data *data)
 	if (!sphere)
 		return (false);
 	sphere->type = 0;
-	if (get_tvec_from_str(value[1], &sphere->position) == false)
+	if (get_tvec_from_str(value[1], &sphere->pos) == false)
 		return (false);
 	sphere->diameter = ft_atof(value[2]);
 	if (get_trgb_from_str(value[3], &sphere->color, &data->scene) == false)
@@ -243,9 +451,9 @@ bool	check_plan(char **value, t_data *data)
 	if (!plan)
 		return (false);
 	plan->type = 2;
-	if (get_tvec_from_str(value[1], &plan->position) == false)
+	if (get_tvec_from_str(value[1], &plan->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &plan->direction) == false)
+	if (get_tvec_from_str(value[2], &plan->dir) == false)
 		return (false);
 	if (get_trgb_from_str(value[3], &plan->color, &data->scene) == false)
 		return (false);
@@ -303,9 +511,9 @@ bool	check_cylinder(char **value, t_data *data)
 	if (!cylinder)
 		return (false);
 	cylinder->type = 1;
-	if (get_tvec_from_str(value[1], &cylinder->position) == false)
+	if (get_tvec_from_str(value[1], &cylinder->pos) == false)
 		return (false);
-	if (get_tvec_from_str(value[2], &cylinder->direction) == false)
+	if (get_tvec_from_str(value[2], &cylinder->dir) == false)
 		return (false);
 	cylinder->diameter = ft_atof(value[3]);
 	cylinder->height = ft_atof(value[4]);

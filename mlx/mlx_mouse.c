@@ -26,7 +26,7 @@ int		mlx_mouse_show(t_xvar *xvar, t_win_list *win)
 }
 
 /*
-** Queries the position of the mouse pointer relative to the origin of the
+** Queries the pos of the mouse pointer relative to the origin of the
 ** specified window and saves it to the provided location.
 **
 ** If the pointer is not on the same screen as the specified window, both

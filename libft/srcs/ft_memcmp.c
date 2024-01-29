@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:04:13 by amugnier          #+#    #+#             */
-/*   Updated: 2022/11/09 11:13:06 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:06:24 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_memcmp(const void *pt1, const void *pt2, size_t size)
 {
-	unsigned long	position;
+	unsigned long	pos;
 	int				delta;
 
-	position = 0;
-	while (position < size)
+	pos = 0;
+	while (pos < size)
 	{
-		position++;
+		pos++;
 		delta = *(unsigned char *)pt1++ - *(unsigned char *)pt2++;
 		if (delta)
 			return (delta);

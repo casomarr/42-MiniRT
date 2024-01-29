@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/26 18:25:41 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 16:34:23 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_ray
 	t_vec	origin;
 	t_vec	dir;
 	float	norm;
+
 	int		color;
 	float	discriminant;
 	float	t;
@@ -101,6 +102,46 @@ typedef struct s_ray
 	float	pixel_delta_w;
 	float	pixel_delta_h;
 }	t_ray;
+
+/*
+typedef struct s_cam
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //12
+	t_vec			dir; //12
+	t_vec			rdir; //12
+	t_vec			udir;//12
+	int				fov; //4
+}			t_cam;
+
+
+[OBJ1]
+
+[OBJ2][OBJ3][OBJ4]
+
+typedef struct s_sphere
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //all
+	t_color			color;
+	float			diameter; //sphere and cylinder
+} t_sphere
+
+t_objs *obj;
+if (obj->type == SPHERE)
+	sphere = (t_sphere*)obj;
+if (obj->type == CAMERA)
+	camera = (t_camera*)obj;
+obj = obj->next;
+
+typedef struct s_objs
+{
+	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
+	t_vec			pos; //all
+	t_vec			dir; //plan and cylinder
+	struct s_objs	*next;
+} t_objs;
+*/
 
 typedef struct s_objs
 {
@@ -133,6 +174,11 @@ typedef struct s_scene
 	int			nb_objs;
 	int			line;
 	char		*fname;
+
+
+	//modification pas d'antoine TODO: Vérifier que ça fait pas de la merde au parsing
+	t_vec		rdir;
+	t_vec		udir;
 } t_scene;
 
 typedef struct s_data
@@ -227,7 +273,7 @@ void	minirt(t_data *data);
 // void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
-t_ray	compute_screen_ray(int x, int y, t_objs *camera);
+t_ray	compute_screen_ray(int x, int y, t_scene scene);
 int		compute_pixel(int x, int y, t_data *data);
 // void	compute_ray(t_data *data, float x, float y);
 void	generate_light_ray(t_data *data);
@@ -247,6 +293,7 @@ float	vec_pythagore(t_vec a);
 t_vec	vec_add_float(t_vec vec, float nb);
 t_vec	vec_div_float(t_vec a, float f);
 t_vec	vec_product(t_vec a, t_vec b);
+t_vec	vec_substract_float(t_vec a, float b);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
@@ -263,8 +310,9 @@ float		determine_pixel_color(t_data *data);
 // void	determine_pixel(t_data *data);
 
 /*Cylinder*/
-void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);
-void	intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylinder, t_ray *camera_ray);
+// void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);
+// void	intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylinder, t_ray *camera_ray);
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder);
 
 /*Render*/
 void	img_pix_put(t_data *data, int x, int y, int color);

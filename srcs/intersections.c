@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/26 14:42:32 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 15:11:25 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_inter	closest_intersection(t_ray cam_ray, t_objs *object, float dist)
 			intersection_point_sphere(&inter, object);
 		else if (object->type == PLANE)
 			intersection_point_plane(&inter, object);
-		// else if (object->type == CYLINDER)
-		// 	intersection_point_cylinder(&inter, object);
+/* 		else if (object->type == CYLINDER)
+			intersection_point_cylinder(&inter, object); */
 /* 			else if (object->type == LIGHT) //temporaire pour afficher lumiere
 			{
 				t_objs *light = get_node(data->scene.objs, LIGHT);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_intersection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/25 20:38:57 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 14:43:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/26 19:12:34 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 15:14:27 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	initialisation(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-/* int	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data data;
 
@@ -90,11 +90,11 @@ int	initialisation(t_data *data)
 	mlx_key_hook(data.win_ptr, esc_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
-} */
+}
 
 
 
-int main()
+/* int main()
 {
 	// t_vec front = (t_vec){0, 0, 1};
 	// t_vec right = (t_vec){1, 0, 0};
@@ -130,4 +130,4 @@ int main()
 	//res = vec_product(vec_normalize((t_vec){data->scene.cam->dir.x, 0, data->scene.cam->dir.z}), res); // = {0., 0.5, -0.}
 	// 0.4, 0.8, -0.4
 	printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-}
+} */

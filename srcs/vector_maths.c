@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_maths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/25 16:35:39 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 14:14:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ t_vec	vec_substract(t_vec a, t_vec b)
 	result.x = a.x - b.x;
 	result.y = a.y - b.y;
 	result.z = a.z - b.z;
+	return (result);
+}
+
+t_vec	vec_substract_float(t_vec a, float b)
+{
+	t_vec result;
+
+	result.x = a.x - b;
+	result.y = a.y - b;
+	result.z = a.z - b;
 	return (result);
 }
 

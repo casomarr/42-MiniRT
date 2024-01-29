@@ -1,7 +1,7 @@
 #     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER         HEIGHT           COLOR (RGB)
 
 C 0,0,0                 0,0,1                      70
-
+# Antoine TODO: ne pas chequer dans le parsing si la dir est entre -1 et 1
 A                                                           1                                            255,255,0
 
 L   1,10,20                                                  0.2
@@ -21,12 +21,22 @@ sp -8,0,20                                                                      
 # plan du bas
 pl 0,-2,0                      0,1,0                                                                         255,255,255
 
-# # plan derrière
-# pl 0,15,0                      0,1,0                                                                         100,0,255
+# plan derrière
+pl 0,15,0                        0,1,0                                                                         100,0,255
 # pl 0,15,0                      1,0,0                                                                         100,0,255
-# # bruit sur tous les objets --> normal car le plan passe par le milieu de la light donc seulement la moitié des rayons éclairent
+# bruit sur tous les objets --> normal car le plan passe par le milieu de la light donc seulement la moitié des rayons éclairent
 
-# # plan à droite
-# pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
+# plan à droite
+pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
 
-#cy 0,0,8                      0,0,0                                       1              2             150,0,150
+cy 0,0,8                      0,0,0                                       1              2             150,0,150
+
+
+
+# #      X,Y,Z         Lightning       direction        fov     diameter    height     color
+# C      0,0,0                         0.25,0.25,1         53
+# sp     0,1,6                                                  2                      255,0,0
+# sp     2,0,6                                                  2                      0,0,255
+# sp     -1.5,0,6                                               1.5                    0,255,0
+# A                     0.3                                                            255,255,255
+# L      2,1,0          0.0                                                            

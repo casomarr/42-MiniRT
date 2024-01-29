@@ -68,17 +68,21 @@ float vec_length(t_vec v)
 /*Generates each ray. They all have the same origin (the camera center)
 but their dir changes (they reach a different pixel on the canevas
 and continue in that dir into the scene)*/
-t_ray	compute_screen_ray(int x, int y, t_objs *camera)
+t_ray	compute_screen_ray(int x, int y, t_scene scene)
 {
 	t_ray	ray;
+	t_objs *camera;
 
+	camera = scene.cam;
 	ray.origin = camera->pos;
 	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
 	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
 	float xr = (2 * ((x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
 	float yr = (/* 1 -  */2 * ((y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
+
 	//calculs de rotation de la camera
-	ray.dir = vec_normalize(create_vec(xr, yr, 1));
+	// ray.dir = vec_normalize(create_vec(xr, yr, 1));
+	ray.dir = vec_normalize(vec_add(vec_add(camera->dir, vec_multiply_float(scene.rdir, xr)), vec_multiply_float(scene.udir, yr)));
 	return (ray);
 }
 
@@ -159,7 +163,8 @@ int	compute_pixel(int x, int y, t_data *data)
 	t_color	color;
 	t_vec	v_rgb;
 
-	ray = compute_screen_ray(x, y, get_node(data->scene.objs, CAMERA)); //TODO: verifier parsing erreur qd pas camera dans scene
+	ray = compute_screen_ray(x, y, data->scene); //TODO: verifier parsing erreur qd pas camera dans scene
+	t_objs *camera = get_node(data->scene.objs, CAMERA);
 	inter = closest_intersection(ray, data->scene.objs, MAX_DIST_CAMERA);
 	if (inter.obj != NULL)
 	{
@@ -168,6 +173,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		// if (inter.obj->type == PLANE)
 		// 	return (color_from_rgb(0,255,0).full);
 		
+/* 		//TEST PATOU ROTATION CAMERA
 		t_vec vec_right;
 		t_vec vec_up;
 
@@ -175,7 +181,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		//t_vec vec_color = (t_vec){ft_fabs(dot_product(inter.normal, vec_right)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
 		t_vec vec_color = (t_vec){(clamp(dot_product(inter.normal, vec_right), 0., 1.)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
 		vec_color = vec_multiply_float(vec_color, 255.);
-		return (color_from_vec(vec_color).full);
+		return (color_from_vec(vec_color).full); */
 
 
 
@@ -199,7 +205,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		t_vec light_dir = vec_div_float(point_to_light, dist_light);
 		interlight = closest_intersection((t_ray){inter.point, light_dir}, data->scene.objs, dist_light);
 		l_rgb = vec_multiply_float(l_rgb, ft_fabs(dot_product(light_dir, inter.normal)));
-
+		
 		if (interlight.obj != NULL)
 		 	v_rgb = ambi_rgb;
 		else
@@ -220,6 +226,13 @@ int	compute_pixel(int x, int y, t_data *data)
 void	prepare_scene(t_data *data)
 {
 	t_objs *objs;
+
+	
+	objs = get_node(objs, CAMERA);
+	data->scene.cam = objs;
+	data->scene.rdir = vec_product((t_vec){0.,1.,0.}, objs->dir);
+	data->scene.udir = vec_product(objs->dir, data->scene.rdir);
+
 	objs = data->scene.objs;
 	while (objs)
 	{

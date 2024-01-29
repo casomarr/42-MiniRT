@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/26 19:11:56 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/29 16:19:38 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,15 @@ void intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylin
 
 
 
-/* t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
+/* t_vec	get_vec_abc(t_vec v, t_vec w, t_vec h, t_objs *cylinder)
 {
 	t_vec	maths;
-	t_ray	ray;
 
+	maths.x = vec_substract(vec_squared(v), vec_squared(vec_multiply(v, h)));
 
-	ray = inter->cam_ray;
-
-	maths.x = 
-
-	maths.y = 
+	maths.y = vec_multiply_float(vec_substract(vec_multiply(v, w), vec_multiply(vec_multiply(v, h), vec_multiply(w, h))), 2.);
  
-	maths.z = 
+	maths.z = vec_substract_float(vec_substract(vec_multiply(w, w), vec_squared(vec_multiply(w, h))), powf(cylinder->diameter / 2, 2.));
 
 	return (maths);
 }
@@ -121,15 +117,37 @@ void intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylin
 void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
 {
 	t_vec	maths;
+	t_vec	v;
+	t_vec	w;
+	t_vec	h;
+	t_vec	H;
+	float	delta;
+	float	t;
 
-	maths = get_vec_abc(inter, cylinder);
+	v = inter->cam_ray.dir;
+	w = vec_substract(inter->cam_ray.origin, cylinder->pos);
+	H = vec_add(cylinder->pos, vec_multiply_float(cylinder->dir, cylinder->height));
+	h = vec_substract(H, cylinder->pos);
+	
+	maths = get_vec_abc(v, w, h, cylinder);
+	delta = powf(maths.y, 2) - 4 * maths.x * maths.z;
+	
+	if (delta > 0)
+	{
+		if ((-maths.y + sqrtf(delta)) / (2. * maths.x) < (-maths.y - sqrtf(delta)) / (2. * maths.x))
+ 			t = (-maths.y + sqrtf(delta)) / (2. * maths.x);
+ 		else
+ 			t = (-maths.y - sqrtf(delta)) / (2. * maths.x);
+	}
+	else if (delta == 0.)
+		t = -maths.y / (2. * maths.x);
 
 	if (delta >= 0 && t > 0. && t < inter->dist)
 	{
 		inter->dist = t;
 		inter->obj = cylinder;
 		inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
-		inter->normal = vec_normalize(vec_substract(inter->point, Q));
+		// inter->normal = vec_normalize(vec_substract(inter->point, Q));
 	}
 } */
 

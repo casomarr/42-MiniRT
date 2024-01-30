@@ -172,20 +172,6 @@ int	compute_pixel(int x, int y, t_data *data)
 		// 	return (color_from_rgb(255,0,0).full);
 		// if (inter.obj->type == PLANE)
 		// 	return (color_from_rgb(0,255,0).full);
-		
-/* 		//TEST PATOU ROTATION CAMERA
-		t_vec vec_right;
-		t_vec vec_up;
-
-		vec_right = vec_product(vec_normalize((t_vec){0., 0., 1.}), vec_normalize((t_vec){0.,1.,0.}));
-		//t_vec vec_color = (t_vec){ft_fabs(dot_product(inter.normal, vec_right)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
-		t_vec vec_color = (t_vec){(clamp(dot_product(inter.normal, vec_right), 0., 1.)),0.,0.};// ft_fabs(dot_product(inter.normal, (t_vec){0,1,0})), ft_fabs(dot_product(inter.normal, (t_vec){0,0,1}))};
-		vec_color = vec_multiply_float(vec_color, 255.);
-		return (color_from_vec(vec_color).full); */
-
-
-
-
 
 		color = inter.obj->color;
 		float ratio_camera_dist =  1. - inter.dist / MAX_DIST_CAMERA;
@@ -205,7 +191,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		t_vec light_dir = vec_div_float(point_to_light, dist_light);
 		interlight = closest_intersection((t_ray){inter.point, light_dir}, data->scene.objs, dist_light);
 		l_rgb = vec_multiply_float(l_rgb, ft_fabs(dot_product(light_dir, inter.normal)));
-		
+
 		if (interlight.obj != NULL)
 		 	v_rgb = ambi_rgb;
 		else
@@ -227,12 +213,10 @@ void	prepare_scene(t_data *data)
 {
 	t_objs *objs;
 
-	
 	objs = get_node(objs, CAMERA);
 	data->scene.cam = objs;
 	data->scene.rdir = vec_product((t_vec){0.,1.,0.}, objs->dir);
 	data->scene.udir = vec_product(objs->dir, data->scene.rdir);
-
 	objs = data->scene.objs;
 	while (objs)
 	{
@@ -240,8 +224,7 @@ void	prepare_scene(t_data *data)
 			objs->dir = vec_normalize(objs->dir);
 		objs = objs->next;
 	}
-
-//	plan->dir = vec_normalize(plan->dir);
+	//	plan->dir = vec_normalize(plan->dir);
 }
 
 /*Calculates each ray's dir.*/

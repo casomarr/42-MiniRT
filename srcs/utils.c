@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:23:42 by casomarr          #+#    #+#             */
-/*   Updated: 2023/12/29 14:54:15 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/30 18:43:27 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_objs	*get_node(t_objs *objs, int type)
 	t_objs	*current;
 
 	current = objs;
-	if (!objs || objs == NULL)
-		return (NULL);
 	while (current)
 	{
 		if (current->type == type)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_intersection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:05:16 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/25 20:10:54 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/30 17:46:34 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_vec vec_normalize(t_vec v)
 //     t_vec normal = vec_normalize(object->dir); //dir de la normale du plan
 //     ray->discriminant = dot_product(ray->dir, normal);
 //     //if (ray->discriminant != 0)
-//     if (ray->discriminant > 1*10e-6) // != 0    
+//     if (ray->discriminant > 1*10e-6) // != 0
 //         ray->t = dot_product(vec_substract(object->pos, ray->origin), normal) / ray->discriminant;
 //     else
 //         ray->t = FLT_MAX;
@@ -59,13 +59,13 @@ t_vec vec_normalize(t_vec v)
 // void    intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray)
 // {
 //     t_vec intersection_point;
-    
+
 //     if (ray->t > 1*10e-6) // != 0
 //     {
 //         *intersection = true;
 //         intersection_point = vec_add(data->ray.origin, vec_multiply_float(data->ray.dir, ray->t));
 //         //ici faire transorfmation x et y
-//         //multiplier par cosinus 
+//         //multiplier par cosinus
 //         /* t_objs *camera = get_node(data->scene.objs, CAMERA);
 //         t_vec gamaprim = create_vec(object->pos.x, object->pos.y, 0.0);
 //         intersection_point.x *= (camera->pos.z - object->pos.x) / sqrtf(dot_product(vec_substract(gamaprim, camera->pos), vec_substract(gamaprim, camera->pos))); */
@@ -128,7 +128,7 @@ void	intersection_point_plane(t_inter *inter, t_objs *plane)
 	float	t;
 	float	dot;
 	t_ray	ray;
-	
+
 	ray = inter->cam_ray;
 	div = dot_product(plane->dir, ray.dir);
 	if (div != 0.0)
@@ -157,7 +157,7 @@ void	intersection_point_plane(t_inter *inter, t_objs *plane)
 	float	D;
 	t_objs	*camera;
 	t_vec	intersection_point;
-	
+
 	intersection_point = create_vec(0.0, 0.0, 0.0);
 	camera = get_node(data->scene.objs, CAMERA);
 	div = dot_product(object->dir, ray->dir);

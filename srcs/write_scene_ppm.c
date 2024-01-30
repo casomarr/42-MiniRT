@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 18:19:57 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/29 19:22:56 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:21:37 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_scene_ppm(t_data *data)
 		return ;
 	}
 	ft_dprintf(fd, "P3\n%d %d\n255\n", 800, 800);
-	y = 0;
+	y = 800 -1;
 	while (y >= 0)
 	{
 		x = 0;

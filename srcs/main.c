@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/29 18:37:25 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:35:54 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_stop(t_data *data, short error)
 {
-	t_objs	*tmp;
+	t_objs	*tmp; //FIXME: data->scene.objs n existe pas si le fichier n existe pas flag necessaire a add
 	while (data->scene.objs != NULL)
 	{
 		tmp = data->scene.objs->next;
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	minirt(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
-	write_scene_ppm(&data);
+	// write_scene_ppm(&data);
 	mlx_hook(data.win_ptr, 17, 1L<< 17, cross_close, &data);
 	mlx_key_hook(data.win_ptr, esc_close, &data);
 	mlx_loop(data.mlx_ptr);

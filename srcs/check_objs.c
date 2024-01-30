@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/25 20:05:35 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/01/30 14:30:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	check_isdigit_int(char *value, t_scene *scene)
+/* bool	check_isdigit_int(char *value, t_scene *scene)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ bool	check_isdigit_int(char *value, t_scene *scene)
 	if (value[i] == '\n')
 		value[i] = '\0';
 	return (true);
-}
+} */
 
 bool	check_isdigit_float(char *value)
 {
@@ -181,21 +181,7 @@ float	ft_atof(char *str)
 	return ((float)reti * sign);
 }
 
-bool	get_tvec_from_str(char *str, t_vec *v)
-{
-	char	**split;
-
-	split = ft_split(str, ',');
-	if (!split)
-		return (false);
-	v->x = ft_atof(split[0]);
-	v->y = ft_atof(split[1]);
-	v->z = ft_atof(split[2]);
-	ft_free_split(split);
-	return (true);
-}
-
-bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
+/* bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
 {
 	char	**split;
 
@@ -218,7 +204,7 @@ bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
 	rgb->bgra[0] = (t_uint8)ft_atoi(split[2]);
 	ft_free_split(split);
 	return (true);
-}
+} */
 
 bool	check_camera(char **value, t_data *data)
 {

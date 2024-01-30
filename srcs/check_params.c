@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:12:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:32:26 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:30:47 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ bool	check_isdigit_int(char *value, t_scene *scene)
 	return (true);
 }
 
-bool	check_isdigit_float(char *value)
+/* bool	check_isdigit_float(char *value)
 {
 	int	i;
 	int	dot;
@@ -142,4 +142,4 @@ bool	check_isdigit_float(char *value)
 			value[i] = '\0';
 	}
 	return (true);
-}
+} */

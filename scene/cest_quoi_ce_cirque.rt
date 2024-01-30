@@ -2,9 +2,9 @@
 
 C 0,0,0                 0,0,1                      70
 # Antoine TODO: ne pas chequer dans le parsing si la dir est entre -1 et 1
-A                                                           0.5                                            255,255,0
+A                                                           0.2                                            255,255,0
 
-L   1,10,20                                                  0.9
+L   1,10,20                                                  1
 #L   0,0,0                                                    0.0
 
 sp 8,0,20                                                                       4                               0,0,255
@@ -12,7 +12,7 @@ sp 2,0,20                                                                       
 sp -2,0,20                                                                       4                               255,255,255
 sp -8,0,20                                                                       4                               255,0,0
 
-# plan du bas
+# # plan du bas
 pl 0,-2,0                      0,1,0                                                                         255,255,255
 
 # plan derrière
@@ -23,8 +23,7 @@ pl 0,15,0                        0,1,0                                          
 # plan à droite
 pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
 
-cy 0,0,0                      0,1,0                                       2              4             150,0,150
-
+# cy 0,0,10                      0,1,0                                       1              2             150,0,150
 
 
 # #      X,Y,Z         Lightning       direction        fov     diameter    height     color

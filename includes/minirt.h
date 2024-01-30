@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/29 19:09:48 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:26:17 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ bool	check_isdigit_float(char *value);
 bool	three_params_float(char *value, t_scene *scene);
 bool	three_params_int(char *value, t_scene *scene);
 bool	get_tvec_from_str(char *str, t_vec *v);
-bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene);
+bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene);
 
 
 void	ft_stop(t_data *data, short error);

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/29 14:43:52 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:09:01 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ float	ft_fabs(float f)
 	return (f);
 }
 
-t_vec	get_vec_abc(t_inter *inter, t_objs *sphere)
+static t_vec	get_vec_abc(t_inter *inter, t_objs *sphere)
 {
 	t_vec	maths;
 	t_ray	ray;

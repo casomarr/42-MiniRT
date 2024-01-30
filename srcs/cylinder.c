@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/29 19:14:11 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:06:23 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ t_vec RotateByDir(t_vec dir_origin, t_vec dir_dest, t_vec p)
     return (vec_product(dir_dest, r));
 }
 
-static t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
+/* static t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
 {
 	t_vec	maths;
 	t_ray	ray;
@@ -204,4 +204,90 @@ void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
 		//besoin de re rotater avec RotateByDir
 		inter->normal = RotateByDir(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t), cylinder->pos);
 	}
+} */
+
+
+
+
+
+
+//version en cours
+/* t_vec vec_rotate(t_vec vector, t_vec axis) {
+	t_vec result;
+
+	float cos_theta = cosf(axis.x);
+	float sin_theta = sinf(axis.x);
+
+	float x_rot = vector.x;
+	float y_rot = cos_theta * vector.y - sin_theta * vector.z;
+	float z_rot = sin_theta * vector.y + cos_theta * vector.z;
+
+	result.x = x_rot;
+	result.y = cosf(axis.y) * y_rot + sinf(axis.y) * z_rot;
+	result.z = -sinf(axis.y) * y_rot + cosf(axis.y) * z_rot;
+
+	return result;
 }
+
+t_vec vec_invert(t_vec vector) {
+	t_vec result;
+
+	result.x = -vector.x;
+	result.y = -vector.y;
+	result.z = -vector.z;
+
+	return result;
+}
+
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
+{
+
+	t_vec maths;
+	float	t;
+
+	// Transform ray into cylinder's local space
+	t_vec local_origin = vec_substract(inter->cam_ray.origin, cylinder->pos);
+	t_vec local_direction = vec_rotate(inter->cam_ray.dir, vec_invert(cylinder->dir));
+
+	// Cylinder axis is y-axis
+	maths.x = powf(local_direction.x, 2) + powf(local_direction.z, 2);
+	maths.y = 2 * (local_origin.x * local_direction.x + local_origin.z * local_direction.z);
+	maths.z = powf(local_origin.x, 2) + powf(local_origin.z, 2) - powf(cylinder->diameter / 2, 2);
+
+	// Solve quadratic equation for t
+	inter->cam_ray.discriminant = maths.y * maths.y - 4 * maths.x * maths.z;
+
+	if (inter->cam_ray.discriminant < 0)
+		return;  // No intersection
+
+	float t1 = (-maths.y - sqrtf(inter->cam_ray.discriminant)) / (2 * maths.x);
+	float t2 = (-maths.y + sqrtf(inter->cam_ray.discriminant)) / (2 * maths.x);
+
+	if ((t1 > 0 && t2 > 0 && t1 < t2) || (t1 > 0 && t2 < 0))
+		t = (-maths.y - sqrtf(inter->cam_ray.discriminant)) / (2 * maths.x);
+	else if (t2 > 0)
+		t = (-maths.y + sqrtf(inter->cam_ray.discriminant)) / (2 * maths.x);
+	// Check if intersection points are within cylinder height
+	float y = inter->cam_ray.origin.y + t * dot_product(inter->cam_ray.dir, cylinder->dir);
+
+	//printf("y = %f, cylinder height: %f\n", y, cylinder->height);
+	if (inter->cam_ray.discriminant >= 0 && y >= 0 && y <= cylinder->height)
+	{
+		// printf("cylinder intersection found\n");
+		t_vec intersection_point_local = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, inter->cam_ray.t));
+		// if ((powf(intersection_point_local.x, 2) + powf(intersection_point_local.z, 2)) <= powf(cylinder->diameter / 2, 2))
+		// {
+			//printf("cylinder intersection found\n");
+			// Transform intersection point back to world space
+			t_vec intersection_point_world = vec_add(vec_rotate(intersection_point_local, cylinder->dir), cylinder->pos);
+			if (t > 0 && t < inter->dist) //t > 0 car sinon derriere camera
+			{
+				inter->dist = t;
+				inter->obj = cylinder;
+				inter->point = vec_add(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t));
+				inter->normal = vec_normalize(vec_substract(inter->point, cylinder->pos));
+				//inter->normal = RotateByDir(inter->cam_ray.origin, vec_multiply_float(inter->cam_ray.dir, t), cylinder->pos);
+			}
+		// }
+	}
+} */

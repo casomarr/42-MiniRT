@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:04:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/29 17:41:08 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:37:32 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	get_tvec_from_str(char *str, t_vec *v)
 	return (true);
 }
 
-bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
+bool	get_trgb_from_str(char *str, t_rgb *rgb, t_scene *scene)
 {
 	char	**split;
 

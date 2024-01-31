@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/30 19:38:20 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:10:39 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/* bool	check_isdigit_int(char *value, t_scene *scene)
+bool	check_isdigit_int(char *value, t_scene *scene)
 {
 	int	i;
 
@@ -33,7 +33,7 @@
 	if (value[i] == '\n')
 		value[i] = '\0';
 	return (true);
-} */
+}
 
 bool	check_isdigit_float(char *value)
 {

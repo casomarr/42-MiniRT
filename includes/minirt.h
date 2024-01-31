@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/30 14:10:47 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:46:15 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ peut faire une image petite pour augmenter les fps.*/
 # define PARSING_ERROR 1
 
 # define ESC_KEY 65307
+# define KEY_M 109
 
 #define MAX_DIST_CAMERA	FLT_MAX
 
@@ -187,6 +188,7 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	t_scene	scene;
+	bool	render_ambiant;
 
 
 
@@ -261,6 +263,7 @@ bool	three_params_int(char *value, t_scene *scene);
 bool	get_tvec_from_str(char *str, t_vec *v);
 bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene);
 void	write_scene_ppm(t_data *data);
+// int	change_ambiant_render(int keycode, t_data *data);
 
 
 void	ft_stop(t_data *data, short error);

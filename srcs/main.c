@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/30 18:35:54 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:14:18 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,21 @@ int	initialisation(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+void	change_ambiant_render(int keycode, t_data *data)
+{
+	if (keycode == KEY_M)
+	{
+		if (data->render_ambiant== false)
+			data->render_ambiant = true;
+		else
+			data->render_ambiant = false;
+		// mlx_clear_window(data->mlx_ptr, data->win_ptr); //hmm voir pour optimiser
+		minirt(data);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+	}
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_data data;
@@ -76,6 +91,7 @@ int	main(int argc, char **argv)
 		printf("Error\nUsage ./miniRT <file.rt>\n");
 		return (0);
 	}
+	ft_bzero(&data, sizeof(t_data));
 	if (parsing(argv[1], &data) == false)
 	{
 		printf("Error\nParsing failed\n");
@@ -88,6 +104,7 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
 	// write_scene_ppm(&data);
 	mlx_hook(data.win_ptr, 17, 1L<< 17, cross_close, &data);
+	mlx_hook(data.win_ptr, 2, 1L << 0, change_ambiant_render, &data);
 	mlx_key_hook(data.win_ptr, esc_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

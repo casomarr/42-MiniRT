@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/30 19:37:51 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:33:19 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ peut faire une image petite pour augmenter les fps.*/
 // # define WIN_HEIGHT 900
 // # define WIN_WIDTH 1600
 
-# define WIN_HEIGHT 800
-# define WIN_WIDTH 800
+# define WIN_HEIGHT 1000
+# define WIN_WIDTH 1000
 
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/31 17:46:15 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:49:33 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ peut faire une image petite pour augmenter les fps.*/
 
 # define ESC_KEY 65307
 # define KEY_M 109
+# define KEY_R 114
 
 #define MAX_DIST_CAMERA	FLT_MAX
 

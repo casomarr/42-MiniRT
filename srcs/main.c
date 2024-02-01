@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/31 19:14:18 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/01 19:11:44 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	initialisation(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-void	change_ambiant_render(int keycode, t_data *data)
+int	change_ambiant_render(int keycode, t_data *data)
 {
 	if (keycode == KEY_M)
 	{
@@ -75,10 +75,21 @@ void	change_ambiant_render(int keycode, t_data *data)
 			data->render_ambiant = true;
 		else
 			data->render_ambiant = false;
-		// mlx_clear_window(data->mlx_ptr, data->win_ptr); //hmm voir pour optimiser
 		minirt(data);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	}
+	if (keycode == KEY_R)
+	{
+		if (parsing(data->scene.fname, data) == false)
+		{
+			printf("Error\nParsing failed\n");
+			ft_stop(data, PARSING_ERROR);
+			return 1; //need to change this return to 1 and continue test from action
+		}
+		minirt(data);
+		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+	}
+	return (0);
 }
 
 
@@ -92,7 +103,8 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	ft_bzero(&data, sizeof(t_data));
-	if (parsing(argv[1], &data) == false)
+	data.scene.fname = argv[1];
+	if (parsing(data.scene.fname, &data) == false)
 	{
 		printf("Error\nParsing failed\n");
 		ft_stop(&data, PARSING_ERROR);

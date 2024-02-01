@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/01/31 19:25:30 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/01 14:26:32 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static float	upper_plane(t_inter *inter, t_objs *cylinder)
 
 	//test
 	t_ray local_ray = transform_ray_to_local(inter->cam_ray, cylinder);
-	t = (cylinder->pos.z + cylinder->height / 2 - local_ray.origin.z) / local_ray.dir.z;
+	t = (cylinder->pos.z + cylinder->height/*  / 2 */ - local_ray.origin.z) / local_ray.dir.z;
 	boundaries = sqrtf((local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) * \
 	(local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) + \
 	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y) * \
@@ -88,7 +88,7 @@ static float	bottom_plane(t_inter *inter, t_objs *cylinder)
 
 	//test
 	t_ray local_ray = transform_ray_to_local(inter->cam_ray, cylinder);
-	t = (cylinder->pos.z - cylinder->height / 2 - local_ray.origin.z) / local_ray.dir.z;
+	t = (cylinder->pos.z - cylinder->height/*  / 2 */ - local_ray.origin.z) / local_ray.dir.z;
 	boundaries = sqrtf((local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) * \
 	(local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) + \
 	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y) * \
@@ -165,12 +165,12 @@ static float	tube(t_inter *inter, t_objs *cylinder)
 		/* z1 = inter->cam_ray.origin.z + t1 * inter->cam_ray.dir.z;
 		z2 = inter->cam_ray.origin.z + t2 * inter->cam_ray.dir.z; */
 
-		if (z1 >= cylinder->pos.z - cylinder->height / 2 && z1 <= cylinder->pos.z + cylinder->height / 2)
+		if (z1 >= cylinder->pos.z - cylinder->height/*  / 2 */ && z1 <= cylinder->pos.z + cylinder->height/*  / 2 */)
 		{
 			if (t1 > 0)
 				t = t1;
 		}
-		if (z2 >= cylinder->pos.z - cylinder->height / 2 && z2 <= cylinder->pos.z + cylinder->height / 2)
+		if (z2 >= cylinder->pos.z - cylinder->height/*  / 2 */ && z2 <= cylinder->pos.z + cylinder->height/*  / 2 */)
 		{
 			if (t2 > 0 && t2 < t)
 				t = t2;

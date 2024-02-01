@@ -70,7 +70,9 @@ but their dir changes (they reach a different pixel on the canevas
 and continue in that dir into the scene)*/
 t_ray	compute_screen_ray(int x, int y, t_scene scene)
 {
-	t_ray	ray;
+
+//AVANT TUTO
+	t_ray    ray;
 	t_objs *camera;
 
 	camera = scene.cam;
@@ -83,6 +85,26 @@ t_ray	compute_screen_ray(int x, int y, t_scene scene)
 	//calculs de rotation de la camera
 	// ray.dir = vec_normalize(create_vec(xr, yr, 1));
 	ray.dir = vec_normalize(vec_add(vec_add(camera->dir, vec_multiply_float(scene.rdir, xr)), vec_multiply_float(scene.udir, yr)));
+
+
+/* 	t_ray    ray;
+
+	ray.origin = scene.cam->pos;
+	// t_vec	curr_pixel = vec_add_float(scene.first_pixel, (x * scene.pixel_delta_u + y * scene.pixel_delta_v));
+	t_vec	curr_pixel = vec_add(vec_add(scene.first_pixel, vec_multiply_float(scene.pixel_delta_u, x)), vec_multiply_float(scene.pixel_delta_v, y));
+	//t_vec	curr_pixel = create_vec(scene.first_pixel.x + x, scene.first_pixel.y + y, 1.0);
+	//t_vec	curr_pixel = create_vec(x, y, 1);
+	// ray.dir = vec_normalize(vec_substract(curr_pixel, ray.origin));
+	ray.dir = vec_substract(curr_pixel, ray.origin); //ca normalize */
+
+	
+	// printf("scene.first_pixel = %f,%f,%f\n", scene.first_pixel.x, scene.first_pixel.y, scene.first_pixel.z);
+	// printf("x = %d, y = %d\n", x, y);
+	// printf("current_pixel = %f,%f,%f\n", curr_pixel.x, curr_pixel.y, curr_pixel.z);
+	// if (x == 1)
+	// 	exit(1);
+
+	
 	return (ray);
 }
 
@@ -173,6 +195,8 @@ int	compute_pixel(int x, int y, t_data *data)
 		// if (inter.obj->type == PLANE)
 		// 	return (color_from_rgb(0,255,0).full);
 
+
+//bug america : odre de calul des couleurs
 		color = inter.obj->color;
 		float ratio_camera_dist =  1. - inter.dist / MAX_DIST_CAMERA;
 		float	ambiratio = get_node(data->scene.objs, AMBIENT)->lightness;
@@ -188,7 +212,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		t_vec l_rgb = vec_multiply_float((t_vec){color.bgra[2], color.bgra[1], color.bgra[0]}, light->lightness);
 		t_vec point_to_light = vec_substract(light->pos, inter.point);
 		float dist_light = get_norm(point_to_light);
-		t_vec light_dir = vec_div_float(point_to_light, dist_light);
+		t_vec light_dir = vec_div_float(point_to_light, dist_light); //changer calcul pour que ca colle avec nou calc dir camera
 		interlight = closest_intersection((t_ray){inter.point, light_dir}, data->scene.objs, dist_light);
 		l_rgb = vec_multiply_float(l_rgb, ft_fabs(dot_product(light_dir, inter.normal)));
 
@@ -197,6 +221,8 @@ int	compute_pixel(int x, int y, t_data *data)
 		else
 			v_rgb = vec_max(l_rgb, ambi_rgb);
 		return color_from_vec(v_rgb).full;
+
+		
 		/* if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
 		{
 //			(t_ray){(t_vec){0.,0.,0.}, (t_vec){0.,0.,0.}}
@@ -215,8 +241,13 @@ void	prepare_scene(t_data *data)
 
 	objs = get_node(data->scene.objs, CAMERA);
 	data->scene.cam = objs;
+	//TODO: bug qd dir camera y = -1 ou 1 et z = 0
+	//fabs dir if y == 1 ou -1 et z = 0 alors changer udir et rdir
+
+	//changements en cours
 	data->scene.rdir = vec_product((t_vec){0.,1.,0.}, objs->dir);
 	data->scene.udir = vec_product(objs->dir, data->scene.rdir);
+
 	objs = data->scene.objs;
 	while (objs)
 	{
@@ -224,7 +255,49 @@ void	prepare_scene(t_data *data)
 			objs->dir = vec_normalize(objs->dir);
 		objs = objs->next;
 	}
-	//	plan->dir = vec_normalize(plan->dir);
+
+
+
+//calculs preliminaires pourray_generation
+// 	t_ray	ray;
+
+// 	float	ratio = WIN_HEIGHT / WIN_WIDTH;
+// 	float	viewport_height = (float)WIN_HEIGHT * ratio;
+// 	float	viewport_width = (float)WIN_WIDTH * ratio;
+
+// /* 	float	aspect_ratio = 16.0 / 9.0;
+// 	float	img_width = 400;
+// 	float	img_height = img_width / aspect_ratio;
+// 	if (img_height < 1)
+// 		img_height = 1;
+//     float	viewport_height = 2.0; // Set to a fixed value
+//     float	viewport_width = viewport_height * (img_width / img_height); */
+
+
+
+// 	float	focal_length = 1.0;
+// 	t_vec	viewport_u = create_vec(viewport_width, 0.0, 0.0);
+// 	t_vec	viewport_v = create_vec(0.0, -viewport_height, 0.0);
+
+// 	// float	pixel_delta_u = vec_divide_float(viewport_u, WIN_WIDTH);
+// 	// float	pixel_delta_v = vec_divide_float(viewport_v, WIN_HEIGHT);
+
+// 	t_vec	pixel_delta_u = vec_div_float(viewport_u, WIN_WIDTH);
+// 	t_vec	pixel_delta_v = vec_div_float(viewport_v, WIN_HEIGHT);
+// /* 
+// 	float	pixel_delta_u = vec_divide_float(viewport_u, img_width);
+// 	float	pixel_delta_v = vec_divide_float(viewport_v, img_height); */
+
+
+
+// 	t_vec	viewport_upper_left = vec_substract(vec_substract(data->scene.cam->pos, (t_vec){0., 0., focal_length}), vec_substract(vec_divide(viewport_u, 2.), vec_divide(viewport_v, 2.)));
+// 	// t_vec	pixel00_loc = vec_add_float(viewport_upper_left, (pixel_delta_u + pixel_delta_v) * 0.5f);
+// 	t_vec	pixel00_loc = vec_add(viewport_upper_left, vec_multiply_float(vec_add(pixel_delta_u, pixel_delta_v), 0.5f));
+
+
+// 	data->scene.first_pixel = pixel00_loc;
+// 	data->scene.pixel_delta_u = pixel_delta_u;
+// 	data->scene.pixel_delta_v = pixel_delta_v;
 }
 
 /*Calculates each ray's dir.*/
@@ -234,61 +307,18 @@ void minirt(t_data *data)
 	int y;
 	int	color;
 
-	// data->direct_light = true; //initialiser ici sinon qd light == NULL ou lightness == 0 elle n est pas initialisee donc conditional jump dans determine color
-	// data->y = 0;
 	prepare_scene(data);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
-		// data->x = 0;
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
 			color = compute_pixel(x, y, data);
-
-
-			//ray = compute_ray(x, y, data->camera);
-			//ce dont t'as besoin = f(datas,x,y)
-			/* compute_ray(data);
-			if (intersection(data,x , y) == true)
-			{
-				if (get_node(data->scene.objs, LIGHT) != NULL && get_node(data->scene.objs, LIGHT)->lightness != 0.0)
-				{
-					generate_light_ray(data);
-					check_intersection_light(data, &data->light_ray);
-					//bouncing
-				}
-				img_pix_put(data, data->x, data->y, determine_pixel_color(data));
-			} */
-/* 			else
-				img_pix_put(data, data->x, data->y, GREEN); */
-			// data->x++;
-			//img_pix_put(data, data->x, data->y, determine_pixel_color(data));
 			img_pix_put(data, x, y, color);
 			x++;
 		}
-		// data->y++;
 		y++;
 	}
 	printf("FINISHED\n");
 }
-/*
-void minirt(t_data *data)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (y < WIN_HEIGHT)
-	{
-		x = 0;
-		while (x < WIN_WIDTH)
-		{
-			img_pix_put(data, x, y, compute_pixel(x, y, data));
-			x++;
-		}
-		y++;
-	}
-	printf("FINISHED\n");
-}
-*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/31 15:33:19 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/01 17:14:51 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,9 @@ typedef struct s_scene
 	int			nb_objs;
 	int			line;
 	char		*fname;
+	t_vec		first_pixel;
+	t_vec		pixel_delta_u;
+	t_vec		pixel_delta_v;
 
 
 	//modification pas d'antoine TODO: Vérifier que ça fait pas de la merde au parsing
@@ -297,6 +300,8 @@ t_vec	vec_add_float(t_vec vec, float nb);
 t_vec	vec_div_float(t_vec a, float f);
 t_vec	vec_product(t_vec a, t_vec b);
 t_vec	vec_substract_float(t_vec a, float b);
+float	vec_divide_float(t_vec a, float f);
+t_vec	vec_divide(t_vec a, float f);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);

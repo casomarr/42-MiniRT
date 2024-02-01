@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:03:57 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/29 14:14:28 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:06:45 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ t_vec	vec_multiply(t_vec a, t_vec b)
 	result.x = a.x * b.x;
 	result.y = a.y * b.y;
 	result.z = a.z * b.z;
+	return (result);
+}
+
+float	vec_divide_float(t_vec a, float f)
+{
+	return (a.x / f + a.y / f + a.z / f);
+}
+t_vec	vec_divide(t_vec a, float f)
+{
+	t_vec result;
+	
+	result.x = a.x / f;
+	result.y = a.y / f;
+	result.z = a.z / f;
 	return (result);
 }
 

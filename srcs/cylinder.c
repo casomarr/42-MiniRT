@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/01 14:26:32 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/02 16:34:03 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/* t_vec RotateByDir(t_vec dir_origin, t_vec dir_dest, t_vec p)
-{
-	t_vec r;
-
-	r = vec_normalize(vec_product(dir_origin, p));
-	return (vec_product(dir_dest, r));
-} */
-
-t_vec vec_cross(t_vec a, t_vec b) {
-    t_vec result;
-    result.x = a.y * b.z - a.z * b.y;
-    result.y = a.z * b.x - a.x * b.z;
-    result.z = a.x * b.y - a.y * b.x;
-    return result;
-}
 
 // Function to create an orthonormal basis given a single vector w
 void create_basis(t_vec w, t_vec *u, t_vec *v) {

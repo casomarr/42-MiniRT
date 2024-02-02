@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/02 14:57:12 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/02 17:02:59 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,14 @@ typedef struct 	s_inter {
 	t_objs	*obj;
 }				t_inter;
 
+typedef struct 	s_lightray 
+{
+	t_vec	point;
+	t_vec	dir;
+	t_vec	normal;
+	float	dist;
+}				t_ligthray;
+
 typedef struct s_scene
 {
 	t_objs		*objs;
@@ -283,10 +291,10 @@ void	minirt(t_data *data);
 // void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
-t_ray	compute_screen_ray(int x, int y, t_scene scene);
+t_ray	compute_camera_ray(int x, int y, t_scene scene);
 int		compute_pixel(int x, int y, t_data *data);
 // void	compute_ray(t_data *data, float x, float y);
-void	generate_light_ray(t_data *data);
+t_inter	compute_light_ray(t_inter inter, t_objs *light, t_objs *objects);
 void	distance_of_projection(t_data *data);
 
 /*Vector Maths*/
@@ -306,6 +314,7 @@ t_vec	vec_product(t_vec a, t_vec b);
 t_vec	vec_substract_float(t_vec a, float b);
 float	vec_divide_float(t_vec a, float f);
 t_vec	vec_divide(t_vec a, float f);
+t_vec	vec_cross(t_vec a, t_vec b);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);

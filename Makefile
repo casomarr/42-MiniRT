@@ -6,7 +6,7 @@
 #    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/02 18:28:33 by octonaute        ###   ########.fr        #
+#    Updated: 2024/02/02 18:34:24 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 ### SOURCES
 SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
+	   $(PATH_SRCS)/add_substract_maths.c \
 	   $(PATH_SRCS)/color.c \
 	   $(PATH_SRCS)/compare_maths.c \
 	   $(PATH_SRCS)/cylinder.c \

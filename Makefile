@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/01/29 18:21:19 by amugnier         ###   ########.fr        #
+#    Updated: 2024/02/02 12:56:00 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,10 +60,10 @@ SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/parse_file.c \
-	   $(PATH_SRCS)/plane_intersection.c \
+	   $(PATH_SRCS)/plane.c \
 	   $(PATH_SRCS)/rays.c \
 	   $(PATH_SRCS)/render.c \
-	   $(PATH_SRCS)/sphere_intersection.c \
+	   $(PATH_SRCS)/sphere.c \
 	   $(PATH_SRCS)/utils.c \
 	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/init.c \

@@ -65,6 +65,14 @@ float vec_length(t_vec v)
 	// data->light_intensity *= 1.0 / (distance * distance);
 } */
 
+t_vec	vec_cross2(t_vec a, t_vec b) {
+    return (t_vec){
+        .x = a.y * b.z - a.z * b.y,
+        .y = a.z * b.x - a.x * b.z,
+        .z = a.x * b.y - a.y * b.x
+    };
+}
+
 /*Generates each ray. They all have the same origin (the camera center)
 but their dir changes (they reach a different pixel on the canevas
 and continue in that dir into the scene)*/
@@ -104,6 +112,24 @@ t_ray	compute_screen_ray(int x, int y, t_scene scene)
 	// if (x == 1)
 	// 	exit(1);
 
+
+//vendredi
+/* 	t_ray ray;
+
+	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+    float scale = tan(scene.cam->fov * 0.5 * (PI / 180)); // Convert FOV from degrees to radians and calculate scale
+
+    t_vec right = vec_normalize(vec_cross2(scene.cam->dir, (t_vec){0, 1, 0}));
+    t_vec up = vec_cross2(right, scene.cam->dir);
+
+    // Convert pixel coordinates to camera space
+    float camera_x = (2 * (x + 0.5) / (float)WIN_WIDTH - 1) * aspect_ratio * scale;
+    float camera_y = (1 - 2 * (y + 0.5) / (float)WIN_HEIGHT) * scale;
+
+    // Calculate ray direction in camera space
+    t_vec ray_dir = vec_normalize((t_vec){camera_x * right.x + camera_y * up.x - scene.cam->dir.x,
+                                    camera_x * right.y + camera_y * up.y - scene.cam->dir.y,
+                                    camera_x * right.z + camera_y * up.z - scene.cam->dir.z}); */
 	
 	return (ray);
 }
@@ -237,16 +263,43 @@ int	compute_pixel(int x, int y, t_data *data)
 
 void	prepare_scene(t_data *data)
 {
-	t_objs *objs;
+	t_objs *camera;
 
-	objs = get_node(data->scene.objs, CAMERA);
-	data->scene.cam = objs;
+	camera = get_node(data->scene.objs, CAMERA);
+	data->scene.cam = camera;
 	//TODO: bug qd dir camera y = -1 ou 1 et z = 0
 	//fabs dir if y == 1 ou -1 et z = 0 alors changer udir et rdir
 
 	//changements en cours
-	data->scene.rdir = vec_product((t_vec){0.,1.,0.}, objs->dir);
-	data->scene.udir = vec_product(objs->dir, data->scene.rdir);
+	// data->scene.rdir = vec_product((t_vec){0.,1.,0.}, camera->dir);
+	// data->scene.udir = vec_product(camera->dir, data->scene.rdir);
+
+	//vendredi
+	t_vec	world_up = {0, 1, 0};
+    t_vec	right;
+	t_vec	up;
+
+    t_vec forward = vec_normalize(camera->dir); //soit je mets la while du dessous au dessus pq je normalize camera->dir deux fois
+
+	//on chèque si le direction de la caméra est parallèle au vecteur up
+	//Si oui, on ajuste le vecteur up en fonction de camera->dir
+    if (fabs(forward.x) < 1e-6 && fabs(forward.z) < 1e-6)
+	{
+		if (forward.y > 0)
+			world_up = (t_vec){1, 0, 0};
+		else
+			world_up = (t_vec){-1, 0, 0};
+	}
+
+    right = vec_normalize(vec_cross2(forward, world_up)); //right : fait un angle droit avec forward et world_up
+    up = vec_cross2(right, forward); //direction up réelle. Elle fait un angle droit à forward et right
+
+    data->scene.rdir = right;
+    data->scene.udir = up;
+
+
+
+	t_objs *objs;
 
 	objs = data->scene.objs;
 	while (objs)

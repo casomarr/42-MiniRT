@@ -232,7 +232,8 @@ int	compute_pixel(int x, int y, t_data *data)
 		ambi_rgb = vec_min(ambi_rgb, (t_vec){ambicolor.bgra[2], ambicolor.bgra[1], ambicolor.bgra[0]});
 		ambi_rgb = vec_multiply_float(ambi_rgb, ambiratio);
 //		v_rgb = vec_multiply_float(v_rgb, ft_fabs(dot_product(data->scene.cam->dir, inter.normal)));
-		// ambi_rgb = vec_multiply_float(ambi_rgb, ft_fabs(dot_product(ray.dir, inter.normal)));//a commenter pour enlever l'ombre avec la lumiere ambiante
+		if (data->render_ambiant == true)
+			ambi_rgb = vec_multiply_float(ambi_rgb, ft_fabs(dot_product(ray.dir, inter.normal)));//a commenter pour enlever l'ombre avec la lumiere ambiante
 		t_inter interlight;
 		t_objs	*light = get_node(data->scene.objs, LIGHT);
 		t_vec l_rgb = vec_multiply_float((t_vec){color.bgra[2], color.bgra[1], color.bgra[0]}, light->lightness);
@@ -373,5 +374,5 @@ void minirt(t_data *data)
 		}
 		y++;
 	}
-	printf("FINISHED\n");
+	// printf("FINISHED\n");
 }

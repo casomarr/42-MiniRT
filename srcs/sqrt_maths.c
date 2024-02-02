@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   sqrt_maths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 14:23:42 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/02 18:30:11 by octonaute        ###   ########.fr       */
+/*   Created: 2024/02/02 18:26:52 by octonaute         #+#    #+#             */
+/*   Updated: 2024/02/02 18:27:02 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec	create_vec(float x, float y, float z) //essayer de remplacer par (t_vec){x, y, z} ou pour lisibiliter remplacer les (t_vec){} par ça
+t_vec	vec_squared(t_vec a)
 {
-	t_vec vector;
-
-	vector.x = x;
-	vector.y = y;
-	vector.z = z;
-	return (vector);
+	t_vec result;
+	
+	result.x = powf(a.x, 2); //powf(a, 2) = a*a = a au carré
+	result.y = powf(a.y, 2);
+	result.z = powf(a.z, 2);
+	return (result);
 }
 
-t_objs	*get_node(t_objs *objs, int type)
+t_vec	vec_sqrt(t_vec a)
 {
-	t_objs	*current;
-
-	current = objs;
-	while (current)
-	{
-		if (current->type == type)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
+	t_vec result;
+	
+	result.x = sqrtf(a.x);
+	result.y = sqrtf(a.y);
+	result.z = sqrtf(a.z);
+	return (result);
 }

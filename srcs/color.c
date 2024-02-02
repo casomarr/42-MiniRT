@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/01/25 18:12:12 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/02 17:14:52 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,19 @@ float	determine_pixel_color(t_data *data)
 	color.bgra[1] = get_color(color.bgra[1], light_intensity);
 	color.bgra[2] = get_color(color.bgra[2], light_intensity);
 	return (color.full);
+}
+
+t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
+{
+	t_color	rgb;
+
+	rgb.full = 0;
+	rgb.bgra[0] = b;
+	rgb.bgra[1] = g;
+	rgb.bgra[2] = r;
+	return (rgb);
+}
+t_color	color_from_vec(t_vec v)
+{
+	return (color_from_rgb(v.x, v.y, v.z));
 }

@@ -6,7 +6,7 @@
 #    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/02 12:56:00 by octonaute        ###   ########.fr        #
+#    Updated: 2024/02/02 18:28:33 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,18 +54,22 @@ HDRS = $(PATH_INCLUDE)/minirt.h \
 SRCS = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
 	   $(PATH_SRCS)/color.c \
+	   $(PATH_SRCS)/compare_maths.c \
 	   $(PATH_SRCS)/cylinder.c \
+	   $(PATH_SRCS)/dot_maths.c \
 	   $(PATH_SRCS)/intersections.c \
-	   $(PATH_SRCS)/light_intensity.c \
+	   $(PATH_SRCS)/lightray.c \
 	   $(PATH_SRCS)/main.c \
+	   $(PATH_SRCS)/multiply_divide_maths.c \
+	   $(PATH_SRCS)/norm_maths.c \
 	   $(PATH_SRCS)/open_file.c \
 	   $(PATH_SRCS)/parse_file.c \
 	   $(PATH_SRCS)/plane.c \
 	   $(PATH_SRCS)/rays.c \
 	   $(PATH_SRCS)/render.c \
 	   $(PATH_SRCS)/sphere.c \
+	   $(PATH_SRCS)/sqrt_maths.c \
 	   $(PATH_SRCS)/utils.c \
-	   $(PATH_SRCS)/vector_maths.c \
 	   $(PATH_SRCS)/init.c \
 	   $(PATH_SRCS)/check_params.c \
 	   $(PATH_SRCS)/set_data.c \

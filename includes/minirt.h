@@ -6,7 +6,7 @@
 /*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/02 17:02:59 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/02 18:22:28 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct s_objs
 } t_objs;
 
 typedef struct 	s_inter {
-	t_ray	cam_ray;
+	t_ray	ray;
 	t_vec	point;
 	t_vec	normal;
 	float	dist;
@@ -288,7 +288,6 @@ int		cross_close(t_data *data);
 /*Rays*/
 void	ray_init(t_data *data);
 void	minirt(t_data *data);
-// void	get_norm(t_ray *ray);
 void	normalize_direction_vector(t_ray *ray);
 // void	generate_current_ray(t_data *data);
 t_ray	compute_camera_ray(int x, int y, t_scene scene);
@@ -309,26 +308,34 @@ float	dot_product_float(t_vec b, float a);
 t_vec	vec_multiply_float(t_vec a, float f);
 float	vec_pythagore(t_vec a);
 t_vec	vec_add_float(t_vec vec, float nb);
-t_vec	vec_div_float(t_vec a, float f);
+t_vec	vec_divide(t_vec a, float f);
 t_vec	vec_product(t_vec a, t_vec b);
 t_vec	vec_substract_float(t_vec a, float b);
 float	vec_divide_float(t_vec a, float f);
 t_vec	vec_divide(t_vec a, float f);
 t_vec	vec_cross(t_vec a, t_vec b);
+t_vec	vec_max(t_vec v1, t_vec v2);
+t_vec	vec_min(t_vec v1, t_vec v2);
+t_vec	vec_clamp(t_vec v, float min, float max);
+float	get_norm(t_vec vec);
+bool	vec_compare(t_vec a, t_vec b);
+t_vec vec_normalize(t_vec v);
+float	ft_fabs(float f);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
 void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
 void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
-t_inter	closest_intersection(t_ray cam_ray, t_objs *object, float dist);
+t_inter	closest_intersection(t_ray ray, t_objs *object, float dist);
 float	get_norm(t_vec vec);
 t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
 float	ft_fabs(float f);
 
 /*Color*/
 int		get_color(unsigned char color, float light_intensity);
-float		determine_pixel_color(t_data *data);
-// void	determine_pixel(t_data *data);
+float	determine_pixel_color(t_data *data);
+t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b);
+t_color	color_from_vec(t_vec v);
 
 /*Cylinder*/
 // void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);

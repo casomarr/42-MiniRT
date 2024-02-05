@@ -19,9 +19,10 @@ sp -2,0,18                                                                      
 pl 0,-2,0                      0,1,0                                                                         255,255,255
 
 # plan derrière
-pl 0,15,0                        0,1,0                                                                         100,0,255
+pl 0,0,40                        0,0,1                                                                         12,0,109
 # pl 0,15,0                      1,0,0                                                                         100,0,255
 # bruit sur tous les objets --> normal car le plan passe par le milieu de la light donc seulement la moitié des rayons éclairent
 
 # plan à droite
-pl 20,-1,0                      -1,-0.5,0                                                                      110,255,140
+pl 20,-1,0                      -1,-0.5,0                                                                      4,97,42
+# pl 20,-1,0                      -1,-0.5,0                                                                      42,42,42

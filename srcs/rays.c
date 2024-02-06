@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:16:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/06 14:35:43 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:31:45 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	compute_pixel(int x, int y, t_data *data)
 		ambi_rgb = vec_multiply_float(ambi_rgb, ambient->lightness);
 		if (data->render_ambiant == true)
 			ambi_rgb = vec_multiply_float(ambi_rgb, ft_fabs(dot_product(ray.dir, inter.normal)));//a commenter pour enlever l'ombre avec la lumiere ambiante
-		
+
 		//tout ce qui suit dans light function
 		t_inter interlight;
 		t_objs	*light = get_node(data->scene.objs, LIGHT);

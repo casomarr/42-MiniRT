@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/31 13:10:39 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/06 17:57:18 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ bool	check_camera(char **value, t_data *data)
 	t_objs	*tmp;
 	t_objs	*camera;//TODO check to free if error
 	//TODO talk about incrementation of nb_objs
+	//FIXME Overflow possible -18446744073709551546 -> 70 fov and maybe float
 	data->scene.nb_camera++;
 	if (data->scene.nb_camera > 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:16:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/06 14:35:43 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:09:11 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,18 @@ int	compute_pixel(int x, int y, t_data *data)
 	t_inter	inter;
 	t_vec	v_rgb;
 	t_vec	ambi_rgb;
-	t_vec l_rgb;
+	t_vec	l_rgb;
 	float ratio_camera_dist;
 	t_inter interlight;
 
-	ray = compute_camera_ray(x, y, data->scene); //TODO: verifier parsing erreur qd pas camera dans scene
+	ray = compute_camera_ray(x, y, data->scene);
 	t_objs *camera = get_node(data->scene.objs, CAMERA);
 	inter = closest_intersection(ray, data->scene.objs, MAX_DIST_CAMERA);
 	if (inter.obj != NULL)
 	{
-
 		ratio_camera_dist =  1. - inter.dist / MAX_DIST_CAMERA;
-
-		//tout ce qui suit dans ambient function
-		t_color	color;
-		t_objs	*ambient;
-		t_vec	ambi_rgb;
-
-		color = inter.obj->color;
-		ambient = get_node(data->scene.objs, AMBIENT);
-		ambi_rgb = (t_vec){color.bgra[2], color.bgra[1], color.bgra[0]};
-		ambi_rgb = vec_min(ambi_rgb, (t_vec){ambient->color.bgra[2], ambient->color.bgra[1], ambient->color.bgra[0]});
-		ambi_rgb = vec_multiply_float(ambi_rgb, ambient->lightness);
-		if (data->render_ambiant == true)
-			ambi_rgb = vec_multiply_float(ambi_rgb, ft_fabs(dot_product(ray.dir, inter.normal)));//a commenter pour enlever l'ombre avec la lumiere ambiante
-		
-		//tout ce qui suit dans light function
-		t_inter interlight;
-		t_objs	*light = get_node(data->scene.objs, LIGHT);
-		t_vec l_rgb = vec_multiply_float((t_vec){color.bgra[2], color.bgra[1], color.bgra[0]}, light->lightness);
-		t_vec point_to_light = vec_substract(light->pos, inter.point);
-		float dist_light = get_norm(point_to_light);
-		t_vec light_dir = vec_divide(point_to_light, dist_light); //changer calcul pour que ca colle avec nou calc dir camera
-		interlight = closest_intersection((t_ray){inter.point, light_dir}, data->scene.objs, dist_light);
-		l_rgb = vec_multiply_float(l_rgb, ft_fabs(dot_product(light_dir, inter.normal)));
-
-
+		ambi_rgb = get_ambi_rgb(inter, get_node(data->scene.objs, AMBIENT), data, ray);
+		l_rgb = get_light_rgb(inter, get_node(data->scene.objs, LIGHT), data->scene.objs, &interlight);
 		if (interlight.obj != NULL)
 		 	v_rgb = ambi_rgb;
 		else
@@ -135,5 +111,4 @@ void minirt(t_data *data)
 		}
 		y++;
 	}
-	// printf("FINISHED\n");
 }

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/06 14:10:35 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:09:37 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,5 +364,9 @@ void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
 void	intersection_point_plane(t_inter *inter, t_objs *plane);
 t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
 t_vec	vec_normalize(t_vec v);
+
+/*Lightray*/
+t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray);
+t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, t_inter *interlight);
 
 #endif

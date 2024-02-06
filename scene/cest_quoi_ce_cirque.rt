@@ -2,7 +2,7 @@
 
 C 0,0,0                 0,0,1                      70
 # Antoine TODO: ne pas chequer dans le parsing si la dir est entre -1 et 1
-A                                                           0.5                                            255,255,0
+A                                                           0.2                                            255,255,255
 
 L   1,10,20                                                  0.9
 

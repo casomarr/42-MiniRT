@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/02 17:14:52 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/06 18:16:37 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	get_color(unsigned char color, float light_intensity)
-{
-	float new_color = (float)color * light_intensity;
-	new_color = roundf(new_color); // Rounds the float to the nearest integer
-
-	if (new_color > 255.0)
-		return 255;
-	else if (new_color < 0.0)
-		return 0;
-	else
-		return (int)new_color; //return((t_uint8)(color + 0.5));
-}
-
-/*In case of intersection between the ray leaving the camera and
-an object of the scene, this function makes the ray go from the
-intersection to the light source.
-- If the light source is attainable, we calculate the distance
-betwen the light source and the object, and the BRDF.
-- If the light source is not attainable, we calculate the shadows.
-In both cases we get a light_intensity value that is then multiplied
-by the color of the intersected object, which gives us the color
-of the current pixel.*/
-float	determine_pixel_color(t_data *data)
-{
-	float	light_intensity;
-	t_color	color;
-
-	color.full = data->closest_object.color.full;
-	
-	//temporaire pour afficher lumiere
-	if (data->closest_object.type == LIGHT)
-		return (color.full);
-
-	if (data->direct_light == true) //points spheres : direct_light = false
-		//light_intensity = brdf(data);
-		light_intensity = 0.9;
-	else
-		light_intensity = get_node(data->scene.objs, AMBIENT)->lightness/*  * brdf(data) */;
-	
-	color.bgra[0] = get_color(color.bgra[0], light_intensity);
-	color.bgra[1] = get_color(color.bgra[1], light_intensity);
-	color.bgra[2] = get_color(color.bgra[2], light_intensity);
-	return (color.full);
-}
 
 t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
 {
@@ -67,7 +22,54 @@ t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
 	rgb.bgra[2] = r;
 	return (rgb);
 }
+
 t_color	color_from_vec(t_vec v)
 {
 	return (color_from_rgb(v.x, v.y, v.z));
+}
+
+/*Calculates the color of the intersected object given the
+ambient light's intensity and color.
+The render_ambiant option allows to render prettiest objects shadow-wise.*/
+t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
+{
+	t_color	color;
+	t_vec	ambi_rgb;
+
+	color = inter.obj->color;
+	ambi_rgb = (t_vec){color.bgra[2], color.bgra[1], color.bgra[0]};
+	ambi_rgb = vec_min(ambi_rgb, (t_vec){ambient->color.bgra[2], \
+	ambient->color.bgra[1], ambient->color.bgra[0]});
+	ambi_rgb = vec_multiply_float(ambi_rgb, ambient->lightness);
+	if (data->render_ambiant == true)
+		ambi_rgb = vec_multiply_float(ambi_rgb, \
+		ft_fabs(dot_product(ray.dir, inter.normal)));
+	return (ambi_rgb);
+}
+
+/*Checks if the light source is reachable by a straight
+line from the point of intersection. We thus iterate through
+each object and compare if the distance from the intersection
+point is higher than the distance from other intersection points
+from other objects. If yes, it means other objects are closer*/
+t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, \
+t_inter *interlight)
+{
+	t_color	color;
+	t_vec	l_rgb;
+	t_vec	point_to_light;
+	t_vec	light_dir;
+	float	dist_light;
+
+	color = inter.obj->color;
+	l_rgb = vec_multiply_float((t_vec){color.bgra[2], \
+	color.bgra[1], color.bgra[0]}, light->lightness);
+	point_to_light = vec_substract(light->pos, inter.point);
+	dist_light = get_norm(point_to_light);
+	light_dir = vec_divide(point_to_light, dist_light);
+	*interlight = closest_intersection((t_ray){inter.point, \
+	light_dir}, objs, dist_light);
+	l_rgb = vec_multiply_float(l_rgb, \
+	ft_fabs(dot_product(light_dir, inter.normal)));
+	return (l_rgb);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/02 18:22:28 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/06 14:10:35 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ peut faire une image petite pour augmenter les fps.*/
 # define ESC_KEY 65307
 # define KEY_M 109
 # define KEY_R 114
+
+# define EPSILON 1e-6
 
 #define MAX_DIST_CAMERA	FLT_MAX
 

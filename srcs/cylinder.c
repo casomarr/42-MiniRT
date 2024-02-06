@@ -1,304 +1,161 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 16:09:52 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/05 19:47:46 by casomarr         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minirt.h"
 
-/* Function that creates an orthonormal basis given a single vector w.
-To do so, it creates two arbitrary vectors not parallel to w */
-void create_basis(t_vec cylinder_dir, t_vec *up, t_vec *right) 
-{
-	t_vec a;
+#include <math.h>
+#include <stdbool.h>
 
-	// if (fabs(cylinder_dir.x) > 0)
-	// 	a = create_vec(-1, 0, 0);
-	// else
-	// 	a = create_vec(1, 0, 0);
-	// *right = vec_cross(cylinder_dir, a);
-	// *up = vec_cross(cylinder_dir, *right);
-
-	
-	// if (fabs(cylinder_dir.y) > 0)
-	// 	a = create_vec(0, 0, -1);
-	// else
-	// 	a = create_vec(0, 0, 1);
-	// *right = vec_normalize(vec_cross(cylinder_dir, a));
-	// *up = vec_cross(cylinder_dir, *right);
-
-	// printf("cylinder_dir = %f %f %f\n", cylinder_dir.x, cylinder_dir.y, cylinder_dir.z);
-	// if (fabs(cylinder_dir.y) < 0.0000001 && fabs(cylinder_dir.x) > 0.000001 && abs(cylinder_dir.z > 0.0001))
-	// 	a = create_vec(-1, -1, 0);
-	// else if (fabs(cylinder_dir.y) > 0.0000001 && fabs(cylinder_dir.x) < 0.000001 && abs(cylinder_dir.z > 0.0001))
-	// 	a = create_vec(0, 1, 0);
-	// else if (fabs(cylinder_dir.y) > 0.0000001 && fabs(cylinder_dir.x) > 0.000001 && abs(cylinder_dir.z < 0.0001))
-	// 	a = create_vec(0,0,1);
-	// else a = (t_vec){0, 0, 0};
-
-	if (fabs(cylinder_dir.x) < 1e-6 && fabs(cylinder_dir.y) < 1e-6)
-	{
-		a = create_vec(-1, 0, 0);
-		// printf("a = %f %f %f\n", a.x, a.y, a.z);
-	}
-	else
-	{
-		a = create_vec(1, 0, 0);
-		// printf("a2 = %f %f %f\n", a.x, a.y, a.z);
-	}
-	*right = vec_cross(cylinder_dir, a);
-	*up = vec_cross(cylinder_dir, *right);
-	// printf("up = %f %f %f\n", up->x, up->y, up->z);
-	// printf("right = %f %f %f\n", right->x, right->y, right->z);
+t_vec vec3_sub(t_vec a, t_vec b) {
+    t_vec result = {a.x - b.x, a.y - b.y, a.z - b.z};
+    return result;
 }
 
-/* void create_basis(t_vec dir, t_vec *up, t_vec *right) {
-    // Check if the direction vector is parallel to the y-axis
-    if (fabs(dir.x) < 1e-6 && fabs(dir.z) < 1e-6) {
-        // If it is, we can choose the x-axis as the 'right' vector
-        *right = (t_vec){1, 0, 0};
-    } else {
-        // Otherwise, we can cross the direction vector with the y-axis to get the 'right' vector
-        *right = vec_cross(dir, (t_vec){0, 1, 0});
+t_vec vec3_scale(t_vec v, float s) {
+    t_vec result = {v.x * s, v.y * s, v.z * s};
+    return result;
+}
+
+float vec3_dot(t_vec a, t_vec b) {
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+t_vec vec3_cross(t_vec a, t_vec b) {
+    t_vec result = {
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x
+    };
+    return result;
+}
+
+//VERSION 1
+
+/* void intersection_point_cylinder(t_inter *inter, t_objs *cylinder) {
+    t_vec co = vec3_sub(inter->ray.origin, cylinder->pos);
+    float coDotDir = vec3_dot(co, cylinder->dir);
+    t_vec a = vec3_sub(inter->ray.dir, vec3_scale(cylinder->dir, vec3_dot(inter->ray.dir, cylinder->dir)));
+    t_vec b = vec3_sub(co, vec3_scale(cylinder->dir, coDotDir));
+    float aDotA = vec3_dot(a, a);
+    float bDotB = vec3_dot(b, b);
+    float radiusSquared = cylinder->diameter / 2 * cylinder->diameter / 2;
+    
+    // Quadratic equation coefficients
+    float A = aDotA;
+    float B = 2 * vec3_dot(a, b);
+    float C = bDotB - radiusSquared;
+    
+    // Discriminant
+    float D = B * B - 4 * A * C;
+    if (D < 0) return ; // No intersection
+    
+    float sqrtD = sqrtf(D);
+    float t1 = (-B - sqrtD) / (2 * A);
+    float t2 = (-B + sqrtD) / (2 * A);
+    
+    // Check if intersections are within cylinder caps
+    float y1 = coDotDir + t1 * vec3_dot(inter->ray.dir, cylinder->dir);
+    float y2 = coDotDir + t2 * vec3_dot(inter->ray.dir, cylinder->dir);
+    bool withinCaps1 = y1 >= 0 && y1 <= cylinder->height;
+    bool withinCaps2 = y2 >= 0 && y2 <= cylinder->height;
+
+    if (withinCaps1 && t1 > 0) {
+        inter->obj = cylinder;
+		inter->dist = t1;
+		inter->point = vec_add(inter->ray.origin, vec_multiply_float(inter->ray.dir, t1));
+        inter->normal = vec_normalize(vec_substract(inter->point, cylinder->pos));
+    } else if (withinCaps2 && t2 > 0) {
+        inter->obj = cylinder;
+		inter->dist = t2;
+		inter->point = vec_add(inter->ray.origin, vec_multiply_float(inter->ray.dir, t2));
+        inter->normal = vec_normalize(vec_substract(inter->point, cylinder->pos));
     }
 
-    // Normalize the 'right' vector
-    *right = vec_normalize(*right);
-
-    // Cross the direction vector with the 'right' vector to get the 'up' vector
-    *up = vec_cross(dir, *right);
-
-    // Normalize the 'up' vector
-    *up = vec_normalize(*up);
+    return ; // Intersection occurs outside the cylinder caps
 } */
 
 
-/* Transforms the ray values into the cylinder's local space (internal
-model of coordonates vs real world coordonates) */
-t_ray transform_ray_to_local(t_ray world_ray, t_objs *cylinder) {
-	t_ray local_ray;
-	t_vec up;
-	t_vec right;
-	// t_vec w;
 
-	//w = vec_normalize(cylinder->dir);
-	create_basis(cylinder->dir, &up, &right);
-	local_ray.origin = vec_substract(world_ray.origin, cylinder->pos);
-	local_ray.origin = create_vec(dot_product(local_ray.origin, right), \
-	dot_product(local_ray.origin, up), dot_product(local_ray.origin, cylinder->dir));
-	local_ray.dir = create_vec(dot_product(world_ray.dir, right), \
-	dot_product(world_ray.dir, up), dot_product(world_ray.dir, cylinder->dir));
-	local_ray.dir = vec_normalize(local_ray.dir);
-	return local_ray;
+
+//VERSION 2 avec plans au bout
+
+float vec3_length(t_vec v) {
+    return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-/* t_ray transform_ray_to_local(t_ray world_ray, t_objs *cylinder) {
-    t_ray local_ray;
-    t_vec up;
-    t_vec right;
-
-    create_basis(cylinder->dir, &up, &right);
-    local_ray.origin = vec_substract(world_ray.origin, cylinder->pos);
-
-    // Keep the x, y, and z components separate during the transformation
-    local_ray.origin.x = dot_product(local_ray.origin, right);
-    local_ray.origin.y = dot_product(local_ray.origin, up);
-    local_ray.origin.z = dot_product(local_ray.origin, cylinder->dir);
-
-    local_ray.dir = world_ray.dir;
-
-    // Keep the x, y, and z components separate during the transformation
-    local_ray.dir.x = dot_product(world_ray.dir, right);
-    local_ray.dir.y = dot_product(world_ray.dir, up);
-    local_ray.dir.z = dot_product(world_ray.dir, cylinder->dir);
-
-    local_ray.dir = vec_normalize(local_ray.dir);
-    return local_ray;
-} */
-
-/* Checks if camera_ray intersects with the upper plane (if t > 0)
- and if the intersection happens inside the cylinder's diameter */
-static float	upper_plane(t_inter *inter, t_objs *cylinder)
-{
-	float	t;
-	float	boundaries;
-	t_ray local_ray;
-
-	local_ray = transform_ray_to_local(inter->ray, cylinder);
-	t = (cylinder->pos.z + cylinder->height/*  / 2 */ - local_ray.origin.z) / local_ray.dir.z;
-	boundaries = sqrtf((local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) * \
-	(local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) + \
-	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y) * \
-	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y));
-	if (t > 0 && boundaries <= cylinder->diameter / 2)
-		return (t);
-	// printf("local_ray.origin = %f %f %f\n", local_ray.origin.x, local_ray.origin.y, local_ray.origin.z);
-	return (0);
+bool intersect_ray_plane(t_ray ray, t_vec planePoint, t_vec planeNormal, float *t) {
+    float denom = vec3_dot(planeNormal, ray.dir);
+    if (fabs(denom) > 1e-6) { // Ensure not parallel
+        t_vec p0l0 = vec3_sub(planePoint, ray.origin);
+        *t = vec3_dot(p0l0, planeNormal) / denom;
+        return *t >= 0;
+    }
+    return false;
 }
 
-/* Checks if camera_ray intersects with the bottom plane (if t > 0)
- and if the intersection happens inside the cylinder's diameter */
-static float	bottom_plane(t_inter *inter, t_objs *cylinder)
-{
-	float	t;
-	float	boundaries;
-	t_ray local_ray;
+void intersection_point_cylinder(t_inter *inter, t_objs *cylinder) {
+    t_vec co = vec3_sub(inter->ray.origin, cylinder->pos);
+    float coDotDir = vec3_dot(co, cylinder->dir);
+    t_vec a = vec3_sub(inter->ray.dir, vec3_scale(cylinder->dir, vec3_dot(inter->ray.dir, cylinder->dir)));
+    t_vec b = vec3_sub(co, vec3_scale(cylinder->dir, coDotDir));
+    float aDotA = vec3_dot(a, a);
+    float bDotB = vec3_dot(b, b);
+    float radiusSquared = cylinder->diameter / 2 * cylinder->diameter / 2;
+    
+    // Quadratic equation coefficients for cylinder side
+    float A = aDotA;
+    float B = 2 * vec3_dot(a, b);
+    float C = bDotB - radiusSquared;
+    
+    // Discriminant
+    float D = B * B - 4 * A * C;
+    float tSide1 = FLT_MAX, tSide2 = FLT_MAX, tCap = FLT_MAX;
+    bool hitSide = false, hitCap = false;
 
-	local_ray = transform_ray_to_local(inter->ray, cylinder);
-	t = (cylinder->pos.z - cylinder->height/*  / 2 */ - local_ray.origin.z) / local_ray.dir.z;
-	boundaries = sqrtf((local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) * \
-	(local_ray.origin.x + t * local_ray.dir.x - cylinder->pos.x) + \
-	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y) * \
-	(local_ray.origin.y + t * local_ray.dir.y - cylinder->pos.y));
-	if (t > 0 && boundaries <= cylinder->diameter / 2)
-		return (t);
-	return (0);
+    if (D >= 0) { // Potential side intersection
+        float sqrtD = sqrtf(D);
+        float t1 = (-B - sqrtD) / (2 * A);
+        float t2 = (-B + sqrtD) / (2 * A);
+        
+        // Check if intersections are within cylinder caps
+        float y1 = coDotDir + t1 * vec3_dot(inter->ray.dir, cylinder->dir);
+        float y2 = coDotDir + t2 * vec3_dot(inter->ray.dir, cylinder->dir);
+        if ((y1 >= 0 && y1 <= cylinder->height) && t1 > 0) {
+            tSide1 = t1;
+            hitSide = true;
+        }
+        if ((y2 >= 0 && y2 <= cylinder->height) && t2 > 0 && t2 < tSide1) {
+            tSide2 = t2;
+            hitSide = true;
+        }
+    }
+
+    // Check for cap intersections
+    t_vec capTopCenter = vec_add(cylinder->pos, vec3_scale(cylinder->dir, cylinder->height));
+    float tCapTop, tCapBottom;
+    bool hitCapTop = intersect_ray_plane(inter->ray, capTopCenter, cylinder->dir, &tCapTop);
+    bool hitCapBottom = intersect_ray_plane(inter->ray, cylinder->pos, cylinder->dir, &tCapBottom);
+    
+    // Check if intersection points are within the radius of the caps
+    if (hitCapTop && vec3_length(vec3_sub(vec_add(inter->ray.origin, vec3_scale(inter->ray.dir, tCapTop)), capTopCenter)) <= cylinder->diameter / 2) {
+        tCap = tCapTop;
+        hitCap = true;
+    }
+    
+    if (hitCapBottom && vec3_length(vec3_sub(vec_add(inter->ray.origin, vec3_scale(inter->ray.dir, tCapBottom)), cylinder->pos)) <= cylinder->diameter / 2) {
+        if (tCapBottom < tCap) {
+            tCap = tCapBottom;
+            hitCap = true;
+        }
+    }
+
+    // Find the closest intersection
+    if (hitSide || hitCap) {
+        float tMin = fmin(tSide1, fmin(tSide2, tCap));
+        if (tMin < FLT_MAX) {
+            inter->obj = cylinder;
+            inter->dist = tMin;
+            inter->point = vec_add(inter->ray.origin, vec_multiply_float(inter->ray.dir, tMin));
+            inter->normal = vec_normalize(vec_substract(inter->point, cylinder->pos));
+        }
+    }
 }
 
-/* Calculates the variables a, b and c (maths.x, maths.y and maths.z)
-to calculate delta further on */
-static t_vec	get_vec_abc(t_inter *inter, t_objs *cylinder)
-{
-	t_vec	maths;
-	t_ray	ray;
-	t_ray local_ray;
 
-	local_ray = transform_ray_to_local(inter->ray, cylinder);
-	ray = local_ray;
-	maths.x = ray.dir.x * ray.dir.x + ray.dir.y * ray.dir.y;
-	maths.y = 2 * (ray.dir.x * (ray.origin.x - cylinder->pos.x) + 
-		ray.dir.y * (ray.origin.y - cylinder->pos.y));
-	maths.z = (ray.origin.x - cylinder->pos.x) * (ray.origin.x - cylinder->pos.x) + 
-		(ray.origin.y - cylinder->pos.y) * (ray.origin.y - cylinder->pos.y) - 
-		(cylinder->diameter / 2) * (cylinder->diameter / 2);
-	return(maths);
-}
-
-/* Returns the closest intersection distance if multiple */
-static float	smaller_t(t_vec maths, float delta, t_objs *cylinder, t_inter *inter)
-{
-	float	t;
-	float	t1;
-	float	t2;
-	float	z1;
-	float	z2;
-	t_ray local_ray;
-
-	t = FLT_MAX;
-	t1 = (-maths.y + sqrt(delta)) / (2 * maths.x);
-	t2 = (-maths.y - sqrt(delta)) / (2 * maths.x);
-	local_ray = transform_ray_to_local(inter->ray, cylinder);
-	z1 = local_ray.origin.z + t1 * local_ray.dir.z;
-	z2 = local_ray.origin.z + t2 * local_ray.dir.z;
-	if (z1 >= cylinder->pos.z - cylinder->height && z1 <= cylinder->pos.z + cylinder->height)
-	{
-		if (t1 > 0)
-			t = t1;
-	}
-	if (z2 >= cylinder->pos.z - cylinder->height && z2 <= cylinder->pos.z + cylinder->height)
-	{
-		if (t2 > 0 && t2 < t)
-			t = t2;
-	}
-	return (t);
-}
-
-/* Checks if the ray intersects with the tube (if delta > 0)
-and if the intersection happens inside the cylinder's height */
-static float	tube(t_inter *inter, t_objs *cylinder)
-{
-	t_vec	maths;
-	float	delta;
-	float	t;
-
-	t = FLT_MAX;
-	maths = get_vec_abc(inter, cylinder);
-	delta = maths.y * maths.y - 4 * maths.x * maths.z;
-	if (delta >= 0)
-		t = smaller_t(maths, delta, cylinder, inter);
-	if (t != FLT_MAX)
-		return (t);
-	else
-		return (0);
-}
-
-/* Returns the closest intersection point. If there was no intersection
-between the ray and one of the objects (the tube or the two planes), their
-associated t will have a value of FLT_MAX */
-static float	closest_t(float t_top, float t_bottom, float t_side)
-{
-	float	t;
-	
-	t = FLT_MAX;
-	if (t_top > 0 && t_top < t)
-		t = t_top;
-	if (t_bottom > 0 && t_bottom < t)
-		t = t_bottom;
-	if (t_side > 0 && t_side < t)
-		t = t_side;
-	if (t != FLT_MAX)
-		return (t);
-	else
-		return (0);
-}
-
-t_vec vec_transform_to_world(t_vec local_vec, t_vec up, t_vec right, t_vec cylinder_dir)
-{
-	// return /* vec_normalize( */vec_add(vec_add(vec_multiply_float(up, local_vec.x), \
-	// vec_multiply_float(right, local_vec.y)), vec_multiply_float(cylinder_dir, local_vec.z))/* ) */;
-
-/* 	return vec_normalize(vec_add(vec_add(cylinder_dir, vec_multiply_float(up, -local_vec.x)), \
-	vec_multiply_float(right, local_vec.y))); */
-
-	return vec_add(vec_add(vec_multiply_float(right, local_vec.x), \
-	vec_multiply_float(up, local_vec.y)), vec_multiply_float(cylinder_dir, local_vec.z));
-}
-
-void	transform_back_to_world_coordinates(t_inter *inter, t_objs *cylinder)
-{
-	t_vec up;
-	t_vec right;
-	// t_vec w;
-
-	// w = vec_normalize(cylinder->dir);
-	create_basis(cylinder->dir, &up, &right);
-	inter->point = vec_add(cylinder->pos, vec_transform_to_world(inter->point, up, right, cylinder->dir));
-	inter->normal = vec_transform_to_world(inter->normal, up, right, cylinder->dir);
-}
-
-/* Divides the cylinder into three objects : two planes and a tube.
-Then checks if the camera_ray intersects with any of these three objects */
-void intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
-{
-	float	t;
-	float	t_top;
-	float	t_bottom;
-	float	t_side;
-	
-	t = 0.;
-	t_top = upper_plane(inter, cylinder);
-	t_bottom = bottom_plane(inter, cylinder);
-	t_side = tube(inter, cylinder);
-
-	t = closest_t(t_top, t_bottom, t_side);
-	if (t > 0)
-	{
-		inter->obj = cylinder;
-		inter->dist = t;
-		inter->point = vec_add(inter->ray.origin, vec_multiply_float(inter->ray.dir, t));
-		if (t == t_side)
-			inter->normal = vec_normalize(vec_substract(inter->point, cylinder->pos));
-		else if (t == t_top)
-			inter->normal = create_vec(0, 1, 0);
-		else if (t == t_bottom)
-			inter->normal = create_vec(0, -1, 0);
-		transform_back_to_world_coordinates(inter, cylinder);
-	}
-	//printf("cylinder->pos = %f %f %f\n", cylinder->pos.x, cylinder->pos.y, cylinder->pos.z);
-}

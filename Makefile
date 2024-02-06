@@ -6,7 +6,7 @@
 #    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/06 18:21:39 by casomarr         ###   ########.fr        #
+#    Updated: 2024/02/06 18:39:13 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to 
 PATH_LIBFT = libft
 PATH_INCLUDE = includes
 PATH_SRCS = srcs
+PATH_PARSING = parsing
+PATH_RENDER = render
+PATH_MATHS = maths
 PATH_MLX = mlx
 
 RM = rm -f
@@ -51,30 +54,55 @@ MLX = $(PATH_MLX)/libmlx.a
 HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
-SRCS = $(PATH_SRCS)/check_objs.c \
-	   $(PATH_SRCS)/check_data_objs.c \
-	   $(PATH_SRCS)/add_substract_maths.c \
-	   $(PATH_SRCS)/color.c \
-	   $(PATH_SRCS)/compare_maths.c \
-	   $(PATH_SRCS)/cylinder.c \
-	   $(PATH_SRCS)/dot_maths.c \
-	   $(PATH_SRCS)/intersections.c \
-	   $(PATH_SRCS)/lightray.c \
+SRCS = $(PATH_SRCS)/$(PATH_PARSING)/check_objs.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/check_data_objs.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/open_file.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/parse_file.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/init.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/check_params.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/set_data.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/write_scene_ppm.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/color.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/lightray.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/rays.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/render.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/sphere.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/utils.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/add_substract_maths.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/compare_maths.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/dot_maths.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/multiply_divide_maths.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/norm_maths.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/sqrt_maths.c \
 	   $(PATH_SRCS)/main.c \
-	   $(PATH_SRCS)/multiply_divide_maths.c \
-	   $(PATH_SRCS)/norm_maths.c \
-	   $(PATH_SRCS)/open_file.c \
-	   $(PATH_SRCS)/parse_file.c \
-	   $(PATH_SRCS)/plane.c \
-	   $(PATH_SRCS)/rays.c \
-	   $(PATH_SRCS)/render.c \
-	   $(PATH_SRCS)/sphere.c \
-	   $(PATH_SRCS)/sqrt_maths.c \
-	   $(PATH_SRCS)/utils.c \
-	   $(PATH_SRCS)/init.c \
-	   $(PATH_SRCS)/check_params.c \
-	   $(PATH_SRCS)/set_data.c \
-	   $(PATH_SRCS)/write_scene_ppm.c
+
+# SRCS = $(PATH_SRCS)/check_objs.c \
+# 	   $(PATH_SRCS)/check_data_objs.c \
+# 	   $(PATH_SRCS)/open_file.c \
+# 	   $(PATH_SRCS)/parse_file.c \
+# 	   $(PATH_SRCS)/init.c \
+# 	   $(PATH_SRCS)/check_params.c \
+# 	   $(PATH_SRCS)/set_data.c \
+# 	   $(PATH_SRCS)/write_scene_ppm.c \
+# 	   $(PATH_SRCS)/color.c \
+# 	   $(PATH_SRCS)/cylinder.c \
+# 	   $(PATH_SRCS)/intersections.c \
+# 	   $(PATH_SRCS)/lightray.c \
+# 	   $(PATH_SRCS)/plane.c \
+# 	   $(PATH_SRCS)/rays.c \
+# 	   $(PATH_SRCS)/render.c \
+# 	   $(PATH_SRCS)/sphere.c \
+# 	   $(PATH_SRCS)/utils.c \
+# 	   $(PATH_SRCS)/add_substract_maths.c \
+# 	   $(PATH_SRCS)/compare_maths.c \
+# 	   $(PATH_SRCS)/dot_maths.c \
+# 	   $(PATH_SRCS)/multiply_divide_maths.c \
+# 	   $(PATH_SRCS)/norm_maths.c \
+# 	   $(PATH_SRCS)/sqrt_maths.c \
+# 	   $(PATH_SRCS)/main.c \
 
 SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
@@ -87,6 +115,11 @@ OBJ_DIR = .objs
 
 #changer le path de la ligne ne dessous si je cree un dossier parsing et un dossier render
 OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+# OBJS = $(patsubst $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(SRCS))) \
+#        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(SRCS))) \
+#        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(SRCS))) \
+#        $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/%.c,$(SRCS)))
+
 OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
 
 # **************************************************************************** #

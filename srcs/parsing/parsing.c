@@ -1,6 +1,8 @@
 #include "minirt.h"
 
-void	ft_stop(t_data *data, short error)
+//TODO: dsl Antoine ne changeant le makefile ça me disait qu'il y avait deux main et deux ft_stop donc je les ai commentés
+
+/* void	ft_stop(t_data *data, short error)
 {
 	t_objs	*tmp;
 	while (data->scene.objs != NULL)
@@ -40,4 +42,4 @@ int	main(int argc, char **argv)
 	}
 	ft_stop(&data, STOP);
 	return (0);
-}
+} */

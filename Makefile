@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
+#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/06 18:39:13 by casomarr         ###   ########.fr        #
+#    Updated: 2024/02/07 13:57:30 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,14 +113,19 @@ SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 ### DIRECTORIES & FILES
 OBJ_DIR = .objs
 
-#changer le path de la ligne ne dessous si je cree un dossier parsing et un dossier render
-OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-# OBJS = $(patsubst $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(SRCS))) \
-#        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(SRCS))) \
-#        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(SRCS))) \
-#        $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/%.c,$(SRCS)))
 
-OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
+#TODO: chatgpt le temps de réparer les deux lignes en dessous
+SRCS := $(shell find $(PATH_SRCS) -name '*.c')
+OBJS := $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
+#changer le path de la ligne ne dessous si je cree un dossier parsing et un dossier render
+# OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+# # OBJS = $(patsubst $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(SRCS))) \
+# #        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(SRCS))) \
+# #        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(SRCS))) \
+# #        $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/%.c,$(SRCS)))
+
+# OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -128,8 +133,13 @@ OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
 
 ### RULES OF COMPILATION
 $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
+
+# TODO: réparer les lignes en dessous
+# $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
+# 	@mkdir -p $(OBJ_DIR)
+# 	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
 
 # **************************************************************************** #
 #                                  MAIN TARGET                                 #

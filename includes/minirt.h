@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:39:57 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:31:03 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ peut faire une image petite pour augmenter les fps.*/
 # define KEY_M 109
 # define KEY_R 114
 
-# define EPSILON 1e-6
+# define EPSILON 1e-6 //on ne l'utilise plus nulle part
 
 #define MAX_DIST_CAMERA	FLT_MAX
 

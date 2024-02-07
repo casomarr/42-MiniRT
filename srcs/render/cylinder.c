@@ -9,7 +9,7 @@ float vec3_length(t_vec v) {
 
 bool intersect_ray_plane(t_ray ray, t_vec planePoint, t_vec planeNormal, float *t) {
 	float denom = dot_product(planeNormal, ray.dir);
-	if (fabs(denom) > 1e-6) { // Ensure not parallel
+	if (fabs(denom) > 0.) { // Ensure not parallel
 		t_vec p0l0 = vec_substract(planePoint, ray.origin);
 		*t = dot_product(p0l0, planeNormal) / denom;
 		return *t >= 0;

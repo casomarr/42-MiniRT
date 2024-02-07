@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/06 17:42:21 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:32:09 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ float	get_t(float delta, t_vec maths)
 	{
 		t1 = (-maths.y + sqrtf(delta)) / (2. * maths.x);
 		t2 = (-maths.y - sqrtf(delta)) / (2. * maths.x);
-		if (t1 > 0 && t2 > 0 && t1 < t2 || t1 > 0 && t2 < 0)
+		if ((t1 > 0 && t2 > 0 && t1 < t2) || (t1 > 0 && t2 < 0))
 			t = t1;
-		else if (t1 > 0 && t2 > 0 && t2 < t1 || t2 > 0 && t1 < 0)
+		else if ((t1 > 0 && t2 > 0 && t2 < t1) || (t2 > 0 && t1 < 0))
 			t = t2;
 	}
 	else if (delta == 0.)

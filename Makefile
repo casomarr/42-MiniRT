@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/07 17:40:11 by amugnier         ###   ########.fr        #
+#    Updated: 2024/02/07 17:19:29 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ SRCS =   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/color.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
-	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
+  	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/rays.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/render.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/sphere.c \

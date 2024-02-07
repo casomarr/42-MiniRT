@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/06 18:09:37 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:26:09 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,7 @@ int		get_color(unsigned char color, float light_intensity);
 float	determine_pixel_color(t_data *data);
 t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b);
 t_color	color_from_vec(t_vec v);
+int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray);
 
 /*Cylinder*/
 // void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:16:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/06 18:09:11 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:45:46 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,30 @@ t_ray	compute_camera_ray(int x, int y, t_scene scene)
 {
 	t_ray	ray;
 	t_objs	*camera;
+	float	fov_adjustment;
+	float	xr;
+	float	yr;
 
 	camera = scene.cam;
 	ray.origin = camera->pos;
-	float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
-	float fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
-	float xr = (2 * ((x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * aspect_ratio;
-	float yr = (2 * ((y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
-	ray.dir = vec_normalize(vec_add(vec_add(camera->dir, vec_multiply_float(scene.rdir, -xr)), vec_multiply_float(scene.udir, yr)));
+	fov_adjustment = tan((camera->fov / 2.0) * (PI / 180.0));
+	xr = (2 * ((x + 0.5) / WIN_WIDTH) - 1) * fov_adjustment * \
+	((float)WIN_WIDTH / (float)WIN_HEIGHT);
+	yr = (2 * ((y + 0.5) / WIN_HEIGHT) - 1) * fov_adjustment;
+	ray.dir = vec_normalize(vec_add(vec_add(camera->dir, \
+	vec_multiply_float(scene.rdir, -xr)), vec_multiply_float(scene.udir, yr)));
 	return (ray);
 }
 
 int	compute_pixel(int x, int y, t_data *data)
 {
-	t_ray 	ray;
+	t_ray	ray;
 	t_inter	inter;
-	t_vec	v_rgb;
-	t_vec	ambi_rgb;
-	t_vec	l_rgb;
-	float ratio_camera_dist;
-	t_inter interlight;
 
 	ray = compute_camera_ray(x, y, data->scene);
-	t_objs *camera = get_node(data->scene.objs, CAMERA);
 	inter = closest_intersection(ray, data->scene.objs, MAX_DIST_CAMERA);
 	if (inter.obj != NULL)
-	{
-		ratio_camera_dist =  1. - inter.dist / MAX_DIST_CAMERA;
-		ambi_rgb = get_ambi_rgb(inter, get_node(data->scene.objs, AMBIENT), data, ray);
-		l_rgb = get_light_rgb(inter, get_node(data->scene.objs, LIGHT), data->scene.objs, &interlight);
-		if (interlight.obj != NULL)
-		 	v_rgb = ambi_rgb;
-		else
-			v_rgb = vec_max(l_rgb, ambi_rgb);
-		return color_from_vec(v_rgb).full;
-	}
+		return (get_pixel_color(inter, data->scene.objs, data, ray));
 	return (0);
 }
 
@@ -66,20 +55,20 @@ so that udir (=up direction) is orthogonal to camera->dir and world_up
 and rdir (right direction) is orthogonal to rdir and camera->dir.*/
 void	prepare_scene(t_data *data)
 {
-	t_objs *objs;
-	t_vec	world_up = {0, 1, 0};
-	t_vec	right;
-	t_vec	up;
+	t_objs	*objs;
+	t_vec	world_up;
 
-	objs = data->scene.objs; //on le remet au début
+	objs = data->scene.objs;
 	while (objs)
 	{
-		if (objs->type == PLANE || objs->type == CAMERA || objs->type == CYLINDER)
+		if (objs->type == PLANE || objs->type == CAMERA \
+		|| objs->type == CYLINDER)
 			objs->dir = vec_normalize(objs->dir);
 		objs = objs->next;
 	}
 	objs = get_node(data->scene.objs, CAMERA);
 	data->scene.cam = objs;
+	world_up = (t_vec){0, 1, 0};
 	if (fabs(objs->dir.x) < 1e-6 && fabs(objs->dir.z) < 1e-6)
 	{
 		if (objs->dir.y > 0)
@@ -92,10 +81,10 @@ void	prepare_scene(t_data *data)
 }
 
 /*Calculates each ray's dir.*/
-void minirt(t_data *data)
+void	minirt(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 	int	color;
 
 	prepare_scene(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:10:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/06 14:09:44 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:30:59 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ present in the scene. Every time an intersection occurs,
 data->z_index is updated to keep in memory what is the closest
 object that intersects with the ray, so that our image doesn't show
 the "hidden" objects.*/
-
 
 t_inter	closest_intersection(t_ray ray, t_objs *object, float dist)
 {
@@ -37,6 +36,7 @@ t_inter	closest_intersection(t_ray ray, t_objs *object, float dist)
 		object = object->next;
 	}
 	if (inter.obj)
-		inter.point = vec_add(inter.point, vec_multiply_float(inter.normal, 0.0005));
+		inter.point = vec_add(inter.point, \
+		vec_multiply_float(inter.normal, 0.0005));
 	return (inter);
 }

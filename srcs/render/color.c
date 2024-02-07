@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/06 18:16:37 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:47:16 by octonaute        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,23 @@ t_inter *interlight)
 	l_rgb = vec_multiply_float(l_rgb, \
 	ft_fabs(dot_product(light_dir, inter.normal)));
 	return (l_rgb);
+}
+
+int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray)
+{
+	float	ratio_camera_dist;
+	t_vec	ambi_rgb;
+	t_vec	l_rgb;
+	t_vec	v_rgb;
+	t_inter	interlight;
+
+	ratio_camera_dist = 1. - inter.dist / MAX_DIST_CAMERA;
+	ambi_rgb = get_ambi_rgb(inter, get_node(objects, AMBIENT), data, ray);
+	l_rgb = get_light_rgb(inter, get_node(objects, LIGHT), \
+			objects, &interlight);
+	if (interlight.obj != NULL)
+		v_rgb = ambi_rgb;
+	else
+		v_rgb = vec_max(l_rgb, ambi_rgb);
+	return (color_from_vec(v_rgb).full);
 }

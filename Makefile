@@ -6,7 +6,7 @@
 #    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/07 13:57:30 by octonaute        ###   ########.fr        #
+#    Updated: 2024/02/07 17:18:42 by octonaute        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,6 @@ SRCS = $(PATH_SRCS)/$(PATH_PARSING)/check_objs.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/color.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
-	   $(PATH_SRCS)/$(PATH_RENDER)/lightray.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/rays.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/render.c \

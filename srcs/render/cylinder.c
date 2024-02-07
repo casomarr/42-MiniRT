@@ -93,10 +93,15 @@ void intersection_point_cylinder(t_inter *inter, t_objs *cylinder) {
 			{
 				t_vec closestPointOnAxis = vec_add(cylinder->pos, vec_multiply_float(cylinder->dir, coDotDir + tMin * dot_product(inter->ray.dir, cylinder->dir)));
 				inter->normal = vec_normalize(vec_substract(inter->point, closestPointOnAxis));
+				// printf("cylinder->dir: %f %f %f\n", cylinder->dir.x, cylinder->dir.y, cylinder->dir.z);
+				// printf("closestPointOnAxis: %f %f %f\n", closestPointOnAxis.x, closestPointOnAxis.y, closestPointOnAxis.z);
+				// printf("inter->ray.dir: %f %f %f\n", inter->ray.dir.x, inter->ray.dir.y, inter->ray.dir.z);
+				// printf("inter->normal: %f %f %f\n", inter->normal.x, inter->normal.y, inter->normal.z);
+				// exit(1);
 			}
-			else if (tMin == tCap && tCap == tCapBottom)
+			else if (tMin == tCapBottom)
 				 inter->normal = vec_negate(cylinder->dir);
-			else if (tMin == tCap && tCap == tCapTop)
+			else if (tMin == tCapTop)
 				inter->normal = cylinder->dir;
 		}
 	}

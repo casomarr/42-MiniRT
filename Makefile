@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+         #
+#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/07 17:18:42 by octonaute        ###   ########.fr        #
+#    Updated: 2024/02/07 17:40:11 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to 
 PATH_LIBFT = libft
 PATH_INCLUDE = includes
 PATH_SRCS = srcs
-PATH_PARSING = parsing
 PATH_RENDER = render
+PATH_PARSING = parsing
 PATH_MATHS = maths
 PATH_MLX = mlx
 
@@ -54,14 +54,19 @@ MLX = $(PATH_MLX)/libmlx.a
 HDRS = $(PATH_INCLUDE)/minirt.h \
 
 ### SOURCES
-SRCS = $(PATH_SRCS)/$(PATH_PARSING)/check_objs.c \
+SRCS =   $(PATH_SRCS)/main.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/check_objs.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/check_data_objs.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/open_file.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/parse_file.c \
-	   $(PATH_SRCS)/$(PATH_PARSING)/init.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/check_params.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/set_data.c \
-	   $(PATH_SRCS)/$(PATH_PARSING)/write_scene_ppm.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/init.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/check_data_objs2.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/parsing_utils.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/set_objs.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/set_objs2.c \
+	   $(PATH_SRCS)/$(PATH_PARSING)/check_objs_shape.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/color.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
@@ -76,32 +81,6 @@ SRCS = $(PATH_SRCS)/$(PATH_PARSING)/check_objs.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/multiply_divide_maths.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/norm_maths.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/sqrt_maths.c \
-	   $(PATH_SRCS)/main.c \
-
-# SRCS = $(PATH_SRCS)/check_objs.c \
-# 	   $(PATH_SRCS)/check_data_objs.c \
-# 	   $(PATH_SRCS)/open_file.c \
-# 	   $(PATH_SRCS)/parse_file.c \
-# 	   $(PATH_SRCS)/init.c \
-# 	   $(PATH_SRCS)/check_params.c \
-# 	   $(PATH_SRCS)/set_data.c \
-# 	   $(PATH_SRCS)/write_scene_ppm.c \
-# 	   $(PATH_SRCS)/color.c \
-# 	   $(PATH_SRCS)/cylinder.c \
-# 	   $(PATH_SRCS)/intersections.c \
-# 	   $(PATH_SRCS)/lightray.c \
-# 	   $(PATH_SRCS)/plane.c \
-# 	   $(PATH_SRCS)/rays.c \
-# 	   $(PATH_SRCS)/render.c \
-# 	   $(PATH_SRCS)/sphere.c \
-# 	   $(PATH_SRCS)/utils.c \
-# 	   $(PATH_SRCS)/add_substract_maths.c \
-# 	   $(PATH_SRCS)/compare_maths.c \
-# 	   $(PATH_SRCS)/dot_maths.c \
-# 	   $(PATH_SRCS)/multiply_divide_maths.c \
-# 	   $(PATH_SRCS)/norm_maths.c \
-# 	   $(PATH_SRCS)/sqrt_maths.c \
-# 	   $(PATH_SRCS)/main.c \
 
 SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 	   $(PATH_SRCS)/check_data_objs.c \
@@ -113,18 +92,11 @@ SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 OBJ_DIR = .objs
 
 
-#TODO: chatgpt le temps de réparer les deux lignes en dessous
-SRCS := $(shell find $(PATH_SRCS) -name '*.c')
-OBJS := $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
-
 #changer le path de la ligne ne dessous si je cree un dossier parsing et un dossier render
-# OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-# # OBJS = $(patsubst $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_PARSING)/%.c,$(SRCS))) \
-# #        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/%.c,$(SRCS))) \
-# #        $(patsubst $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/$(PATH_RENDER)/$(PATH_MATHS)/%.c,$(SRCS))) \
-# #        $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(filter $(PATH_SRCS)/%.c,$(SRCS)))
+#Have 1 directory for parsing and 1 for render in .objs
+OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-# OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
+OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
 
 # **************************************************************************** #
 #                                  COMPILATION                                 #
@@ -132,13 +104,8 @@ OBJS := $(patsubst $(PATH_SRCS)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 ### RULES OF COMPILATION
 $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
-	@mkdir -p $(dir $@)
+	@mkdir -p $(OBJ_DIR) $(OBJ_DIR)/$(PATH_PARSING) $(OBJ_DIR)/$(PATH_RENDER) $(OBJ_DIR)/$(PATH_RENDER)/$(PATH_MATHS)
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
-
-# TODO: réparer les lignes en dessous
-# $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(HDRS)
-# 	@mkdir -p $(OBJ_DIR)
-# 	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
 
 # **************************************************************************** #
 #                                  MAIN TARGET                                 #
@@ -204,14 +171,14 @@ $(GTACTION): $(OBJS_ACTIONS)
 	$(CC) $(CFLAGS) -o $(GTACTION) $(OBJS_ACTIONS) $(LIBFT) $(LINKER_FLAGS) $(MLX)
 
 # Construction de l'action (si différente)
-action: $(LIBFT) $(MLX) $(GTACTION)
+# action: $(LIBFT) $(MLX) $(GTACTION)
 
 #remove $(MLX) From $(NAME) if parsing are call by make parsing
-parsing: $(LIBFT) $(OBJS_PARSING)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS_PARSING) $(LIBFT)
+# parsing: $(LIBFT) $(OBJS_PARSING)
+# 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS_PARSING) $(LIBFT)
 
 # **************************************************************************** #
 #                                   PHONIES                                    #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re action
+.PHONY: all clean fclean re action parsing

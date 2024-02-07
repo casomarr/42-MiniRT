@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:04:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/31 13:11:50 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/07 16:45:10 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene)
 	if (!split)
 		return (false);
 	rgb->full = 0;
-	if ((ft_atoi(split[0]) > 255 || ft_atoi(split[0]) < 0)\
-		|| (ft_atoi(split[1]) > 255 || ft_atoi(split[1]) < 0)\
+	if ((ft_atoi(split[0]) > 255 || ft_atoi(split[0]) < 0) \
+		|| (ft_atoi(split[1]) > 255 || ft_atoi(split[1]) < 0) \
 		|| (ft_atoi(split[2]) > 255 || ft_atoi(split[2]) < 0))
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Color must be between 0 and 255\n\x1B[0m", scene->fname,\
+			"Color must be between 0 and 255\n\x1B[0m", scene->fname, \
 			scene->line);
 		ft_free_split(split);
 		return (false);

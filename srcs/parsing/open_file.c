@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:06:28 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 14:32:54 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:48:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ bool	open_file(char *path, t_data *data)
 	data->scene.fname = path;
 	if (fd > 0)
 	{
-			if (parse_file(fd, data) == false)
-			{
-				close(fd);
-				return (false);
-			}
+		if (parse_file(fd, data) == false)
+		{
 			close(fd);
-			return (true);
+			return (false);
+		}
+		close(fd);
+		return (true);
 	}
 	else
 	{
@@ -47,8 +47,7 @@ int	parsing(char *file_name, t_data *data)
 {
 	if (check_filename(file_name) == false)
 		return (false);
-	else
-	if (open_file(file_name, data) == false)
+	else if (open_file(file_name, data) == false)
 		return (false);
 	return (true);
 }

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_compile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:30:11 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 14:01:20 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/07 16:33:07 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "check_compile.h"
 
-//TODO: décommenter cette fonction qd makefile réparé
-/* int	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -39,4 +38,3 @@
 	printf("%p\n", win_ptr);
 	printf("Hello World! -> %s\n", argv[1]);
 }
- */

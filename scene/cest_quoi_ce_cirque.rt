@@ -1,8 +1,8 @@
 #     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER         HEIGHT           COLOR (RGB)
 
-C 0,0,0                 0,0,1                      70
+C 0,0,0                 -0.3,0.5,1                      70
 # Antoine TODO: ne pas chequer dans le parsing si la dir est entre -1 et 1
-A                                                           0.2                                            255,255,255
+A                                                           0.4                                            0,255,255
 
 L   1,10,20                                                  0.9
 

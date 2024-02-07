@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   check_data_objs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/25 18:07:27 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/07 17:02:33 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	check_coords(t_objs *objs, t_scene *scene)//je separe Camera, Light, Ambiant, Plan, Sphere, Cylinder ou j appelle cette fonction pour tous ceux qui ont des coords ?
+bool	check_coords(t_objs *objs, t_scene *scene)
 {
 	if ((objs->pos.x < -10000 || objs->pos.x > 10000)
 		|| (objs->pos.y < -10000 || objs->pos.y > 10000)
 		|| (objs->pos.z < -10000 || objs->pos.z > 10000))
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Coords must be between -10000 and 10000\n\x1B[0m", scene->fname,\
+			"Coords must be between -10000 and 10000\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
 	}
@@ -31,31 +31,7 @@ bool	check_diameter(t_objs *objs, t_scene *scene)
 	if (objs->diameter <= 0 || objs->diameter > 200)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Diameter must be between 0 and 50\n\x1B[0m", scene->fname,\
-			scene->line);
-		return (false);
-	}
-	return (true);
-}
-
-bool	check_height(t_objs *objs, t_scene *scene)
-{
-	if (objs->height <= 0 || objs->height > 50)
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Height must be between 0 and 50\n\x1B[0m", scene->fname,\
-			scene->line);
-		return (false);
-	}
-	return (true);
-}
-
-bool	check_fov(t_objs *objs, t_scene *scene)
-{
-	if (objs->fov < 0 || objs->fov > 180)
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Fov must be between 0 and 180\n\x1B[0m", scene->fname,\
+			"Diameter must be between 0 and 50\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
 	}
@@ -69,19 +45,7 @@ bool	check_vector(t_objs *objs, t_scene *scene)
 		|| (objs->dir.z < -1 || objs->dir.z > 1))
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Vector must be between -1 and 1\n\x1B[0m", scene->fname,\
-			scene->line);
-		return (false);
-	}
-	return (true);
-}
-
-bool check_lightness(t_objs *objs, t_scene *scene)
-{
-	if (objs->lightness < 0.0 || objs->lightness > 1.0)
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Lightness must be between 0.0 and 1.0\n\x1B[0m", scene->fname,\
+			"Vector must be between -1 and 1\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
 	}
@@ -95,7 +59,7 @@ bool	check_color(t_objs *objs, t_scene *scene)
 		|| (objs->color.bgra[2] < 0 || objs->color.bgra[2] > 255))
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Color must be between 0 and 255\n\x1B[0m", scene->fname,\
+			"Color must be between 0 and 255\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
 	}
@@ -112,7 +76,8 @@ bool	check_data_objs(t_objs *objs, t_scene *scene)
 	}
 	else if (objs->type == 1)
 	{
-		if (!check_coords(objs, scene) || !check_vector(objs, scene) || !check_diameter(objs, scene)
+		if (!check_coords(objs, scene) || !check_vector(objs, scene) \
+			|| !check_diameter(objs, scene)
 			|| !check_height(objs, scene))
 			return (false);
 	}
@@ -123,7 +88,8 @@ bool	check_data_objs(t_objs *objs, t_scene *scene)
 	}
 	else if (objs->type == 3)
 	{
-		if (!check_coords(objs, scene) || !check_vector(objs, scene) || !check_fov(objs, scene))
+		if (!check_coords(objs, scene) || !check_vector(objs, scene) \
+			|| !check_fov(objs, scene))
 			return (false);
 	}
 	else if (objs->type == 4)
@@ -133,7 +99,7 @@ bool	check_data_objs(t_objs *objs, t_scene *scene)
 	}
 	else if (objs->type == 5)
 	{
-		if ( !check_coords(objs, scene) || !check_lightness(objs, scene))
+		if (!check_coords(objs, scene) || !check_lightness(objs, scene))
 			return (false);
 	}
 	return (true);

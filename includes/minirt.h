@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
 /*   Updated: 2024/02/07 17:31:03 by octonaute        ###   ########.fr       */
@@ -168,7 +168,7 @@ typedef struct 	s_inter {
 	t_objs	*obj;
 }				t_inter;
 
-typedef struct 	s_lightray 
+typedef struct 	s_lightray
 {
 	t_vec	point;
 	t_vec	dir;
@@ -278,6 +278,16 @@ bool	get_tvec_from_str(char *str, t_vec *v);
 bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene);
 void	write_scene_ppm(t_data *data);
 // int	change_ambiant_render(int keycode, t_data *data);
+bool	check_ovf_int(char *value, t_scene *scene, size_t size);
+bool	check_nb_params(char **value, t_data *data);
+bool	check_nb_cam(t_data *data);
+bool	set_camera(t_objs *camera, char **value, t_data *data);
+bool	set_ambiant(t_objs *ambiant, char **value, t_data *data);
+bool	set_light(t_objs *light, char **value, t_data *data);
+bool	set_sphere(t_objs *sphere, char **value, t_data *data);
+bool	set_cylinder(t_objs *cylinder, char **value, t_data *data);
+bool	check_nb_light(t_data *data);
+bool	check_nb_ambiant(t_data *data);
 
 
 void	ft_stop(t_data *data, short error);

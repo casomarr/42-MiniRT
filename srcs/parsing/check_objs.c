@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:33:37 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:03:35 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	check_camera(char **value, t_data *data)
 
 	if (check_nb_cam(data) == false)
 		return (false);
-	if (check_nb_params(value, data) == false)
+	if (check_nb_params(value, 4, data) == false)
 		return (false);
 	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
@@ -82,7 +82,10 @@ bool	check_camera(char **value, t_data *data)
 	if (!camera)
 		return (false);
 	if (set_camera(camera, value, data) == false)
+	{
+		free(camera);
 		return (false);
+	}
 	return (true);
 }
 
@@ -92,11 +95,10 @@ bool	check_ambiant(char **value, t_data *data)
 
 	if (check_nb_ambiant(data) == false)
 		return (false);
-	if (count_params(value) != 3) //TODO Call check_nb_params
+	if (count_params(value) != 3)
 	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Ambiant\n\x1B[0m", data->scene.fname, \
-			data->scene.line);
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 "Wrong number of \
+		parameters for Ambiant\n\x1B[0m", data->scene.fname, data->scene.line);
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
@@ -112,7 +114,7 @@ bool	check_ambiant(char **value, t_data *data)
 	if (!ambiant)
 		return (false);
 	if (set_ambiant(ambiant, value, data) == false)
-		return (false);
+		return (free(ambiant), false);
 	return (true);
 }
 
@@ -122,13 +124,8 @@ bool	check_light(char **value, t_data *data)
 
 	if (check_nb_light(data) == false)
 		return (false);
-	if (count_params(value) != 3) //TODO Call check_nb_params
-	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Light\n\x1B[0m", data->scene.fname, \
-			data->scene.line);
+	if (check_nb_params(value, 3, data) == false)
 		return (false);
-	}
 	if (three_params_float(value[1], &data->scene) == false)
 		return (false);
 	if (check_isdigit_float(value[2]) == false)
@@ -142,6 +139,9 @@ bool	check_light(char **value, t_data *data)
 	if (!light)
 		return (false);
 	if (set_light(light, value, data) == false)
+	{
+		free(light);
 		return (false);
+	}
 	return (true);
 }

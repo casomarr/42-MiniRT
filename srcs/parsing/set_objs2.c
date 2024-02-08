@@ -6,17 +6,14 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:16:18 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:30:11 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:13:02 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	set_cylinder(t_objs *cylinder, char **value, t_data *data)
+bool	set_value_cylinder(t_objs *cylinder, char **value, t_data *data)
 {
-	t_objs	*tmp;
-
-	cylinder->type = 1;
 	if (get_tvec_from_str(value[1], &cylinder->pos) == false)
 		return (false);
 	if (get_tvec_from_str(value[2], &cylinder->dir) == false)
@@ -25,11 +22,18 @@ bool	set_cylinder(t_objs *cylinder, char **value, t_data *data)
 	cylinder->height = ft_atof(value[4]);
 	if (get_trgb_from_str(value[5], &cylinder->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(cylinder, &data->scene) == false)
-	{
-		free(cylinder);
+	return (true);
+}
+
+bool	set_cylinder(t_objs *cylinder, char **value, t_data *data)
+{
+	t_objs	*tmp;
+
+	cylinder->type = 1;
+	if (set_value_cylinder(cylinder, value, data) == false)
 		return (false);
-	}
+	if (check_data_objs(cylinder, &data->scene) == false)
+		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{

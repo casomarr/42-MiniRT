@@ -6,19 +6,19 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:54:32 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:15:00 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:55:03 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool	check_nb_params(char **value, t_data *data) //TODO this function need check all params of all objs
+bool	check_nb_params(char **value, int nb_params, t_data *data)
 {
-	if (count_params(value) != 4)
+	if (count_params(value) != nb_params)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters for Camera\n\x1B[0m", data->scene.fname, \
-			data->scene.line);
+			"Wrong number of parameters line : %d \n\x1B[0m", \
+			data->scene.fname, data->scene.line, data->scene.line);
 		return (false);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:16:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/08 15:46:03 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:21:23 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*Generates each ray. They all have the same origin (the camera center)
 but their dir changes (they reach a different pixel on the canevas
 and continue in that dir into the scene)*/
-t_ray	compute_camera_ray(int x, int y, t_scene scene)
+static t_ray	compute_camera_ray(int x, int y, t_scene scene)
 {
 	t_ray	ray;
 	t_objs	*camera;
@@ -36,7 +36,7 @@ t_ray	compute_camera_ray(int x, int y, t_scene scene)
 
 /* Creates a ray, checks if it intersects with an
 object and if yes determines the pixel color */
-int	compute_pixel(int x, int y, t_data *data)
+static int	compute_pixel(int x, int y, t_data *data)
 {
 	t_ray	ray;
 	t_inter	inter;
@@ -55,7 +55,7 @@ calculation in compute_camera_ray : if the direction of the camera is
 parallel to the up vector, we adjust the vector according to camera->dir
 so that udir (=up direction) is orthogonal to camera->dir and world_up
 and rdir (right direction) is orthogonal to rdir and camera->dir.*/
-void	prepare_scene(t_data *data)
+static void	prepare_scene(t_data *data)
 {
 	t_objs	*objs;
 	t_vec	world_up;

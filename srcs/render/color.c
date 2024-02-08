@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 15:51:44 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:19:39 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Transforms RGB values received in .rt file to BGR
 since the mlx is in BGR system */
-t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
+static t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
 {
 	t_color	rgb;
 
@@ -25,7 +25,7 @@ t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
 	return (rgb);
 }
 
-t_color	color_from_vec(t_vec v)
+static t_color	color_from_vec(t_vec v)
 {
 	return (color_from_rgb(v.x, v.y, v.z));
 }
@@ -33,7 +33,7 @@ t_color	color_from_vec(t_vec v)
 /* Calculates the color of the intersected object given the
 ambient light's intensity and color.
 The render_ambiant option allows to render prettiest objects shadow-wise */
-t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
+static t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
 {
 	t_color	color;
 	t_vec	ambi_rgb;
@@ -56,7 +56,7 @@ line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
 point is higher than the distance from other intersection points
 from other objects. If yes, it means other objects are closer */
-t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, \
+static t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, \
 t_inter *interlight)
 {
 	t_color	color;

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:58:18 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 15:41:57 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:22:21 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_vec	get_vec_abc(t_inter *inter, t_objs *sphere)
 }
 
 /* Returns the closest intersection distance */
-float	get_t(float delta, t_vec maths)
+static float	get_t(float delta, t_vec maths)
 {
 	float	t;
 	float	t1;

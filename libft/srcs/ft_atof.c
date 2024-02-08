@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:07:30 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 14:55:38 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:07:55 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,28 @@ static float	process_before_comma(const char *str)
 	return (result);
 }
 
+static int	get_sign(const char c)
+{
+	int	sign;
+
+	sign = 1;
+	if (c == '-')
+		sign = -1;
+	else if (c == '+')
+		sign = 1;
+	return (sign);
+}
+
 static float	convert_to_float(const char *str)
 {
 	float	bef_comma;
 	float	decimal;
 	int		len;
 	int		i;
+	int		sign;
 
 	i = 0;
+	sign = get_sign(*str);
 	bef_comma = process_before_comma(str);
 	while (str[i] && str[i] != '.')
 		i++;
@@ -40,9 +54,9 @@ static float	convert_to_float(const char *str)
 	while (len--)
 		decimal /= 10;
 	if (bef_comma >= 0)
-		return (bef_comma + decimal);
+		return (sign * (bef_comma + decimal));
 	else
-		return (bef_comma + -decimal);
+		return ((bef_comma + -decimal));
 }
 
 //Convert a string to a floating-point number.

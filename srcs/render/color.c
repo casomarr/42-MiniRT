@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 16:44:08 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:18:39 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static t_color	color_from_vec(t_vec v)
 /* Calculates the color of the intersected object given the
 ambient light's intensity and color.
 The render_ambiant option allows to render prettiest objects shadow-wise */
-static t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
+static t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, \
+t_data *data, t_ray ray)
 {
 	t_color	color;
 	t_vec	ambi_rgb;

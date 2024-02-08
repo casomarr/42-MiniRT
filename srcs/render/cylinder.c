@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:36:56 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 16:46:47 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:18:13 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	intersection_point_cylinder(t_inter *inter, t_objs *cylinder)
 			cylinder->dir))));
 		else if (tmin == tbottom)
 				inter->normal = vec_negate(cylinder->dir);
-		else
+		else if (tmin == ttop)
 			inter->normal = cylinder->dir;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 16:47:23 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:10:33 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,18 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 		return (false);
 	}
 	if (value[0] == NULL)
-	{
-		ft_free_split(value);
-		return (false);
-	}
+		return (ft_free_split(value), false);
 	if (ft_strlen(value[0]) == 1 || ft_strlen(value[0]) == 2)
 	{
 		if (check_chars(value, data) == false)
-		{
-			ft_free_split(value);
-			return (false);
-		}
+			return (ft_free_split(value), false);
 	}
 	else
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
 			"'%s' not a valid object\n\x1B[0m", data->scene.fname, \
 			data->scene.line, value[0]);
-		ft_free_split(value);
-		return (false);
+		return (ft_free_split(value), false);
 	}
 	ft_free_split(value);
 	return (true);
@@ -92,10 +85,7 @@ int	parse_file(int fd, t_data *data)
 			if (ft_strlen(line) > 1 && line[0] != '#')
 			{
 				if (check_nb_char_in_line(line, data) == false)
-				{
-					free(line);
-					return (false);
-				}
+					return (free(line), false);
 			}
 			free(line);
 			line = get_next_line(fd);
@@ -106,6 +96,8 @@ int	parse_file(int fd, t_data *data)
 			return (false);
 		return (true);
 	}
+	ft_dprintf(2, ERROR_MSG1 "%s: " ERROR_MSG2
+		"Empty file\n\x1B[0m", data->scene.fname);
 	return (false);
 }
 

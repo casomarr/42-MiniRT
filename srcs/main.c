@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 15:36:00 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:14:04 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_stop(t_data *data, short error)
 {
-	t_objs	*tmp; //FIXME: data->scene.objs n existe pas si le fichier n existe pas flag necessaire a add
+	t_objs	*tmp;
 	while (data->scene.objs != NULL)
 	{
 		tmp = data->scene.objs->next;

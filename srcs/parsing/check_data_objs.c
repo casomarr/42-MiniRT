@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:02:33 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/07 19:58:53 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	check_color(t_objs *objs, t_scene *scene)
 
 bool	check_data_objs(t_objs *objs, t_scene *scene)
 {
-	//TODO VOIR SI JE PEUX FAIRE UN SEUL RETURN AVEC TOUTES LES FONCTIONS DEDANS
+	//TODO: VOIR SI JE PEUX FAIRE UN SEUL RETURN AVEC TOUTES LES FONCTIONS DEDANS
 	if (objs->type == 0)
 	{
 		if (!check_coords(objs, scene) || !check_diameter(objs, scene))

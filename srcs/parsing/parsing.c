@@ -6,13 +6,13 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:36:38 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:36:45 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/07 19:57:09 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "minirt.h"
 
-// //TODO: dsl Antoine ne changeant le makefile ça me disait qu'il y avait
+// //TODO:: dsl Antoine ne changeant le makefile ça me disait qu'il y avait
 // deux main et deux ft_stop donc je les ai commentés
 
 // void	ft_stop(t_data *data, short error)

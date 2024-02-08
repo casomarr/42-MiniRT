@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 19:58:53 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:31:37 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,7 @@ bool	check_color(t_objs *objs, t_scene *scene)
 
 bool	check_data_objs(t_objs *objs, t_scene *scene)
 {
-	//TODO: VOIR SI JE PEUX FAIRE UN SEUL RETURN AVEC TOUTES LES FONCTIONS DEDANS
-	if (objs->type == 0)
-	{
-		if (!check_coords(objs, scene) || !check_diameter(objs, scene))
-			return (false);
-	}
-	else if (objs->type == 1)
-	{
-		if (!check_coords(objs, scene) || !check_vector(objs, scene) \
-			|| !check_diameter(objs, scene)
-			|| !check_height(objs, scene))
-			return (false);
-	}
-	else if (objs->type == 2)
-	{
-		if (!check_coords(objs, scene) || !check_vector(objs, scene))
-			return (false);
-	}
-	else if (objs->type == 3)
+	if (objs->type == 3)
 	{
 		if (!check_coords(objs, scene) || !check_vector(objs, scene) \
 			|| !check_fov(objs, scene))
@@ -102,5 +84,7 @@ bool	check_data_objs(t_objs *objs, t_scene *scene)
 		if (!check_coords(objs, scene) || !check_lightness(objs, scene))
 			return (false);
 	}
+	else if (check_shape_objs(objs, scene) == false)
+		return (false);
 	return (true);
 }

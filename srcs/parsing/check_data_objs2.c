@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:49:04 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:36:56 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:31:26 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,28 @@ bool	check_height(t_objs *objs, t_scene *scene)
 			"Height must be between 0 and 50\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
+	}
+	return (true);
+}
+
+bool	check_shape_objs(t_objs *objs, t_scene *scene)
+{
+	if (objs->type == 0)
+	{
+		if (!check_coords(objs, scene) || !check_diameter(objs, scene))
+			return (false);
+	}
+	else if (objs->type == 1)
+	{
+		if (!check_coords(objs, scene) || !check_vector(objs, scene) \
+			|| !check_diameter(objs, scene)
+			|| !check_height(objs, scene))
+			return (false);
+	}
+	else if (objs->type == 2)
+	{
+		if (!check_coords(objs, scene) || !check_vector(objs, scene))
+			return (false);
 	}
 	return (true);
 }

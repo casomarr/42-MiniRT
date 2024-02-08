@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 17:15:59 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:31:33 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ bool	check_status_int(char **params, t_scene *scene, int i);
 bool	check_is_not_comment(char *line, t_data *data);
 bool	check_len_str(char **value, t_data *data);
 int		change_ambiant_render(int keycode, t_data *data);
-
+bool	check_shape_objs(t_objs *objs, t_scene *scene);
 
 void	ft_stop(t_data *data, short error);
 

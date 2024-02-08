@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:35:01 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:15:59 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ typedef struct s_ray
 {
 	t_vec	origin;
 	t_vec	dir;
-	float	norm;
-	t_vec	point;
 }	t_ray;
 
 typedef struct s_objs

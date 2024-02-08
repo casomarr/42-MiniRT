@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/07 17:19:29 by octonaute        ###   ########.fr        #
+#    Updated: 2024/02/08 15:30:09 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ NAME = minirt
 
 CC = clang
 #caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
-CFLAGS = -Wall -Wextra -g3 -gdwarf-4
+CFLAGS = -Wall -Wextra 
+#-Werror
+#-g3 -gdwarf-4
 #/!\ ATTENTION, FAUT ENLEVER LE # DE LA PROCHAINE LIGNE AVANT LE RENDU /!\
 #CFLAGS+= -Werror
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
@@ -69,6 +71,7 @@ SRCS =   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/$(PATH_PARSING)/check_objs_shape.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/color.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder_check_hit.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
   	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/rays.c \

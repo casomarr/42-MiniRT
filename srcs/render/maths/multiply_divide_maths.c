@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiply_divide_maths.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:21:08 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/07 17:16:01 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/08 15:54:03 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_vec	vec_multiply(t_vec a, t_vec b)
 	return (result);
 }
 
-/*Function to multiply two vectors*/
+/*Function to multiply a vector by a float*/
 t_vec	vec_multiply_float(t_vec a, float f)
 {
 	t_vec	result;
@@ -34,6 +34,7 @@ t_vec	vec_multiply_float(t_vec a, float f)
 	return (result);
 }
 
+/*Function to divide two vectors*/
 t_vec	vec_divide(t_vec a, float f)
 {
 	t_vec	result;
@@ -44,6 +45,7 @@ t_vec	vec_divide(t_vec a, float f)
 	return (result);
 }
 
+/*Function to divide a vector by a float*/
 float	vec_divide_float(t_vec a, float f)
 {
 	return (a.x / f + a.y / f + a.z / f);

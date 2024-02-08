@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/01 19:11:44 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:36:00 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,42 +122,3 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-
-
-/* int main()
-{
-	// t_vec front = (t_vec){0, 0, 1};
-	// t_vec right = (t_vec){1, 0, 0};
-	// t_vec up = (t_vec){0, 1, 0};
-
-	// t_vec	res;
-
-	// res = vec_product(front, up); // = {-1, 0, 0}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// res = vec_product(up, front); // = {1, 0, 0}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// res = vec_product(front, right); // = {0, 1, 0}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// res = vec_product(right, front); // = {0, -1, 0}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// res = vec_product(right, up); // = {0, 0, 1} --> Ça donne bien front
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// res = vec_product(up, right); // = {0, 0, -1}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-
-	// res = vec_product(up, (t_vec){-0.5, 0, 0.5}); // = {0.5, -0, 0.5}
-	// res = vec_product(res, vec_normalize((t_vec){dir.x, 0, dir.z})); // = {0.5, -0, 0.5}
-	// printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-
-
-	t_vec front = vec_normalize((t_vec){-0.5, 0.5, 0.5});
-	t_vec up = (t_vec){0, 1, 0};
-	t_vec	res;
-	res = vec_product(up, vec_normalize((t_vec){front.x, 0, front.y})); // = {0.5, -0, 0.5}
-	printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-	// 0.7, 0, 0.7
-	res = vec_product(front, res);
-	//res = vec_product(vec_normalize((t_vec){data->scene.cam->dir.x, 0, data->scene.cam->dir.z}), res); // = {0., 0.5, -0.}
-	// 0.4, 0.8, -0.4
-	printf("res = {%f, %f, %f}\n", res.x, res.y, res.z);
-} */

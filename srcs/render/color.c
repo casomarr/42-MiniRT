@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/07 16:47:16 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/08 15:51:44 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/* Transforms RGB values received in .rt file to BGR
+since the mlx is in BGR system */
 t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b)
 {
 	t_color	rgb;
@@ -28,9 +30,9 @@ t_color	color_from_vec(t_vec v)
 	return (color_from_rgb(v.x, v.y, v.z));
 }
 
-/*Calculates the color of the intersected object given the
+/* Calculates the color of the intersected object given the
 ambient light's intensity and color.
-The render_ambiant option allows to render prettiest objects shadow-wise.*/
+The render_ambiant option allows to render prettiest objects shadow-wise */
 t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
 {
 	t_color	color;
@@ -47,11 +49,13 @@ t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray)
 	return (ambi_rgb);
 }
 
-/*Checks if the light source is reachable by a straight
+/* Calculates the color of the intersected object given the
+light's intensity and color.
+Checks if the light source is reachable by a straight
 line from the point of intersection. We thus iterate through
 each object and compare if the distance from the intersection
 point is higher than the distance from other intersection points
-from other objects. If yes, it means other objects are closer*/
+from other objects. If yes, it means other objects are closer */
 t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, \
 t_inter *interlight)
 {
@@ -74,6 +78,8 @@ t_inter *interlight)
 	return (l_rgb);
 }
 
+/* Returns the stronger color between the mix of intersected object color
+with light color or intersected object color with ambient color */
 int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray)
 {
 	float	ratio_camera_dist;

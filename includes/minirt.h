@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:21:52 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:23:14 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,98 +298,72 @@ int		change_ambiant_render(int keycode, t_data *data);
 void	ft_stop(t_data *data, short error);
 
 
-/*Main*/
-int		initialisation(t_data *data);
-int		esc_close(int keycode, t_data *data);
-int		cross_close(t_data *data);
-/*Rays*/
-void	ray_init(t_data *data);
-void	minirt(t_data *data);
-void	normalize_direction_vector(t_ray *ray);
-// void	generate_current_ray(t_data *data);
-t_ray	compute_camera_ray(int x, int y, t_scene scene);
-int		compute_pixel(int x, int y, t_data *data);
-// void	compute_ray(t_data *data, float x, float y);
-t_inter	compute_light_ray(t_inter inter, t_objs *light, t_objs *objects);
-void	distance_of_projection(t_data *data);
 
-/*Vector Maths*/
-t_vec	create_vec(float x, float y, float z);
-t_vec	vec_substract(t_vec a, t_vec b);
-t_vec	vec_add(t_vec a, t_vec b);
-t_vec	vec_multiply(t_vec a, t_vec b);
-t_vec	vec_squared(t_vec a);
-t_vec	vec_sqrt(t_vec a);
-float	dot_product(t_vec a, t_vec b);
-float	dot_product_float(t_vec b, float a);
-t_vec	vec_multiply_float(t_vec a, float f);
-float	vec_pythagore(t_vec a);
-t_vec	vec_add_float(t_vec vec, float nb);
-t_vec	vec_divide(t_vec a, float f);
-t_vec	vec_product(t_vec a, t_vec b);
-t_vec	vec_substract_float(t_vec a, float b);
-float	vec_divide_float(t_vec a, float f);
-t_vec	vec_divide(t_vec a, float f);
-t_vec	vec_cross(t_vec a, t_vec b);
-t_vec	vec_max(t_vec v1, t_vec v2);
-t_vec	vec_min(t_vec v1, t_vec v2);
-t_vec	vec_clamp(t_vec v, float min, float max);
-float	get_norm(t_vec vec);
-bool	vec_compare(t_vec a, t_vec b);
-t_vec	vec_normalize(t_vec v);
-float	ft_fabs(float f);
-float	vec_length(t_vec v);
-t_vec	vec_negate(t_vec v);
+/*							RENDER FOLDER							*/
 
-/*Intersections*/
-void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
-void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
-void	check_intersection_light(t_data *data, /* t_objs *current_sphere,  */t_ray *light_ray);
-t_inter	closest_intersection(t_ray ray, t_objs *object, float dist);
-float	get_norm(t_vec vec);
-t_vec	get_intersection_point_sphere(t_objs *sphere, t_ray *ray, t_data *data);
-float	ft_fabs(float f);
-
-/*Color*/
-int		get_color(unsigned char color, float light_intensity);
-float	determine_pixel_color(t_data *data);
-t_color	color_from_rgb(t_uint8 r, t_uint8 g, t_uint8 b);
-t_color	color_from_vec(t_vec v);
+/* Color */
 int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray);
 
-/*Cylinder*/
-// void	check_intersection_cylinder(t_objs *cylinder, t_ray *ray);
-// void	intersection_point_cylinder(bool *intersection, t_data *data, t_objs *cylinder, t_ray *camera_ray);
-void intersection_point_cylinder(t_inter *inter, t_objs *cylinder);
-
-/*Render*/
-void	img_pix_put(t_data *data, int x, int y, int color);
-// void	add_pixel_to_img(t_data *data, int color);
-
-/*Light Intensity*/
-float	clamp(float value, float min, float max);
-float	lerp(float ratio, float min, float max);
-float	brdf(t_data *data);
-float	bouncing(t_data *data);
-
-/*Utils*/
-t_objs	*get_node(t_objs *objs, int type);
-
-/*Plane intersection*/
-void	get_norm2(t_vec *a, t_data *data);
-void	check_intersection_plane(t_objs *object, t_ray *ray, t_data *data);
-// void	intersection_point_plane(bool *intersection, t_data *data, t_objs *object, t_ray *ray);
-void	intersection_point_plane(t_inter *inter, t_objs *plane);
-t_vec	get_intersection_point_plane(t_data *data, t_objs *object, t_ray *ray);
-t_vec	vec_normalize(t_vec v);
-
-/*Lightray*/
-t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray);
-t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, t_inter *interlight);
-
-/*cylinder_check_hit*/
+/* Cylinder Check Hit */
 float	check_hit_side(t_inter *inter, t_objs *cylinder);
 float	check_hit_captop(t_inter *inter, t_objs *cylinder);
 float	check_hit_capbottom(t_inter *inter, t_objs *cylinder);
+
+/* Cylinder */
+void	intersection_point_cylinder(t_inter *inter, t_objs *cylinder);
+
+/* Intersections */
+t_inter	closest_intersection(t_ray ray, t_objs *object, float dist);
+
+/* Plane */
+void	intersection_point_plane(t_inter *inter, t_objs *plane);
+
+/* Rays */
+void	minirt(t_data *data);
+
+/* Render */
+void	img_pix_put(t_data *data, int x, int y, int color);
+
+/* Sphere */
+void	intersection_point_sphere(t_inter *inter, t_objs *sphere);
+
+/* Utils */
+t_objs	*get_node(t_objs *objs, int type);
+
+/*			MATHS FOLDER			*/
+
+/* Add Substract Maths */
+t_vec	vec_substract(t_vec a, t_vec b);
+t_vec	vec_substract_float(t_vec a, float b);
+t_vec	vec_add(t_vec a, t_vec b);
+t_vec	vec_add_float(t_vec vec, float nb);
+float	vec_length(t_vec v);
+
+/* Compare Maths */
+bool	vec_compare(t_vec a, t_vec b);
+t_vec	vec_max(t_vec v1, t_vec v2);
+t_vec	vec_min(t_vec v1, t_vec v2);
+float	ft_fabs(float f);
+t_vec	vec_negate(t_vec v);
+
+/* Dot Maths*/
+float	dot_product(t_vec a, t_vec b);
+float	dot_product_float(t_vec b, float a);
+float	vec_pythagore(t_vec a);
+t_vec	vec_cross(t_vec a, t_vec b);
+
+/* Multiply Divide Maths */
+t_vec	vec_multiply(t_vec a, t_vec b);
+t_vec	vec_multiply_float(t_vec a, float f);
+t_vec	vec_divide(t_vec a, float f);
+float	vec_divide_float(t_vec a, float f);
+
+/* Norm Maths */
+float	get_norm(t_vec vec);
+t_vec	vec_normalize(t_vec v);
+
+/* Sqrt Maths */
+t_vec	vec_squared(t_vec a);
+t_vec	vec_sqrt(t_vec a);
 
 #endif

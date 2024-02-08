@@ -6,12 +6,13 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:25:15 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/08 15:42:34 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:14:06 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/* Returns true if two vectors are the same */
 bool	vec_compare(t_vec a, t_vec b)
 {
 	if (a.x == b.x && a.y == b.y && a.z == b.z)
@@ -19,6 +20,8 @@ bool	vec_compare(t_vec a, t_vec b)
 	return (false);
 }
 
+/* Returns a vector with the highest
+values of vectors v1 and v2 */
 t_vec	vec_max(t_vec v1, t_vec v2)
 {
 	t_vec	ret;
@@ -33,6 +36,8 @@ t_vec	vec_max(t_vec v1, t_vec v2)
 	return (ret);
 }
 
+/* Returns a vector with the lowest
+values of vectors v1 and v2 */
 t_vec	vec_min(t_vec v1, t_vec v2)
 {
 	t_vec	ret;
@@ -47,6 +52,7 @@ t_vec	vec_min(t_vec v1, t_vec v2)
 	return (ret);
 }
 
+/* Returns the absolute value of f */
 float	ft_fabs(float f)
 {
 	if (f < 0)
@@ -54,6 +60,7 @@ float	ft_fabs(float f)
 	return (f);
 }
 
+/* Negates a vector's values */
 t_vec	vec_negate(t_vec v)
 {
 	t_vec	result;

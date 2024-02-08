@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:23:14 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:35:01 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,11 @@
 # include <math.h>
 # include <float.h>
 
-//effacer, juste pour tests
-#include <sys/types.h>
-#include <sys/wait.h>
-
 # define MAX_OBJS 256
 #define PI 3.14159265358979323846
 
-/*Patou : si le sujet ne specifie pas de taille d'image on
-peut faire une image petite pour augmenter les fps.*/
-// # define WIN_HEIGHT 900
-// # define WIN_WIDTH 1600
-
 # define WIN_HEIGHT 1000
 # define WIN_WIDTH 1000
-
-# define WHITE 0xFFFFFF
-# define BLACK 0x000000
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
 
 # define SPHERE		0
 # define CYLINDER	1
@@ -58,8 +43,6 @@ peut faire une image petite pour augmenter les fps.*/
 # define ESC_KEY 65307
 # define KEY_M 109
 # define KEY_R 114
-
-# define EPSILON 1e-6 //on ne l'utilise plus nulle part
 
 #define MAX_DIST_CAMERA	FLT_MAX
 
@@ -77,7 +60,7 @@ typedef struct s_vec
 typedef unsigned int t_uint32;
 typedef unsigned char t_uint8;
 
-typedef union	u_color //le changer à bgra
+typedef union	u_color
 {
 	t_uint32	full;
 	t_uint8		bgra[4];
@@ -85,10 +68,10 @@ typedef union	u_color //le changer à bgra
 
 typedef struct s_img
 {
-	void	*mlx_img; //address that mlx_new_image returns
+	void	*mlx_img;
 	char	*addr;
-	int		bpp; /* bits per pixel */
-	int		width; //avant line_len, change pour ray_generation
+	int		bpp;
+	int		width;
 	int		height;
 	int		endian;
 }	t_img;
@@ -98,65 +81,19 @@ typedef struct s_ray
 	t_vec	origin;
 	t_vec	dir;
 	float	norm;
-
-	int		color;
-	float	discriminant;
-	float	t;
-	t_vec	point; //pour norme au lieu de 3 float a, b, c
-	float	pixel_delta_w;
-	float	pixel_delta_h;
+	t_vec	point;
 }	t_ray;
 
-/*
-typedef struct s_cam
-{
-	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			pos; //12
-	t_vec			dir; //12
-	t_vec			rdir; //12
-	t_vec			udir;//12
-	int				fov; //4
-}			t_cam;
-
-
-[OBJ1]
-
-[OBJ2][OBJ3][OBJ4]
-
-typedef struct s_sphere
-{
-	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			pos; //all
-	t_color			color;
-	float			diameter; //sphere and cylinder
-} t_sphere
-
-t_objs *obj;
-if (obj->type == SPHERE)
-	sphere = (t_sphere*)obj;
-if (obj->type == CAMERA)
-	camera = (t_camera*)obj;
-obj = obj->next;
-
 typedef struct s_objs
 {
-	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			pos; //all
-	t_vec			dir; //plan and cylinder
-	struct s_objs	*next;
-} t_objs;
-*/
-
-typedef struct s_objs
-{
-	short			type; //a check 0 = sphere, 1 = plan, 2 = cylinder 3 = camera 4 = ambiant 5 = light
-	t_vec			pos; //all
-	t_vec			dir; //plan and cylinder
+	short			type;
+	t_vec			pos;
+	t_vec			dir;
 	t_color			color;
-	float			diameter; //sphere and cylinder
-	float			height; //cylinder only
-	int				fov; //camera only
-	float			lightness; //ambiant and light
+	float			diameter;
+	float			height;
+	int				fov;
+	float			lightness;
 	struct s_objs	*next;
 } t_objs;
 
@@ -168,14 +105,6 @@ typedef struct 	s_inter {
 	t_objs	*obj;
 }				t_inter;
 
-typedef struct 	s_lightray
-{
-	t_vec	point;
-	t_vec	dir;
-	t_vec	normal;
-	float	dist;
-}				t_ligthray;
-
 typedef struct s_scene
 {
 	t_objs		*objs;
@@ -186,12 +115,6 @@ typedef struct s_scene
 	int			nb_objs;
 	int			line;
 	char		*fname;
-	t_vec		first_pixel;
-	t_vec		pixel_delta_u;
-	t_vec		pixel_delta_v;
-
-
-	//modification pas d'antoine TODO: Vérifier que ça fait pas de la merde au parsing
 	t_vec		rdir;
 	t_vec		udir;
 } t_scene;
@@ -203,42 +126,8 @@ typedef struct s_data
 	t_img	img;
 	t_scene	scene;
 	bool	render_ambiant;
-
-
-
-	t_ray	ray;
-	t_ray	light_ray;
-	int		x;
-	int		y;
-	float	z_index;
-	t_vec	closest_intersection_point;
-	t_objs	closest_object;
-	bool	direct_light;
-	float	norm;
-	float	light_intensity;
 }	t_data;
 
-/* typedef struct s_check_objs
-{
-	const char	*ref;
-	bool		(*check)(char **value, t_data *data);
-}				t_check_objs;
-
-int		parse_file(int fd, t_data *data);
-bool	check_not_empty(int fd);
-bool	open_file(char *path, t_data *data);
-int		parsing(char *file_name, t_data *data);
-bool	check_nb_char_in_line(char *line, t_data *data);
-bool	check_chars(char **value, t_data *data);
-bool	check_camera(char **value, t_data *data);
-bool	check_ambiant(char **value, t_data *data);
-bool	check_light(char **value, t_data *data);
-bool	check_plan(char **value, t_data *data);
-bool	check_sphere(char **value, t_data *data);
-bool	check_cylinder(char **value, t_data *data);
-void	ft_free_split(char **value);
-void	init_data(t_data *data);
-t_objs	*lst_new_objs(void); */
 
 typedef struct s_check_objs
 {
@@ -276,7 +165,6 @@ bool	three_params_float(char *value, t_scene *scene);
 bool	three_params_int(char *value, t_scene *scene);
 bool	get_tvec_from_str(char *str, t_vec *v);
 bool	get_trgb_from_str(char *str, t_color *rgb, t_scene *scene);
-// int	change_ambiant_render(int keycode, t_data *data);
 bool	check_ovf_int(char *value, t_scene *scene, size_t size);
 bool	check_nb_params(char **value, int nb_params, t_data *data);
 bool	check_nb_cam(t_data *data);

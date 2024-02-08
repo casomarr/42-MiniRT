@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:16:10 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/07 17:39:42 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:46:03 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_ray	compute_camera_ray(int x, int y, t_scene scene)
 	return (ray);
 }
 
+/* Creates a ray, checks if it intersects with an
+object and if yes determines the pixel color */
 int	compute_pixel(int x, int y, t_data *data)
 {
 	t_ray	ray;

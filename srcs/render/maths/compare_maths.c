@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compare_maths.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: octonaute <octonaute@student.42.fr>        +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:25:15 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/02 18:25:37 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/08 15:42:34 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ float	ft_fabs(float f)
 	if (f < 0)
 		return (f * -1.);
 	return (f);
+}
+
+t_vec	vec_negate(t_vec v)
+{
+	t_vec	result;
+
+	result.x = -v.x;
+	result.y = -v.y;
+	result.z = -v.z;
+	return (result);
 }

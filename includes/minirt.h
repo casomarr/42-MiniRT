@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/07 17:31:03 by octonaute        ###   ########.fr       */
+/*   Updated: 2024/02/08 15:28:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,8 +331,10 @@ t_vec	vec_min(t_vec v1, t_vec v2);
 t_vec	vec_clamp(t_vec v, float min, float max);
 float	get_norm(t_vec vec);
 bool	vec_compare(t_vec a, t_vec b);
-t_vec vec_normalize(t_vec v);
+t_vec	vec_normalize(t_vec v);
 float	ft_fabs(float f);
+float	vec_length(t_vec v);
+t_vec	vec_negate(t_vec v);
 
 /*Intersections*/
 void	check_intersection_sphere(t_objs *sphere, t_ray *ray);
@@ -379,5 +381,10 @@ t_vec	vec_normalize(t_vec v);
 /*Lightray*/
 t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, t_data *data, t_ray ray);
 t_vec	get_light_rgb(t_inter inter, t_objs *light, t_objs *objs, t_inter *interlight);
+
+/*cylinder_check_hit*/
+float	check_hit_side(t_inter *inter, t_objs *cylinder);
+float	check_hit_captop(t_inter *inter, t_objs *cylinder);
+float	check_hit_capbottom(t_inter *inter, t_objs *cylinder);
 
 #endif

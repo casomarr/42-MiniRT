@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_substract_maths.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:23:49 by octonaute         #+#    #+#             */
-/*   Updated: 2024/02/07 17:39:29 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:43:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ t_vec	vec_substract_float(t_vec a, float b)
 /* Function to add two vectors */
 t_vec	vec_add(t_vec a, t_vec b)
 {
-	t_vec result;
-
 	t_vec	result;
 
 	result.x = a.x + b.x;
@@ -58,4 +56,10 @@ t_vec	vec_add_float(t_vec vec, float nb)
 	res.y = vec.y + nb;
 	res.z = vec.z + nb;
 	return (res);
+}
+
+/* Returns the length of a vector */
+float	vec_length(t_vec v)
+{
+	return (sqrtf(v.x * v.x + v.y * v.y + v.z * v.z));
 }

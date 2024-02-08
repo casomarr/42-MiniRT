@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 17:28:43 by amugnier          #+#    #+#             */
-/*   Updated: 2024/01/12 15:08:35 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:22:48 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char		*ft_uitoa(unsigned int n);
 
 int			ft_strstr(const char *str, char *comp);
 long long	ft_atoi(const char *str);
-float		ft_atof(char *str);
+float		ft_atof(const char *str);
 int			ft_isascii(int c);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);

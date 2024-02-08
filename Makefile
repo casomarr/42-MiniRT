@@ -6,7 +6,7 @@
 #    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/08 16:37:14 by amugnier         ###   ########.fr        #
+#    Updated: 2024/02/08 16:59:25 by amugnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,9 @@ NAME = minirt
 CC = clang
 #caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
 CFLAGS = -Wall -Wextra
-# CFLAGS+= -Werror
 #-Werror
 #-g3 -gdwarf-4
-#/!\ ATTENTION, FAUT ENLEVER LE # DE LA PROCHAINE LIGNE AVANT LE RENDU /!\
+CFLAGS+= -Werror
 LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
 
 # LX11 = /usr/lib/x86_64-linux-gnu/libX11.a

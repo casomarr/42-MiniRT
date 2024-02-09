@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 14:22:26 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:38:52 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@
 # define ERROR_MSG1 "Error\n\x1B[1m"
 # define ERROR_MSG2 "\x1B[31merror:\x1B[0m\x1B[1m "
 
+typedef unsigned int	t_uint32;
+typedef unsigned char	t_uint8;
+
 typedef struct s_vec
 {
 	float	x;
 	float	y;
 	float	z;
 }	t_vec;
-
-typedef unsigned int	t_uint32;
-typedef unsigned char	t_uint8;
 
 typedef union u_color
 {
@@ -124,12 +124,13 @@ typedef struct s_data
 	t_scene	scene;
 	bool	render_ambiant;
 }	t_data;
+	
+typedef bool			(*t_checkfunction)(char **value, t_data *data);
 
 typedef struct s_check_objs
 {
-	const char	*ref;
-	// bool		(*check)	(char	**value, t_data	*data);
-	bool		(*check)(char **value, t_data *data);
+	const char		*ref;
+	t_checkfunction	check;
 }	t_check_objs;
 
 int		parse_file(int fd, t_data *data);

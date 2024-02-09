@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 18:31:33 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:22:26 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <float.h>
 
 # define MAX_OBJS 256
-#define PI 3.14159265358979323846
+# define PI 3.14159265358979323846
 
 # define WIN_HEIGHT 1000
 # define WIN_WIDTH 1000
@@ -44,23 +44,22 @@
 # define KEY_M 109
 # define KEY_R 114
 
-#define MAX_DIST_CAMERA	FLT_MAX
+# define MAX_DIST_CAMERA	FLT_MAX
 
 # define ERROR_MSG1 "Error\n\x1B[1m"
 # define ERROR_MSG2 "\x1B[31merror:\x1B[0m\x1B[1m "
 
-
 typedef struct s_vec
 {
-	float x;
-	float y;
-	float z;
+	float	x;
+	float	y;
+	float	z;
 }	t_vec;
 
-typedef unsigned int t_uint32;
-typedef unsigned char t_uint8;
+typedef unsigned int	t_uint32;
+typedef unsigned char	t_uint8;
 
-typedef union	u_color
+typedef union u_color
 {
 	t_uint32	full;
 	t_uint8		bgra[4];
@@ -93,15 +92,15 @@ typedef struct s_objs
 	int				fov;
 	float			lightness;
 	struct s_objs	*next;
-} t_objs;
+}	t_objs;
 
-typedef struct 	s_inter {
+typedef struct s_inter {
 	t_ray	ray;
 	t_vec	point;
 	t_vec	normal;
 	float	dist;
 	t_objs	*obj;
-}				t_inter;
+}	t_inter;
 
 typedef struct s_scene
 {
@@ -115,7 +114,7 @@ typedef struct s_scene
 	char		*fname;
 	t_vec		rdir;
 	t_vec		udir;
-} t_scene;
+}	t_scene;
 
 typedef struct s_data
 {
@@ -126,12 +125,12 @@ typedef struct s_data
 	bool	render_ambiant;
 }	t_data;
 
-
 typedef struct s_check_objs
 {
 	const char	*ref;
+	// bool		(*check)	(char	**value, t_data	*data);
 	bool		(*check)(char **value, t_data *data);
-}				t_check_objs;
+}	t_check_objs;
 
 int		parse_file(int fd, t_data *data);
 bool	check_not_empty(int fd);
@@ -180,15 +179,13 @@ bool	check_is_not_comment(char *line, t_data *data);
 bool	check_len_str(char **value, t_data *data);
 int		change_ambiant_render(int keycode, t_data *data);
 bool	check_shape_objs(t_objs *objs, t_scene *scene);
-
 void	ft_stop(t_data *data, short error);
-
-
 
 /*							RENDER FOLDER							*/
 
 /* Color */
-int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray);
+int		get_pixel_color(t_inter inter, t_objs *objects, \
+t_data *data, t_ray ray);
 
 /* Cylinder Check Hit */
 float	check_hit_side(t_inter *inter, t_objs *cylinder);

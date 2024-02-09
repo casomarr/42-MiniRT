@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 17:18:39 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 20:32:28 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_inter *interlight)
 	light_dir}, objs, dist_light);
 	l_rgb = vec_multiply_float(l_rgb, \
 	ft_fabs(dot_product(light_dir, inter.normal)));
+	l_rgb = attenuate_color(l_rgb, dist_light);
 	return (l_rgb);
 }
 
@@ -83,16 +84,18 @@ t_inter *interlight)
 with light color or intersected object color with ambient color */
 int	get_pixel_color(t_inter inter, t_objs *objects, t_data *data, t_ray ray)
 {
-	float	ratio_camera_dist;
 	t_vec	ambi_rgb;
 	t_vec	l_rgb;
 	t_vec	v_rgb;
 	t_inter	interlight;
 
-	ratio_camera_dist = 1. - inter.dist / MAX_DIST_CAMERA;
 	ambi_rgb = get_ambi_rgb(inter, get_node(objects, AMBIENT), data, ray);
-	l_rgb = get_light_rgb(inter, get_node(objects, LIGHT), \
-			objects, &interlight);
+	interlight.obj = NULL;
+	if (get_node(objects, LIGHT))
+	{
+		l_rgb = get_light_rgb(inter, get_node(objects, LIGHT), \
+				objects, &interlight);
+	}
 	if (interlight.obj != NULL)
 		v_rgb = ambi_rgb;
 	else

@@ -6,7 +6,7 @@
 /*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 15:38:52 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 20:38:51 by casomarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@
 # define MAX_OBJS 256
 # define PI 3.14159265358979323846
 
-# define WIN_HEIGHT 1000
-# define WIN_WIDTH 1000
+# define C_ATTENUATION 1.0
+# define L_ATTENUATION 0.01
+# define Q_ATTENUATION 0.0001
+
+
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
 
 # define SPHERE		0
 # define CYLINDER	1
@@ -198,6 +203,9 @@ void	intersection_point_cylinder(t_inter *inter, t_objs *cylinder);
 
 /* Intersections */
 t_inter	closest_intersection(t_ray ray, t_objs *object, float dist);
+
+/*Light Attenuation*/
+t_vec	attenuate_color(t_vec color, float dist_light);
 
 /* Plane */
 void	intersection_point_plane(t_inter *inter, t_objs *plane);

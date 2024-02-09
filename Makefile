@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/07 12:03:11 by amugnier          #+#    #+#              #
-#    Updated: 2024/02/08 16:59:25 by amugnier         ###   ########.fr        #
+#    Updated: 2024/02/09 20:33:19 by casomarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,13 @@
 #                                  CONFIGURATION                               #
 # **************************************************************************** #
 
-NAME = minirt
+NAME = miniRT
 
-CC = clang
-#caro : rajouter -gdwarf-4 qd sur ordi perso pour valgrind
+CC = cc
 CFLAGS = -Wall -Wextra
-#-Werror
 #-g3 -gdwarf-4
 CFLAGS+= -Werror
-LINKER_FLAGS = -lXext -lX11 -lm #check location installation of dependencies to github action
-
-# LX11 = /usr/lib/x86_64-linux-gnu/libX11.a
-# LXEXT = /usr/lib/x86_64-linux-gnu/libXext.a
-# LM = /usr/lib/x86_64-linux-gnu/libm.a
-
-# LINKER_FLAGS = $(LX11) $(LXEXT) $(LM)
+LINKER_FLAGS = -lXext -lX11 -lm
 
 PATH_LIBFT = libft
 PATH_INCLUDE = includes
@@ -72,6 +64,7 @@ SRCS =   $(PATH_SRCS)/main.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/cylinder_check_hit.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/intersections.c \
+	   $(PATH_SRCS)/$(PATH_RENDER)/light_attenuation.c \
   	   $(PATH_SRCS)/$(PATH_RENDER)/plane.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/rays.c \
 	   $(PATH_SRCS)/$(PATH_RENDER)/render.c \
@@ -94,8 +87,6 @@ SRCS_PARSING = $(PATH_SRCS)/check_objs.c \
 OBJ_DIR = .objs
 
 
-#changer le path de la ligne ne dessous si je cree un dossier parsing et un dossier render
-#Have 1 directory for parsing and 1 for render in .objs
 OBJS = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 OBJS_PARSING = $(patsubst $(PATH_SRCS)/%.c, $(OBJ_DIR)/%.o, $(SRCS_PARSING))
@@ -154,12 +145,10 @@ re: fclean all
 ### NAME OF GITHUB ACTION
 GTACTION = minirt_action
 
-# Sources pour l'action (si différente)
 SRCS_ACTION = $(PATH_SRCS)/check_compile.c
 HDRS_ACTION = $(PATH_INCLUDE)/check_compile.h
 
 
-# Objets pour l'action (si différente)
 OBJS_DIR_ACTION = .objs_action
 OBJS_ACTIONS = $(patsubst $(PATH_SRCS)/%.c, $(OBJS_DIR_ACTION)/%.o, $(SRCS_ACTION))
 
@@ -168,11 +157,9 @@ $(OBJS_DIR_ACTION)/%.o: $(PATH_SRCS)/%.c $(HDRS_ACTION)
 	@mkdir -p $(OBJS_DIR_ACTION)
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_MLX) -I $(PATH_LIBFT)/$(PATH_INCLUDE) -I $(PATH_SRCS) -I $(PATH_INCLUDE)
 
-# Compilation de l'action (si différente)
 $(GTACTION): $(OBJS_ACTIONS)
 	$(CC) $(CFLAGS) -o $(GTACTION) $(OBJS_ACTIONS) $(LIBFT) $(LINKER_FLAGS) $(MLX)
 
-# Construction de l'action (si différente)
 # action: $(LIBFT) $(MLX) $(GTACTION)
 
 #remove $(MLX) From $(NAME) if parsing are call by make parsing

@@ -1,8 +1,8 @@
 #     X, Y, Z                X, Y, Z              FOV     LIGHTNING        DIAMETER         HEIGHT           COLOR (RGB)
 
-C 0,0,0                 -0.3,0.5,1                      70
+C 0,0,0                 0,0,1                      70
 
-A                                                           0.4                                            0,255,255
+A                                                           0.4                                            255,0,255
 
 L   1,10,20                                                  0.9
 
@@ -12,7 +12,7 @@ sp -2,0,20                                                                      
 sp -8,0,20                                                                       4                               255,0,0
 
 # plan du bas
-pl 0,-2,0                      0,1,0                                                                         255,255,255
+pl 0,-2,0                      0,1,0                                                                         250,250,0
 # plan derrière
 pl 0,15,0                        0,1,0                                                                         100,0,255
 # plan à droite

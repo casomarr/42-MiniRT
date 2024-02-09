@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:12:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 15:39:31 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:30:40 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ bool	three_params_int(char *value, t_scene *scene)
 		return (false);
 	if (count_params(params) != 3)
 	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Wrong number of parameters\n\x1B[0m", \
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 \
+			"Wrong number of parameters\n\x1B[0m",
 			scene->fname, scene->line);
 		ft_free_split(params);
 		return (false);
@@ -84,8 +84,8 @@ bool	three_params_float(char *value, t_scene *scene)
 	params = ft_split(value, ',');
 	if (count_params(params) != 3)
 	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 "Wrong number \
-		of parameters\n\x1B[0m", scene->fname, scene->line);
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 \
+		"Wrong number	of parameters\n\x1B[0m", scene->fname, scene->line);
 		ft_free_split(params);
 		return (false);
 	}
@@ -93,8 +93,8 @@ bool	three_params_float(char *value, t_scene *scene)
 	{
 		if (check_isdigit_float(params[i]) == false)
 		{
-			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 "number is \
-			not a FLOAT\n\x1B[0m", scene->fname, scene->line);
+			ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 \
+			"number is not a FLOAT\n\x1B[0m", scene->fname, scene->line);
 			ft_free_split(params);
 			return (false);
 		}

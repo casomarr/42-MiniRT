@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:50:56 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:10:33 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:38:04 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ bool	check_nb_char_in_line(char *line, t_data *data)
 	else
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"'%s' not a valid object\n\x1B[0m", data->scene.fname, \
-			data->scene.line, value[0]);
+			"not a valid object\n\x1B[0m", data->scene.fname, \
+			data->scene.line);
 		return (ft_free_split(value), false);
 	}
 	ft_free_split(value);
@@ -122,8 +122,8 @@ bool	check_chars(char **value, t_data *data)
 	}
 	if (value[0][ft_strlen(value[0]) - 1] == '\n')
 		value[0][ft_strlen(value[0]) - 1] = '\0';
-	ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-		"'%s' not a valid object\n\x1B[0m", data->scene.fname, \
-		data->scene.line, value[0]);
+	ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 \
+	"not a valid object\n\x1B[0m", data->scene.fname, \
+		data->scene.line);
 	return (false);
 }

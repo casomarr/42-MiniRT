@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:03:35 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:42:38 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ bool	check_ambiant(char **value, t_data *data)
 	if (count_params(value) != 3)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 "Wrong number of \
-		parameters for Ambiant\n\x1B[0m", data->scene.fname, data->scene.line);
+parameters for Ambiant\n\x1B[0m", data->scene.fname, data->scene.line);
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
 	{
-		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
+		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 \
 			"Lightness must be a FLOAT\n\x1B[0m", data->scene.fname, \
 			data->scene.line);
 		return (false);

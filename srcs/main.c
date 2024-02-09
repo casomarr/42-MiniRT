@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 21:48:45 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:51:50 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv)
 	data.scene.fname = argv[1];
 	if (parsing(data.scene.fname, &data) == false)
 	{
-		printf("Error\nParsing failed\n"); //TODO: remove this
+		printf("Parsing failed\n");
 		ft_stop(&data, PARSING_ERROR);
 		return (1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 20:38:51 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:52:24 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define C_ATTENUATION 1.0
 # define L_ATTENUATION 0.01
 # define Q_ATTENUATION 0.0001
-
 
 # define WIN_HEIGHT 800
 # define WIN_WIDTH 800
@@ -129,7 +128,7 @@ typedef struct s_data
 	t_scene	scene;
 	bool	render_ambiant;
 }	t_data;
-	
+
 typedef bool			(*t_checkfunction)(char **value, t_data *data);
 
 typedef struct s_check_objs

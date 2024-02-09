@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 16:10:20 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 18:31:37 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:46:55 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ bool	check_coords(t_objs *objs, t_scene *scene)
 
 bool	check_diameter(t_objs *objs, t_scene *scene)
 {
-	if (objs->diameter <= 0 || objs->diameter > 200)
+	if (objs->diameter <= 0 || objs->diameter > 100)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Diameter must be between 0 and 50\n\x1B[0m", scene->fname, \
+			"Diameter must be between 0 and 100\n\x1B[0m", scene->fname, \
 			scene->line);
 		return (false);
 	}

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:55:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 21:42:38 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,16 @@ bool	check_camera(char **value, t_data *data)
 	return (true);
 }
 
-bool	check_ambiant(char **value, t_data *data)
+bool	check_ambient(char **value, t_data *data)
 {
-	t_objs	*ambiant;
+	t_objs	*ambient;
 
-	if (check_nb_ambiant(data) == false)
+	if (check_nb_ambient(data) == false)
 		return (false);
 	if (count_params(value) != 3)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2 "Wrong number of \
-parameters for Ambiant\n\x1B[0m", data->scene.fname, data->scene.line);
+parameters for ambient\n\x1B[0m", data->scene.fname, data->scene.line);
 		return (false);
 	}
 	if (check_isdigit_float(value[1]) == false)
@@ -110,11 +110,11 @@ parameters for Ambiant\n\x1B[0m", data->scene.fname, data->scene.line);
 	}
 	if (three_params_int(value[2], &data->scene) == false)
 		return (false);
-	ambiant = lst_new_objs();
-	if (!ambiant)
+	ambient = lst_new_objs();
+	if (!ambient)
 		return (false);
-	if (set_ambiant(ambiant, value, data) == false)
-		return (free(ambiant), false);
+	if (set_ambient(ambient, value, data) == false)
+		return (free(ambient), false);
 	return (true);
 }
 

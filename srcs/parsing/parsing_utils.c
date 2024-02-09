@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:54:32 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 15:55:03 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ bool	check_nb_cam(t_data *data)
 	return (true);
 }
 
-bool	check_nb_ambiant(t_data *data)
+bool	check_nb_ambient(t_data *data)
 {
-	data->scene.nb_ambiant++;
-	if (data->scene.nb_ambiant > 1)
+	data->scene.nb_ambient++;
+	if (data->scene.nb_ambient > 1)
 	{
 		ft_dprintf(2, ERROR_MSG1 "%s:%d: " ERROR_MSG2
-			"Only one Ambiant is allowed\n\x1B[0m", data->scene.fname, \
+			"Only one ambient is allowed\n\x1B[0m", data->scene.fname, \
 			data->scene.line);
 		return (false);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casomarr <casomarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:21:00 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/09 20:32:28 by casomarr         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_color	color_from_vec(t_vec v)
 
 /* Calculates the color of the intersected object given the
 ambient light's intensity and color.
-The render_ambiant option allows to render prettiest objects shadow-wise */
+The render_ambient option allows to render prettiest objects shadow-wise */
 static t_vec	get_ambi_rgb(t_inter inter, t_objs *ambient, \
 t_data *data, t_ray ray)
 {
@@ -44,7 +44,7 @@ t_data *data, t_ray ray)
 	ambi_rgb = vec_min(ambi_rgb, (t_vec){ambient->color.bgra[2], \
 	ambient->color.bgra[1], ambient->color.bgra[0]});
 	ambi_rgb = vec_multiply_float(ambi_rgb, ambient->lightness);
-	if (data->render_ambiant == true)
+	if (data->render_ambient == true)
 		ambi_rgb = vec_multiply_float(ambi_rgb, \
 		ft_fabs(dot_product(ray.dir, inter.normal)));
 	return (ambi_rgb);

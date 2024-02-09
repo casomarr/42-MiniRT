@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:59:22 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/08 16:01:08 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ bool	set_camera(t_objs *camera, char **value, t_data *data)
 	return (true);
 }
 
-bool	set_ambiant(t_objs *ambiant, char **value, t_data *data)
+bool	set_ambient(t_objs *ambient, char **value, t_data *data)
 {
 	t_objs	*tmp;
 
-	ambiant->type = 4;
-	ambiant->lightness = ft_atof(value[1]);
-	if (get_trgb_from_str(value[2], &ambiant->color, &data->scene) == false)
+	ambient->type = 4;
+	ambient->lightness = ft_atof(value[1]);
+	if (get_trgb_from_str(value[2], &ambient->color, &data->scene) == false)
 		return (false);
-	if (check_data_objs(ambiant, &data->scene) == false)
+	if (check_data_objs(ambient, &data->scene) == false)
 		return (false);
 	tmp = data->scene.objs;
 	if (tmp != NULL)
 	{
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = ambiant;
+		tmp->next = ambient;
 	}
 	else
-		data->scene.objs = ambiant;
+		data->scene.objs = ambient;
 	return (true);
 }
 

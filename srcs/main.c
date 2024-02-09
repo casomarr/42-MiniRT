@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:44:16 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 21:51:50 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 	minirt(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.img.mlx_img, 0, 0);
 	mlx_hook(data.win_ptr, 17, 1L << 17, cross_close, &data);
-	mlx_hook(data.win_ptr, 2, 1L << 0, change_ambiant_render, &data);
+	mlx_hook(data.win_ptr, 2, 1L << 0, change_ambient_render, &data);
 	mlx_key_hook(data.win_ptr, esc_close, &data);
 	mlx_loop(data.mlx_ptr);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:33:36 by amugnier          #+#    #+#             */
-/*   Updated: 2024/02/09 21:52:24 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_scene
 	t_objs		*objs;
 	t_objs		*cam;
 	int			nb_camera;
-	int			nb_ambiant;
+	int			nb_ambient;
 	int			nb_light;
 	int			nb_objs;
 	int			line;
@@ -126,7 +126,7 @@ typedef struct s_data
 	void	*win_ptr;
 	t_img	img;
 	t_scene	scene;
-	bool	render_ambiant;
+	bool	render_ambient;
 }	t_data;
 
 typedef bool			(*t_checkfunction)(char **value, t_data *data);
@@ -144,7 +144,7 @@ int		parsing(char *file_name, t_data *data);
 bool	check_nb_char_in_line(char *line, t_data *data);
 bool	check_chars(char **value, t_data *data);
 bool	check_camera(char **value, t_data *data);
-bool	check_ambiant(char **value, t_data *data);
+bool	check_ambient(char **value, t_data *data);
 bool	check_light(char **value, t_data *data);
 bool	check_plan(char **value, t_data *data);
 bool	check_sphere(char **value, t_data *data);
@@ -171,18 +171,18 @@ bool	check_ovf_int(char *value, t_scene *scene, size_t size);
 bool	check_nb_params(char **value, int nb_params, t_data *data);
 bool	check_nb_cam(t_data *data);
 bool	set_camera(t_objs *camera, char **value, t_data *data);
-bool	set_ambiant(t_objs *ambiant, char **value, t_data *data);
+bool	set_ambient(t_objs *ambient, char **value, t_data *data);
 bool	set_light(t_objs *light, char **value, t_data *data);
 bool	set_sphere(t_objs *sphere, char **value, t_data *data);
 bool	set_cylinder(t_objs *cylinder, char **value, t_data *data);
 bool	check_value_cylinder(char **value, t_data *data);
 bool	set_plan(t_objs *plan, char **value, t_data *data);
 bool	check_nb_light(t_data *data);
-bool	check_nb_ambiant(t_data *data);
+bool	check_nb_ambient(t_data *data);
 bool	check_status_int(char **params, t_scene *scene, int i);
 bool	check_is_not_comment(char *line, t_data *data);
 bool	check_len_str(char **value, t_data *data);
-int		change_ambiant_render(int keycode, t_data *data);
+int		change_ambient_render(int keycode, t_data *data);
 bool	check_shape_objs(t_objs *objs, t_scene *scene);
 void	ft_stop(t_data *data, short error);
 

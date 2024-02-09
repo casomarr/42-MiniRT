@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:23:42 by casomarr          #+#    #+#             */
-/*   Updated: 2024/02/08 16:21:34 by amugnier         ###   ########.fr       */
+/*   Updated: 2024/02/09 22:07:14 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_objs	*get_node(t_objs *objs, int type)
 	return (NULL);
 }
 
-int	change_ambiant_render(int keycode, t_data *data)
+int	change_ambient_render(int keycode, t_data *data)
 {
 	if (keycode == KEY_M)
 	{
-		if (data->render_ambiant == false)
-			data->render_ambiant = true;
+		if (data->render_ambient == false)
+			data->render_ambient = true;
 		else
-			data->render_ambiant = false;
+			data->render_ambient = false;
 		minirt(data);
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
 			data->img.mlx_img, 0, 0);

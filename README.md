@@ -2,6 +2,9 @@
 
 # MiniRT
 
+![scene1](https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f)
+![scene3](https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe)
+
 ## Goal: 
 Create a minimalistic ray tracer from scratch to render 3D scenes with basic objects and lighting. \
 **Ray tracing**: technique used in computer graphics to generate realistic images by simulating the path of light.

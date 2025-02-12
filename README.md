@@ -27,7 +27,7 @@ Create a minimalistic ray tracer from scratch to render 3D scenes with basic obj
 - **Optimization:** Ensure efficient performance, especially when handling complex scenes.
 - **Error Handling:** Gracefully manage invalid input files or edge cases.
   
-Skills Developed
+## Skills Developed
 - **Graphics Concepts:** Basics of ray tracing, light simulation, and 3D rendering.
 - **Mathematics:** Understand the maths behind raytracing.
 

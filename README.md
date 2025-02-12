@@ -2,7 +2,7 @@
 
 # MiniRT
 
-![scene1](https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f)
+![scene1](https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f) width="200"
 ![scene3](https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe)
 
 ## Goal: 

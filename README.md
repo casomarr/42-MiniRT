@@ -2,7 +2,7 @@
 
 # MiniRT
 
-<img src="[images/your_image.png](https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f)" alt="Alt Text" width="50%">
+<img src="https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f" alt="scene1" width="50%">
 
 ![scene1](https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f)
 ![scene3](https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe)

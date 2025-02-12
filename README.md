@@ -47,11 +47,54 @@ To set up this project locally, follow these steps:
 	make
 	```
 
-4. **Run the shell:**
+4. **Run the program:**
 	```sh
-	./minirt
+	./miniRT <file.rt>
 	```
 
-# Usage
-- change the [filename]'s data to change the image (EXPLIQUER CHAQUE LIGNE avec photo)
-- **Output** : The program generates a PNG image of the rendered scene
+## Usage
+- In the "scene" folder, each .rt file describes the elements of the 3D scene to be rendered. Each line in the file specifies an object, light, camera, or configuration parameter.
+- Each line starts with an identifier followed by parameters.
+- The file must include exactly one camera (C) and one ambient light (A).
+- Output : the program generates a PNG image of the rendered scene.
+
+- Camera (C):
+  	- coordinates of the position of the camera
+  	- coordinates of the point the camera is looking at
+  	- field of view (in degrees), controlling the width of the camera's view
+- Light (L):
+  	- coordinates of the light source
+  	- light intensity (from 0.0 to 1.0)
+  	- light color in RGB format (from 0 to 255)
+- Ambient Light (A):
+  	- ambient light intensity (from 0.0 to 1.0)
+  	- ambient light color in RGB format (from 0 to 255)
+- Sphere (sp):
+  	- center coordinates of the sphere
+  	- diameter of the sphere
+  	- color of the sphere in RGB format (from 0 to 255)
+- Cylinder (cy):
+  	- center coordinates of the base of the cylinder
+  	- axis vector of the cylinder
+  	- diameter of the cylinder
+  	- height of the cylinder
+  	- color of the cylinder in RGB format (from 0 to 255)
+- Plane (pl):
+  	- coordinates of a point on the plane
+  	- normal vector of the plane (perpendicular to its surface)
+  	- color of the plane in RGB format (from 0 to 255)
+  
+**Example:**
+```
+C     0,20,0     0,-0.7,1     70
+
+L     0,20,20     0.9
+
+A     0.2      255,255,255
+
+pl     0,-2,0     0,1,0     206,206,206
+
+cy     2,0,15     -0.916,0.9063,-0.1182     3     9     117,241,0
+
+sp     0,0,10     5     255,0,0
+```

@@ -10,7 +10,7 @@
 Create a minimalistic ray tracer from scratch to render 3D scenes with basic objects and lighting. \
 **Ray tracing**: technique used in computer graphics to generate realistic images by simulating the path of light.
 
-## Key Features to Implement:
+## Key Features to Implement
 - **Basic Objects:**
   Render simple geometric shapes like spheres, planes, and cylinders.
 - **Lighting:**

@@ -4,6 +4,7 @@
 
 <img src="https://github.com/user-attachments/assets/b13909e7-86f6-4651-ab07-d6226cdcad43" alt="scene1" height="200">
 <img src="https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe" alt="scene2" height="200">
+<img src="https://github.com/user-attachments/assets/450f47f5-e730-4e7b-b55c-e9836b3723d5" alt="scene3" height="200">
 
 ## Goal: 
 Create a minimalistic ray tracer from scratch to render 3D scenes with basic objects and lighting. \

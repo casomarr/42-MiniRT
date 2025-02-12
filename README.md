@@ -3,7 +3,7 @@
 # MiniRT
 
 <img src="https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f" alt="scene1" width="50%">
-<img src="[https://github.com/user-attachments/assets/4a7be7a5-ad9d-454c-9062-c16e12c6301f](https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe)" alt="scene1" width="70%">
+<img src="https://github.com/user-attachments/assets/e96eac53-3da1-49f3-bab4-10a56a0128fe" alt="scene2" width="70%">
 
 ## Goal: 
 Create a minimalistic ray tracer from scratch to render 3D scenes with basic objects and lighting. \

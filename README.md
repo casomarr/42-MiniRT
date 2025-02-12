@@ -54,9 +54,8 @@ To set up this project locally, follow these steps:
 
 ## Usage
 - In the "scene" folder, each .rt file describes the elements of the 3D scene to be rendered. Each line in the file specifies an object, light, camera, or configuration parameter.
-- Each line starts with an identifier followed by parameters.
 - The file must include exactly one camera (C) and one ambient light (A).
-- Output : the program generates a PNG image of the rendered scene.
+- Each line starts with an identifier followed by parameters:
 
 	- Camera (C):
 	  	- coordinates of the position of the camera
@@ -84,7 +83,7 @@ To set up this project locally, follow these steps:
 	  	- normal vector of the plane (perpendicular to its surface)
 	  	- color of the plane in RGB format (from 0 to 255)
   
-**Example:**
+Example:
 ```
 C     0,20,0     0,-0.7,1     70
 
@@ -98,3 +97,4 @@ cy     2,0,15     -0.916,0.9063,-0.1182     3     9     117,241,0
 
 sp     0,0,10     5     255,0,0
 ```
+- Output : the program generates a PNG image of the rendered scene.

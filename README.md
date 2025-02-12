@@ -14,7 +14,7 @@ Create a minimalistic ray tracer from scratch to render 3D scenes with basic obj
 - **Camera:**
   Define a camera to view the scene from a specific perspective.
 - **Scene Parsing:**
-  Read and interpret a configuration file (.rt) that describes the scene (e.g., object positions, colors, light sources, camera settings).
+  Read and interpret a configuration file (.rt) that describes the scene (object positions, colors, light sources, camera settings).
 - **Rendering:**
   Generate a 2D image by casting rays from the camera and calculating how they interact with objects and light sources.
 
@@ -22,11 +22,10 @@ Create a minimalistic ray tracer from scratch to render 3D scenes with basic obj
 - **Mathematics:** Use linear algebra (vectors, matrices) for ray-object intersections and lighting calculations.
 - **Optimization:** Ensure efficient performance, especially when handling complex scenes.
 - **Error Handling:** Gracefully manage invalid input files or edge cases.
-- 
+  
 Skills Developed
-- **C Programming:** Deep understanding of memory management and data structures.
 - **Graphics Concepts:** Basics of ray tracing, light simulation, and 3D rendering.
-- **Problem Solving:** Implementing complex mathematical algorithms in code.
+- **Mathematics:** Understand the maths behind raytracing.
 
 ## Installation
 
